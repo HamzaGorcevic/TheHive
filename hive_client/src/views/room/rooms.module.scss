@@ -1,0 +1,329 @@
+@import '../../assets/variables';
+.container {
+    min-height: 100vh;
+    background-color: $cream-white;
+    padding: $spacing-xl;
+  }
+
+  .card {
+    background: white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+    padding: $spacing-lg;
+    border: 2px solid $honey-light;
+    transition: $transition-base;
+
+    &:hover {
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+
+    h2 {
+      color: $honey-dark;
+      font-size: $font-size-xl;
+      font-weight: bold;
+    }
+  }
+
+  .roomGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $spacing-lg;
+  }
+
+  .roomCard {
+    @extend .card;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .roomTitle {
+    color: $honey-dark;
+    font-size: $font-size-lg;
+    font-weight: bold;
+  }
+
+  .roomDescription {
+    color: $wax-brown;
+    font-size: $font-size-base;
+  }
+
+  .roomMeta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: $honey-gold;
+    font-size: $font-size-sm;
+  }
+
+  .form {
+    @extend .card;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .formGroup {
+    margin-bottom: $spacing-lg;
+
+    label {
+      display: block;
+      color: $honey-dark;
+      margin-bottom: $spacing-sm;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: $spacing-md;
+      border: 2px solid $honey-light;
+      border-radius: $border-radius-md;
+      transition: $transition-fast;
+
+      &:focus {
+        outline: none;
+        border-color: $honey-gold;
+      }
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+  }
+
+  .button {
+    width: 100%;
+    padding: $spacing-md;
+    background: $honey-gold;
+    color: white;
+    border: none;
+    border-radius: $border-radius-md;
+    font-weight: bold;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+      background: $honey-dark;
+    }
+  }
+
+  .error {
+    background: rgba($error-red, 0.1);
+    color: $error-red;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  .success {
+    background: rgba($forest-green, 0.1);
+    color: $forest-green;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  .loading {
+    text-align: center;
+    color: $honey-dark;
+    padding: $spacing-xl;
+  }
+  .roomContainer {
+    @extend .container;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .messageList {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+  }
+
+  .messageThread {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .message {
+    @extend .card;
+    background: white;
+
+    &.reply {
+      margin-left: $spacing-xl;
+      border-left: 4px solid $honey-gold;
+    }
+  }
+
+  .messageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid $honey-light;
+  }
+
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: $honey-dark;
+    font-weight: bold;
+  }
+
+  .messageTime {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $wax-brown;
+    font-size: $font-size-sm;
+  }
+
+  .messageContent {
+    color: $wax-brown;
+    line-height: 1.6;
+    margin-bottom: $spacing-md;
+  }
+
+  .messageActions {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: $spacing-md;
+  }
+
+  .actionButton {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    border: 1px solid $honey-light;
+    border-radius: $border-radius-sm;
+    color: $honey-dark;
+    background: transparent;
+    font-size: $font-size-sm;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+      background: $honey-light;
+    }
+
+    &.deleteButton {
+      color: $error-red;
+      border-color: rgba($error-red, 0.3);
+
+      &:hover {
+        background: rgba($error-red, 0.1);
+      }
+    }
+  }
+
+  .replyForm {
+    margin-top: $spacing-md;
+    padding-top: $spacing-md;
+    border-top: 1px solid $honey-light;
+  }
+
+  .replyInput {
+    width: 100%;
+    min-height: 100px;
+    padding: $spacing-md;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-md;
+    resize: vertical;
+
+    &:focus {
+      outline: none;
+      border-color: $honey-gold;
+    }
+  }
+
+  .replyFormActions {
+    display: flex;
+    gap: $spacing-md;
+  }
+
+  .messageForm {
+    @extend .card;
+    position: sticky;
+    bottom: $spacing-md;
+    background: white;
+  }
+
+  .messageInput {
+    width: 100%;
+    min-height: 120px;
+    padding: $spacing-md;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-md;
+    resize: vertical;
+
+    &:focus {
+      outline: none;
+      border-color: $honey-gold;
+    }
+  }
+
+  .cancelButton {
+    background: transparent;
+    border: 1px solid $honey-light;
+    color: $wax-brown;
+
+    &:hover {
+      background: $honey-light;
+    }
+  }
+
+  .question {
+    @extend .card;
+    margin-bottom: $spacing-xl;
+    background: white;
+    border: 2px solid $honey-gold;
+  }
+
+  .questionTitle {
+    font-size: $font-size-xxl;
+    color: $honey-dark;
+    margin-bottom: $spacing-md;
+    line-height: 1.3;
+  }
+
+  .questionMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid $honey-light;
+  }
+
+  .questionContent {
+    color: $wax-brown;
+    line-height: 1.6;
+    font-size: $font-size-lg;
+    white-space: pre-wrap;
+  }
+
+  // Update message styles to better differentiate from question
+  .message {
+    background: rgba($cream-white, 0.5);
+    border: 1px solid $honey-light;
+
+    &.reply {
+      margin-left: $spacing-xl;
+      border-left: 4px solid $honey-gold;
+      background: white;
+    }
+  }

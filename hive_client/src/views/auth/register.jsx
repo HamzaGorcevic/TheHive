@@ -1,0 +1,80 @@
+import React, { useState, useContext } from "react";
+import axiosClient from "../../axios";
+import StateContext from "../../contexts/authcontext";
+import styles from "./auth.module.scss";
+import { toast } from "react-toastify";
+
+const Register = () => {
+    const { registerUser } = useContext(StateContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [error, setError] = useState(null);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axiosClient.post("/register", {
+                name,
+                email,
+                password,
+            });
+            registerUser(response.data);
+            toast.success("Successfully registered");
+        } catch (err) {
+            // Check for a response from the server
+            console.log(err.response.data.message);
+            if (err.response && err.response.data && err.response.data.errors) {
+                setError(err.response.data.message); // Show the error from the server
+            } else {
+                setError("Registration failed. Please try again."); // Fallback error
+            }
+        }
+    };
+
+    return (
+        <div className={styles.authContainer}>
+            <div className={styles.authCard}>
+                <h2 className={styles.title}>Join TheHive</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Name:</label>
+                        <input
+                            className={styles.input}
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Email:</label>
+                        <input
+                            className={styles.input}
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Password:</label>
+                        <input
+                            className={styles.input}
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    {error && <p className={styles.error}>{error}</p>}
+                    <button className={styles.submitButton} type="submit">
+                        Register
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export { Register };

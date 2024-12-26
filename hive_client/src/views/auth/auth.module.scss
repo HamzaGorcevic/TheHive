@@ -1,0 +1,96 @@
+@import '../../assets/variables';
+
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: $spacing-xl;
+  background: linear-gradient(135deg, $cream-white, $honey-light);
+}
+
+.authCard {
+  background-color: white;
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, $honey-gold, $honey-dark);
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+  }
+}
+
+.title {
+  color: $wax-brown;
+  font-size: $font-size-xxl;
+  margin-bottom: $spacing-lg;
+  text-align: center;
+  font-weight: bold;
+}
+
+.formGroup {
+  margin-bottom: $spacing-lg;
+}
+
+.label {
+  display: block;
+  color: $wax-brown;
+  font-size: $font-size-sm;
+  margin-bottom: $spacing-xs;
+  font-weight: 500;
+}
+
+.input {
+  width: 92%;
+  padding: $spacing-md;
+  border: 2px solid $honey-light;
+  border-radius: $border-radius-md;
+  font-size: $font-size-base;
+  transition: $transition-base;
+
+  &:focus {
+    outline: none;
+    border-color: $honey-gold;
+    box-shadow: 0 0 0 3px rgba($honey-gold, 0.2);
+  }
+}
+
+.submitButton {
+  width: 100%;
+  padding: $spacing-md;
+  background-color: $honey-gold;
+  color: white;
+  border: none;
+  border-radius: $border-radius-md;
+  font-size: $font-size-base;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition-base;
+
+  &:hover {
+    background-color: $honey-dark;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.error {
+  color: $error-red;
+  font-size: $font-size-sm;
+  margin-top: $spacing-xs;
+  text-align: center;
+}
