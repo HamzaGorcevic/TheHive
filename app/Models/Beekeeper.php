@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Beekeeper extends Model
 {
@@ -18,6 +18,15 @@ class Beekeeper extends Model
         'latitude',
         'longitude',
     ];
+
+    protected $casts = [
+        'number_of_hives' => 'integer',
+        'years_of_experience' => 'integer',
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
+
+    protected $hidden = [];
 
     public function user()
     {

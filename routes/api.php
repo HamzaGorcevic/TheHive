@@ -10,7 +10,6 @@ Route::post("register", [AuthController::class, "register"]);
 Route::post("logout", [AuthController::class, "logout"]);
 Route::post("register_beekeeper", [AuthController::class, "register_beekeeper"]);
 
-
 Route::middleware('auth:sanctum')->group(function () {
     // Get all rooms
     Route::get('rooms', [RoomController::class, 'all_rooms']);

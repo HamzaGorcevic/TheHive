@@ -1,0 +1,43 @@
+@import '../../assets/variables';
+
+.profileCard {
+  background-color: $cream-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-md;
+  margin-bottom: $spacing-lg;
+
+  .header {
+    border-bottom: 2px solid $honey-gold;
+    padding-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
+
+    h1 {
+      color: $wax-brown;
+      font-size: $font-size-xxl;
+      margin: 0;
+    }
+
+    .role {
+      display: inline-block;
+      background-color: $honey-gold;
+      color: white;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-sm;
+      margin-top: $spacing-sm;
+    }
+  }
+
+  .info {
+    .infoItem {
+      margin-bottom: $spacing-md;
+
+      .label {
+        color: $honey-dark;
+        font-weight: bold;
+        margin-right: $spacing-sm;
+      }
+    }
+  }
+}

@@ -33,6 +33,10 @@ const Navbar = () => {
                         <User className={styles.icon} />
                         My Rooms
                     </Link>
+                    <Link to="/profile" className={styles.link}>
+                        <User className={styles.icon} />
+                        Profile
+                    </Link>
                     {!authData ? (
                         <>
                             <Link to="/login" className={styles.link}>

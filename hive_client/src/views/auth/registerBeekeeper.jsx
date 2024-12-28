@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MapPin, TreePine, Mail, Lock, User } from "lucide-react";
 import axios from "axios";
 import styles from "./auth.module.scss";
 import LocationPicker from "../../helpers/locationPicker";
 import axiosClient from "../../axios";
 import { toast } from "react-toastify";
+import StateContext from "../../contexts/authcontext";
+import { useNavigate } from "react-router-dom";
 const Input = ({
     icon: Icon,
     label,
@@ -46,7 +48,8 @@ const RegisterBeekeeper = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
+    const { registerUser } = useContext(StateContext);
+    const navigate = useNavigate();
     const handleLocationSelect = (location) => {
         setFormData((prev) => ({
             ...prev,
@@ -70,8 +73,9 @@ const RegisterBeekeeper = () => {
             registerUser(response.data);
             toast.success("Succesfully registered as beekeeper!");
             console.log(response);
+            navigate("/rooms");
         } catch (err) {
-            toast.success("There is been mistake try again later");
+            toast.error("There is been mistake try again later");
             setError(err.response?.data?.message || "Registration failed");
         } finally {
             setLoading(false);

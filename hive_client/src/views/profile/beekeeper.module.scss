@@ -1,0 +1,61 @@
+@import '../../assets/variables';
+
+.beekeeperCard {
+  background-color: $cream-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-md;
+  margin-top: $spacing-lg;
+
+  h2 {
+    color: $honey-dark;
+    margin-bottom: $spacing-lg;
+    font-size: $font-size-xl;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+
+    .statItem {
+      background-color: $honey-light;
+      padding: $spacing-md;
+      border-radius: $border-radius-md;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: $transition-base;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+      }
+
+      i {
+        color: $honey-dark;
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-sm;
+      }
+
+      .label {
+        color: $wax-brown;
+        font-size: $font-size-sm;
+        margin-bottom: $spacing-xs;
+      }
+
+      .value {
+        color: $honey-dark;
+        font-size: $font-size-lg;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .mapContainer {
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    box-shadow: $shadow-sm;
+  }
+}
