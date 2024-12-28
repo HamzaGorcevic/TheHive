@@ -3,13 +3,14 @@ import axiosClient from "../../axios";
 import StateContext from "../../contexts/authcontext";
 import styles from "./auth.module.scss";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const { loginUser } = useContext(StateContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -19,6 +20,7 @@ const Login = () => {
             });
             loginUser(response.data);
             toast.success("Successfully logged in");
+            navigate("/rooms");
         } catch (err) {
             // Check for a response from the server
             if (

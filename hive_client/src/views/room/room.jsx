@@ -48,13 +48,17 @@ const Room = () => {
             setError("Failed to post message");
         }
     };
-
     const handleReply = async (messageId, content) => {
         try {
-            await axiosClient.post(`/messages/${messageId}/reply`, {
-                content,
-                room_id: id,
-            });
+            await axiosClient.post(
+                `/${isReply ? "messages" : "rooms"}/${messageId}/${
+                    isReply ? "reply" : "messages"
+                }`,
+                {
+                    content,
+                    room_id: id,
+                }
+            );
             fetchRoomData();
         } catch (err) {
             setError("Failed to post reply");
@@ -86,6 +90,8 @@ const Room = () => {
                         onReply={handleReply}
                         onDelete={handleDelete}
                         setIsReply={setIsReply}
+                        room={room}
+                        fetchRoomData={fetchRoomData}
                     />
                 ))}
             </div>

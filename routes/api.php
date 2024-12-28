@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route; // Correct import for Route
 Route::post("login", [AuthController::class, "login"]);
 Route::post("register", [AuthController::class, "register"]);
 Route::post("logout", [AuthController::class, "logout"]);
-
+Route::post("register_beekeeper", [AuthController::class, "register_beekeeper"]);
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -31,10 +31,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Add a new message to a room
     Route::post('rooms/{room_id}/messages', [MessageController::class, 'add_message']);
+    Route::post('messages/{message_id}/reply', [MessageController::class, 'reply_message']);
 
     // Remove a specific message
     Route::delete('messages/{message_id}', [MessageController::class, 'remove_message']);
 
     // Reply to a message
-    Route::post('messages/{message_id}/reply', [MessageController::class, 'reply_message']);
+
+    //Vote
+    Route::post('messages/{message_id}/vote', [MessageController::class, 'vote_message']);
+    Route::get('messages/{message_id}/vote', [MessageController::class, 'get_message_votes']);
+    Route::post('messages/solved', [MessageController::class, 'mark_as_solved']);
 });

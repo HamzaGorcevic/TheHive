@@ -8,7 +8,11 @@ import RoomForm from "./views/room/roomForm";
 import { UserRooms } from "./views/room/userRooms";
 import Rooms from "./views/room/rooms";
 import Room from "./views/room/room";
-
+import Navbar from "./components/navbar/navbar";
+import "./app.css";
+import ProtectedRoute from "./helpers/protectedRoute";
+import RegisterBeekeeper from "./views/auth/registerBeekeeper";
+import Profile from "./views/profile/profile";
 function App() {
     return (
         <Router>
@@ -26,13 +30,27 @@ function App() {
                 transition={Slide}
             />
             <ContextProvider>
+                <Navbar />
                 <Routes>
+                    <Route
+                        element={
+                            <ProtectedRoute
+                                allowedRoles={["user", "beekeeper"]}
+                            />
+                        }
+                    >
+                        <Route path="/create-room" element={<RoomForm />} />
+                        <Route path="/user-rooms" element={<UserRooms />} />
+                        <Route path="/rooms" element={<Rooms />} />
+                        <Route path="/rooms/:id" element={<Room />} />
+                        <Route path="/profile" element={<Profile />} />
+                    </Route>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/create-room" element={<RoomForm />} />
-                    <Route path="/user-rooms" element={<UserRooms />} />
-                    <Route path="/rooms" element={<Rooms />} />
-                    <Route path="/rooms/:id" element={<Room />} />
+                    <Route
+                        path="/register-beekeeper"
+                        element={<RegisterBeekeeper />}
+                    />
                 </Routes>
             </ContextProvider>
         </Router>

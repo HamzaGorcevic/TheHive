@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import { User, Clock } from "lucide-react";
 import styles from "./rooms.module.scss";
 import axiosClient from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 export const UserRooms = () => {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
+
+    const singleRoomRedirect = (id) => {
+        navigate(`/rooms/${id}`);
+    };
 
     useEffect(() => {
         const fetchUserRooms = async () => {
@@ -37,11 +43,17 @@ export const UserRooms = () => {
 
             <div className={styles.roomGrid}>
                 {rooms.map((room) => (
-                    <div key={room.id} className={styles.roomCard}>
+                    <div
+                        key={room.id}
+                        className={styles.roomCard}
+                        onClick={() => singleRoomRedirect(room.id)}
+                    >
                         <h3 className={styles.roomTitle}>{room.title}</h3>
                         <p className={styles.roomDescription}>
                             {room.description}
                         </p>
+                        {room.solved_message_id ? <p>SOLVED</p> : ""}
+
                         <div className={styles.roomMeta}>
                             <Clock size={16} />
                             <span>

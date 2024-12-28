@@ -3,6 +3,7 @@ import axiosClient from "../../axios";
 import StateContext from "../../contexts/authcontext";
 import styles from "./auth.module.scss";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const { registerUser } = useContext(StateContext);
@@ -10,7 +11,7 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [error, setError] = useState(null);
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -21,6 +22,7 @@ const Register = () => {
             });
             registerUser(response.data);
             toast.success("Successfully registered");
+            navigate("/rooms");
         } catch (err) {
             // Check for a response from the server
             console.log(err.response.data.message);
@@ -72,6 +74,7 @@ const Register = () => {
                         Register
                     </button>
                 </form>
+                <a href="/register-beekeeper">Register as beekeeper !</a>
             </div>
         </div>
     );

@@ -52,7 +52,7 @@
 }
 
 .input {
-  width: 92%;
+  width: 100%;
   padding: $spacing-md;
   border: 2px solid $honey-light;
   border-radius: $border-radius-md;
@@ -94,3 +94,131 @@
   margin-top: $spacing-xs;
   text-align: center;
 }
+
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-xl;
+    background-color: $honey-light;
+  }
+
+  .form {
+    width: 100%;
+    max-width: 800px;
+    background-color: $cream-white;
+    padding: $spacing-xl;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-lg;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+
+    h1 {
+      color: $honey-dark;
+      font-size: $font-size-xxl;
+      margin-top: $spacing-sm;
+    }
+
+    .logo {
+      color: $honey-gold;
+    }
+  }
+
+  .formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .inputGroup {
+    position: relative;
+  }
+
+  .label {
+    display: block;
+    color: $wax-brown;
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-xs;
+  }
+
+  .inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .icon {
+    position: absolute;
+    left: $spacing-sm;
+    color: $honey-gold;
+  }
+
+  .input {
+    width: 100%;
+    padding: $spacing-sm $spacing-xl $spacing-sm $spacing-xxl;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    transition: border-color $transition-base;
+    background-color: white;
+
+    &:focus {
+      outline: none;
+      border-color: $honey-gold;
+    }
+
+    &:disabled {
+      background-color: $honey-light;
+      cursor: not-allowed;
+    }
+  }
+
+  .mapSection {
+    grid-column: 1 / -1;
+    margin: $spacing-lg 0;
+
+    h2 {
+      color: $wax-brown;
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-md;
+    }
+  }
+
+  .error {
+    grid-column: 1 / -1;
+    color: $error-red;
+    text-align: center;
+    padding: $spacing-sm;
+    background-color: lighten($error-red, 45%);
+    border-radius: $border-radius-sm;
+  }
+
+  .submitButton {
+    grid-column: 1 / -1;
+    background-color: $honey-gold;
+    color: white;
+    padding: $spacing-md;
+    border: none;
+    border-radius: $border-radius-md;
+    font-size: $font-size-lg;
+    cursor: pointer;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background-color: darken($honey-gold, 10%);
+    }
+
+    &:disabled {
+      background-color: lighten($honey-gold, 20%);
+      cursor: not-allowed;
+    }
+  }

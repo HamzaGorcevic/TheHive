@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'points',
     ];
 
     /**
@@ -33,6 +35,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'roles'
     ];
 
     public function messages()
@@ -43,7 +46,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Room::class);
     }
-
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 
     /**
      * Get the attributes that should be cast.
@@ -55,6 +61,18 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'points' => 'integer'
         ];
+    }
+    public function getRoleAttribute()
+    {
+        return $this->roles->first()->name ?? null;
+    }
+
+    protected $appends = ['role'];
+
+    protected static function boot()
+    {
+        parent::boot();
     }
 }

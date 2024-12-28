@@ -19,6 +19,11 @@ class Room extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function solvedMessage()
+    {
+        return $this->belongsTo(Message::class, 'solved_message_id');
+    }
+
     /**
      * Get the messages associated with the room.
      */

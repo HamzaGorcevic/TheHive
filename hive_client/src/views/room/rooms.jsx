@@ -6,12 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 const Rooms = () => {
     const [rooms, setRooms] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
     useEffect(() => {
         const fetchRooms = async () => {
             try {
+                setLoading(true);
                 const response = await axiosClient.get("/rooms");
                 setRooms(response.data.rooms);
                 setError("");
@@ -50,6 +51,7 @@ const Rooms = () => {
                         <p className={styles.roomDescription}>
                             {room.description}
                         </p>
+                        {room.solved_message_id ? <p>SOLVED</p> : ""}
                         <div className={styles.roomMeta}>
                             <Users size={16} />
                             <span>{room.creator.name}</span>

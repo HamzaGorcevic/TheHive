@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MessageRequest;
 use App\Models\Message;
+use App\Models\Room;
+use App\Models\Vote;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -94,6 +98,96 @@ class MessageController extends Controller
             'reply' => $reply,
             'message' => 'Reply posted successfully'
         ], 201);
+    }
+    public function vote_message(Request $request)
+    {
+        $request->validate([
+            'message_id' => 'required|exists:messages,id',
+            'vote_type' => 'required|in:1,0,-1'
+        ]);
+
+        $user = $request->user();
+        $message = Message::findOrFail($request->message_id);
+
+        // Prevent voting on own messages
+        if ($message->user_id === $user->id) {
+            return response()->json(['error' => 'Cannot vote on your own message'], 403);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $currentVote = Vote::where('user_id', $user->id)
+                ->where('message_id', $message->id)
+                ->first();
+
+            $previousVoteType = $currentVote ? $currentVote->vote_type : 0;
+
+            if ($request->vote_type === 0) {
+                if ($currentVote) {
+                    $currentVote->delete();
+                }
+            } else {
+                Vote::updateOrCreate(
+                    ['user_id' => $user->id, 'message_id' => $message->id],
+                    ['vote_type' => $request->vote_type]
+                );
+            }
+
+            $totalPoints = $message->votes()->sum('vote_type');
+            $message->update(['points' => $totalPoints]);
+
+            $pointDiff = $request->vote_type - $previousVoteType;
+            if ($pointDiff !== 0) {
+                $messageAuthor = $message->user;
+                $messageAuthor->increment('points', $pointDiff);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Vote recorded successfully',
+                'new_score' => $totalPoints
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function mark_as_solved(Request $request)
+    {
+        $request->validate([
+            'room_id' => 'required|exists:rooms,id',
+            'message_id' => 'required|exists:messages,id',
+        ]);
+
+        $room = Room::findOrFail($request->room_id);
+        $user = $request->user();
+        if ($user->id !== $room->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $message = Message::where('id', $request->message_id)
+            ->where('room_id', $room->id)
+            ->first();
+
+        if (!$message) {
+            return response()->json(['error' => 'Message does not belong to this room'], 400);
+        }
+
+        $room->solved_message_id = $message->id;
+        $room->save();
+
+        return response()->json([
+            'message' => 'Room marked as solved',
+            'solved_message_id' => $room->solved_message_id,
+        ]);
+    }
+
+    public function get_message_votes(Request $request)
+    {
+        $voteCount = Vote::where('message_id', $request->message_id)->count();
+        return response()->json(['count' => $voteCount]);
     }
 
     private function deleteNestedReplies($message)

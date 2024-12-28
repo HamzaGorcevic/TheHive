@@ -38,4 +38,8 @@ class Message extends Model
     {
         return $this->belongsTo(Message::class, 'parent_message_id');
     }
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 }

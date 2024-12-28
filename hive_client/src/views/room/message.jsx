@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
     MessageSquare,
     ThumbsUp,
@@ -6,15 +6,17 @@ import {
     Reply,
     User,
     Clock,
+    CheckCircle2,
 } from "lucide-react";
 import styles from "./rooms.module.scss";
+import Vote from "./vote";
+import StateContext from "../../contexts/authcontext";
 
-const Message = ({ message, onReply, onDelete, setIsReply, isReply }) => {
+const Message = ({ message, onReply, onDelete, setIsReply, isReply, room }) => {
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [replyContent, setReplyContent] = useState("");
-    const currentUser = JSON.parse(localStorage.getItem("authData"))?.user;
+    const { authData } = useContext(StateContext);
 
-    console.log(message);
     const handleReplySubmit = async (e) => {
         e.preventDefault();
         setIsReply(true);
@@ -36,7 +38,15 @@ const Message = ({ message, onReply, onDelete, setIsReply, isReply }) => {
                 </div>
             </div>
 
-            <div className={styles.messageContent}>{message.content}</div>
+            <div className={styles.messageContent}>
+                <Vote
+                    messageId={message.id}
+                    initialPoints={message.points}
+                    authorId={message.user_id}
+                    userId={authData.user.id}
+                />
+                {message.content}
+            </div>
 
             <div className={styles.messageActions}>
                 <button
@@ -47,7 +57,7 @@ const Message = ({ message, onReply, onDelete, setIsReply, isReply }) => {
                     Reply
                 </button>
 
-                {currentUser?.id === message.user_id && (
+                {authData.user?.id === message.user_id && (
                     <button
                         className={`${styles.actionButton} ${styles.deleteButton}`}
                         onClick={() => onDelete(message.id)}

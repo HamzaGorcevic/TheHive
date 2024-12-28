@@ -2,21 +2,24 @@ import React, { useState } from "react";
 import { Plus } from "lucide-react";
 import styles from "./rooms.module.scss";
 import axiosClient from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 const RoomForm = () => {
     const [formData, setFormData] = useState({
         title: "",
         description: "",
     });
+
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await axiosClient.post("/rooms", formData);
             setSuccess("Room created successfully!");
             setFormData({ title: "", description: "" });
+            navigate("/user-rooms");
             setError("");
         } catch (err) {
             setError("Failed to create room. Please try again.");
