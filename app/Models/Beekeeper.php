@@ -27,7 +27,10 @@ class Beekeeper extends Model
     ];
 
     protected $hidden = [];
-
+    public function services()
+    {
+        return $this->hasMany(BeekeeperService::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BeekeeperServiceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route; // Correct import for Route
@@ -41,4 +42,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('messages/{message_id}/vote', [MessageController::class, 'vote_message']);
     Route::get('messages/{message_id}/vote', [MessageController::class, 'get_message_votes']);
     Route::post('messages/solved', [MessageController::class, 'mark_as_solved']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/services', [BeekeeperServiceController::class, 'get_availble_services']);
+    Route::get('/categories', [BeekeeperServiceController::class, 'get_categories']);
+    Route::post('/categories', [BeekeeperServiceController::class, 'create_category']);
+    Route::post('/services', [BeekeeperServiceController::class, 'beekeeper_make_availble']);
+    Route::get('/services/category', [BeekeeperServiceController::class, 'category_services']);
 });

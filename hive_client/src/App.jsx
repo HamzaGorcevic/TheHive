@@ -13,6 +13,9 @@ import "./app.css";
 import ProtectedRoute from "./helpers/protectedRoute";
 import RegisterBeekeeper from "./views/auth/registerBeekeeper";
 import Profile from "./views/profile/profile";
+import BeekeeperService from "./views/beekeeperService/browseBeekeeperServices";
+import BrowseServices from "./views/beekeeperService/browseBeekeeperServices";
+import CreateService from "./views/beekeeperService/createBeekeeperService";
 function App() {
     return (
         <Router>
@@ -44,6 +47,11 @@ function App() {
                         <Route path="/rooms" element={<Rooms />} />
                         <Route path="/rooms/:id" element={<Room />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/browse" element={<BrowseServices />} />
+                        <Route
+                            path="/create-service"
+                            element={<CreateService />}
+                        />
                     </Route>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
