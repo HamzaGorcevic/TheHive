@@ -3,6 +3,7 @@ import { User, Clock } from "lucide-react";
 import styles from "./rooms.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const UserRooms = () => {
     const [rooms, setRooms] = useState([]);
@@ -13,23 +14,33 @@ export const UserRooms = () => {
     const singleRoomRedirect = (id) => {
         navigate(`/rooms/${id}`);
     };
-
+    const fetchUserRooms = async () => {
+        try {
+            const response = await axiosClient.get("/user/rooms");
+            setRooms(response.data.rooms);
+            setError("");
+        } catch (err) {
+            setError("Failed to load your rooms");
+        } finally {
+            setLoading(false);
+        }
+    };
     useEffect(() => {
-        const fetchUserRooms = async () => {
-            try {
-                const response = await axiosClient.get("/user/rooms");
-                setRooms(response.data.rooms);
-                setError("");
-            } catch (err) {
-                setError("Failed to load your rooms");
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchUserRooms();
     }, []);
+    const handleDelete = async (roomId, e) => {
+        e.stopPropagation();
 
+        try {
+            const response = await axiosClient.delete(`rooms/${roomId}`);
+            if (response.status == 200) {
+                toast.success("Room deleted succesfully!");
+                fetchUserRooms();
+            }
+        } catch (e) {
+            toast.error(e);
+        }
+    };
     if (loading)
         return <div className={styles.loading}>Loading your rooms...</div>;
     if (error) return <div className={styles.error}>{error}</div>;
@@ -53,6 +64,12 @@ export const UserRooms = () => {
                             {room.description}
                         </p>
                         {room.solved_message_id ? <p>SOLVED</p> : ""}
+                        <button
+                            className={styles.deleteBtn}
+                            onClick={(e) => handleDelete(room.id, e)}
+                        >
+                            Delete room
+                        </button>
 
                         <div className={styles.roomMeta}>
                             <Clock size={16} />

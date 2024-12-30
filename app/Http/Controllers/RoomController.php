@@ -54,4 +54,17 @@ class RoomController extends Controller
             'room' => $room
         ]);
     }
+    public function delete_room(Request $request)
+    {
+        $room = Room::find($request->room_id);
+        if ($room) {
+            $room->delete();
+            return response()->json([
+                'message' => 'Room deleted successfully'
+            ]);
+        }
+        return response()->json([
+            "message" => "Room not found"
+        ]);
+    }
 }

@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('rooms', [RoomController::class, 'create_room']);
 
     Route::get('rooms/{room_id}', [RoomController::class, 'get_room']);
+    Route::delete('rooms/{room_id}', [RoomController::class, 'delete_room']);
 });
 
 // Message Routes
@@ -39,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Reply to a message
 
     //Vote
+    Route::get('votes', [MessageController::class, 'get_user_points']);
     Route::post('messages/{message_id}/vote', [MessageController::class, 'vote_message']);
     Route::get('messages/{message_id}/vote', [MessageController::class, 'get_message_votes']);
     Route::post('messages/solved', [MessageController::class, 'mark_as_solved']);
@@ -50,4 +52,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/categories', [BeekeeperServiceController::class, 'create_category']);
     Route::post('/services', [BeekeeperServiceController::class, 'beekeeper_make_availble']);
     Route::get('/services/category', [BeekeeperServiceController::class, 'category_services']);
+    Route::delete("/services/{service_id}", [BeekeeperServiceController::class, 'delete_service']);
+    Route::delete("/categories/{category_id}", [BeekeeperServiceController::class, 'delete_category']);
 });

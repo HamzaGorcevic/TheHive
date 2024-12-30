@@ -1,0 +1,171 @@
+@import '../../assets/variables';
+
+.container {
+    background-color: $cream-white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $spacing-xl;
+  }
+
+  .formCard {
+    background-color: white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    box-shadow: $shadow-lg;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .title {
+    color: $honey-dark;
+    font-size: $font-size-xxl;
+    margin-bottom: $spacing-lg;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+  }
+
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  .label {
+    color: $wax-brown;
+    font-size: $font-size-base;
+    font-weight: 600;
+  }
+
+  .input {
+    padding: $spacing-md;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    transition: border-color $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $honey-gold;
+    }
+  }
+
+  .button {
+    background-color: $honey-gold;
+    color: white;
+    padding: $spacing-md $spacing-xl;
+    border: none;
+    border-radius: $border-radius-md;
+    font-size: $font-size-lg;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background-color: $honey-dark;
+    }
+
+    &:disabled {
+      background-color: $honey-light;
+      cursor: not-allowed;
+    }
+  }
+
+  .categoriesList {
+    border-top: 2px solid $honey-light;
+    padding-top: $spacing-lg;
+    margin-top: $spacing-lg;
+  }
+
+  .dropdownToggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md;
+    background-color: $cream-white;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    color: $wax-brown;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: $honey-light;
+    }
+  }
+
+  .dropdown {
+    margin-top: $spacing-md;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .categoryItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md;
+    border-bottom: 1px solid $honey-light;
+    transition: background-color $transition-fast;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: $cream-white;
+    }
+  }
+
+  .deleteButton {
+    background: none;
+    border: none;
+    color: $error-red;
+    cursor: pointer;
+    padding: $spacing-xs;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: rgba($error-red, 0.1);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .emptyMessage {
+    text-align: center;
+    color: $wax-brown;
+    padding: $spacing-md;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .spinning {
+    animation: spin 1s linear infinite;
+  }

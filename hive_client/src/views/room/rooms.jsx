@@ -1,32 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Home, Users, Clock } from "lucide-react";
 import styles from "./rooms.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import StateContext from "../../contexts/authcontext";
 
 const Rooms = () => {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const { authData } = useContext(StateContext);
     const navigate = useNavigate();
+    const fetchRooms = async () => {
+        try {
+            setLoading(true);
+            const response = await axiosClient.get("/rooms");
+            setRooms(response.data.rooms);
+            setError("");
+        } catch (err) {
+            setError("Failed to load rooms");
+        } finally {
+            setLoading(false);
+        }
+    };
     useEffect(() => {
-        const fetchRooms = async () => {
-            try {
-                setLoading(true);
-                const response = await axiosClient.get("/rooms");
-                setRooms(response.data.rooms);
-                setError("");
-            } catch (err) {
-                setError("Failed to load rooms");
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchRooms();
     }, []);
     const singleRoomRedirect = (id) => {
         navigate(`/rooms/${id}`);
+    };
+    const handleDelete = async (roomId, e) => {
+        e.stopPropagation();
+
+        try {
+            const response = await axiosClient.delete(`rooms/${roomId}`);
+            if (response.status == 200) {
+                toast.success("Room deleted succesfully!");
+                fetchRooms();
+            }
+        } catch (e) {
+            toast.error(e);
+        }
     };
     if (loading) return <div className={styles.loading}>Loading rooms...</div>;
     if (error) return <div className={styles.error}>{error}</div>;
@@ -51,6 +66,16 @@ const Rooms = () => {
                         <p className={styles.roomDescription}>
                             {room.description}
                         </p>
+                        {authData?.user?.role == "admin" ? (
+                            <button
+                                className={styles.deleteBtn}
+                                onClick={(e) => handleDelete(room.id, e)}
+                            >
+                                Delete room
+                            </button>
+                        ) : (
+                            ""
+                        )}
                         {room.solved_message_id ? <p>SOLVED</p> : ""}
                         <div className={styles.roomMeta}>
                             <Users size={16} />

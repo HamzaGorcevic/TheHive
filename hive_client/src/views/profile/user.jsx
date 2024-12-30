@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./user.module.scss";
+import axiosClient from "../../axios";
+import StateContext from "../../contexts/authcontext";
 
 const UserCard = ({ user }) => {
-    console.log(user);
+    const [points, setPoints] = useState(0);
+    const { authData } = useContext(StateContext);
+    useEffect(() => {
+        const getUserPoints = async () => {
+            const response = await axiosClient.get("/votes");
+            setPoints(response.data.votes);
+        };
+        getUserPoints();
+    });
+
     return (
         <div className={styles.profileCard}>
             <div className={styles.header}>
@@ -14,10 +25,14 @@ const UserCard = ({ user }) => {
                     <span className={styles.label}>Email:</span>
                     <span>{user.email}</span>
                 </div>
-                <div className={styles.infoItem}>
-                    <span className={styles.label}>Points:</span>
-                    <span>{user.points ? user.points : 0}</span>
-                </div>
+                {authData?.user?.role != "admin" ? (
+                    <div className={styles.infoItem}>
+                        <span className={styles.label}>Points:</span>
+                        <span>{points}</span>
+                    </div>
+                ) : (
+                    ""
+                )}
                 <div className={styles.infoItem}>
                     <span className={styles.label}>Member since:</span>
                     <span>

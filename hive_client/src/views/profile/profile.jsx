@@ -9,9 +9,9 @@ const Profile = () => {
 
     return (
         <div className={styles.profileContainer}>
-            <UserCard user={authData.user} />
-            {authData.user.beekeeper && (
-                <BeekeeperCard beekeeper={authData.user.beekeeper} />
+            <UserCard user={authData?.user} />
+            {authData?.user?.beekeeper && (
+                <BeekeeperCard beekeeper={authData?.user?.beekeeper} />
             )}
         </div>
     );

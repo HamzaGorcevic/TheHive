@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('message_id')->constrained()->onDelete('cascade');
+            $table->foreignId('voted_user_id')->constrained('users')->onDelete('cascade');
             $table->integer('vote_type');
             $table->timestamps();
         });

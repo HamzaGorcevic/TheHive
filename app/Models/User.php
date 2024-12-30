@@ -25,7 +25,7 @@ class User extends Authenticatable
     ];
 
     // Add eager loading for roles and beekeeper
-    protected $with = ['roles', 'beekeeper'];
+    // protected $with = ['roles', 'beekeeper'];
 
     public function messages()
     {
@@ -56,7 +56,10 @@ class User extends Authenticatable
             'points' => 'integer'
         ];
     }
-
+    public function services()
+    {
+        return $this->hasMany(BeekeeperService::class);
+    }
     public function getRoleAttribute()
     {
         return $this->roles->first()->name ?? null;
@@ -64,17 +67,15 @@ class User extends Authenticatable
 
     public function getBeekeeperDataAttribute()
     {
-        // Load the beekeeper relationship if not loaded
         if (!$this->relationLoaded('beekeeper')) {
             $this->load('beekeeper');
         }
-
-        // Return beekeeper data if user has beekeeper role
         if ($this->hasRole('beekeeper')) {
             return $this->beekeeper;
         }
         return null;
     }
 
-    protected $appends = ['role'];
+
+    protected $appends = ['role', 'beekeeper_data'];
 }

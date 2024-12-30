@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Filter, User } from "lucide-react";
 import styles from "./beekeeperService.module.scss";
 import axiosClient from "../../axios";
+import { toast } from "react-toastify";
+import StateContext from "../../contexts/authcontext";
 
 const BrowseServices = () => {
     const [categories, setCategories] = useState([]);
     const [services, setServices] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [error, setError] = useState("");
-
+    const { authData } = useContext(StateContext);
     useEffect(() => {
         fetchCategories();
         fetchServices();
@@ -18,8 +20,6 @@ const BrowseServices = () => {
         try {
             const response = await axiosClient.get("/categories");
             if (response.status == 200) {
-                console.log("jel ok");
-                console.log(response.data);
                 setCategories(response.data.categories);
             }
         } catch (err) {
@@ -28,15 +28,18 @@ const BrowseServices = () => {
     };
 
     const fetchServices = async (categoryId) => {
+        console.log("sta je");
         try {
             const url = categoryId
                 ? `/services/category?categoryservice_id=${categoryId}`
                 : "/services";
 
             const response = await axiosClient.get(url);
-
             if (response.status == 200) {
                 setServices(response.data.services);
+            } else {
+                setServices([]);
+                toast.warning(response.data.message);
             }
         } catch (err) {
             setError("Failed to load services");
@@ -46,6 +49,20 @@ const BrowseServices = () => {
     const handleCategoryChange = (categoryId) => {
         setSelectedCategory(categoryId);
         fetchServices(categoryId);
+    };
+    const handleDelete = async (serviceId) => {
+        console.log("ovde");
+        try {
+            const response = await axiosClient.delete(`/services/${serviceId}`);
+            if (response.status == 200) {
+                toast.success(response.data.message);
+                fetchServices();
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (e) {
+            toast.error(e);
+        }
     };
 
     return (
@@ -78,11 +95,23 @@ const BrowseServices = () => {
                             <span className={styles.price}>
                                 ${service.price}
                             </span>
+                            {authData?.user?.role == "admin" ||
+                            service.user_id == authData?.user?.id ? (
+                                <button
+                                    onClick={() => {
+                                        handleDelete(service.id);
+                                    }}
+                                >
+                                    Delete{" "}
+                                </button>
+                            ) : (
+                                ""
+                            )}
                         </div>
 
                         <div className={styles.beekeeperInfo}>
                             <User size={16} />
-                            <span>{service.beekeeper.name}</span>
+                            <span>{service.user.name}</span>
                         </div>
 
                         <p className={styles.details}>{service.details}</p>

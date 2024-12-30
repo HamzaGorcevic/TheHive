@@ -91,7 +91,6 @@ class MessageController extends Controller
             'parent_message_id' => $request->message_id,
         ]);
 
-        // Load all necessary relationships
         $reply->load(['user', 'allReplies.user']);
 
         return response()->json([
@@ -102,6 +101,7 @@ class MessageController extends Controller
     public function vote_message(Request $request)
     {
         $request->validate([
+            'voted_user_id' => 'required|exists:users,id',
             'message_id' => 'required|exists:messages,id',
             'vote_type' => 'required|in:1,0,-1'
         ]);
@@ -129,7 +129,7 @@ class MessageController extends Controller
                 }
             } else {
                 Vote::updateOrCreate(
-                    ['user_id' => $user->id, 'message_id' => $message->id],
+                    ['user_id' => $user->id, 'message_id' => $message->id, 'voted_user_id' => $request->voted_user_id],
                     ['vote_type' => $request->vote_type]
                 );
             }
@@ -154,6 +154,13 @@ class MessageController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function get_user_points(Request $request)
+    {
+        $votes = Vote::where('voted_user_id', $request->user()->id)->count();
+        return response()->json(["votes" => $votes], 200);
+    }
+
+
     public function mark_as_solved(Request $request)
     {
         $request->validate([

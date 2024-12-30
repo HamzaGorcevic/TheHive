@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('beekeeper_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('beekeeper_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('categoryservice_id')->constrained()->onDelete('cascade');
             $table->text('details');
             $table->decimal('price');

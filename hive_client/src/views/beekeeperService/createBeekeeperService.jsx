@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { AlertCircle } from "lucide-react";
 import styles from "./beekeeperService.module.scss";
 import axiosClient from "../../axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CreateService = () => {
     const [categories, setCategories] = useState([]);
@@ -11,7 +13,7 @@ const CreateService = () => {
         details: "",
     });
     const [error, setError] = useState("");
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetchCategories();
     }, []);
@@ -32,12 +34,15 @@ const CreateService = () => {
         try {
             const response = await axiosClient.post("/services", formData);
 
-            if (response.ok) {
+            if (response.status == 200) {
                 setFormData({ categoryservice_id: "", price: "", details: "" });
                 setError("");
+                toast.success("Succesfully created service!");
+                navigate("/services");
             }
         } catch (err) {
             setError("Failed to create service");
+            toast.error(err);
         }
     };
 

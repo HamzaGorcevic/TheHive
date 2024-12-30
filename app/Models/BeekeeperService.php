@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class BeekeeperService extends Model
 {
-    protected $fillable = ['beekeeper_id', 'categoryservice_id', 'details', "price"];
+    protected $fillable = ['user_id', 'categoryservice_id', 'details', "price"];
 
-    public function beekeeper()
+    public function user()
     {
-        return $this->belongsTo(Beekeeper::class);
+        return $this->belongsTo(User::class);
     }
 
     public function categoryservice()

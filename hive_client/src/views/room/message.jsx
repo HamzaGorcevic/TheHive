@@ -16,7 +16,7 @@ const Message = ({ message, onReply, onDelete, setIsReply, isReply, room }) => {
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [replyContent, setReplyContent] = useState("");
     const { authData } = useContext(StateContext);
-
+    console.log("message", message);
     const handleReplySubmit = async (e) => {
         e.preventDefault();
         setIsReply(true);
@@ -57,15 +57,16 @@ const Message = ({ message, onReply, onDelete, setIsReply, isReply, room }) => {
                     Reply
                 </button>
 
-                {authData.user?.id === message.user_id && (
-                    <button
-                        className={`${styles.actionButton} ${styles.deleteButton}`}
-                        onClick={() => onDelete(message.id)}
-                    >
-                        <Trash2 size={16} />
-                        Delete
-                    </button>
-                )}
+                {authData?.user?.id === message.user_id ||
+                    (authData?.user?.role == "admin" && (
+                        <button
+                            className={`${styles.actionButton} ${styles.deleteButton}`}
+                            onClick={() => onDelete(message.id)}
+                        >
+                            <Trash2 size={16} />
+                            Delete
+                        </button>
+                    ))}
             </div>
 
             {showReplyForm && (

@@ -25,18 +25,58 @@ const Navbar = () => {
                     <Link to="/rooms" className={styles.link}>
                         Browse Rooms
                     </Link>
-                    <Link to="/create-room" className={styles.link}>
-                        <PlusCircle className={styles.icon} />
-                        Create Room
-                    </Link>
-                    <Link to="/user-rooms" className={styles.link}>
-                        <User className={styles.icon} />
-                        My Rooms
-                    </Link>
+
+                    {["beekeeper", "user"].includes(authData?.user?.role) ? (
+                        <>
+                            <Link to="/user-rooms" className={styles.link}>
+                                <User className={styles.icon} />
+                                My Rooms
+                            </Link>
+                            <Link to="/create-room" className={styles.link}>
+                                <PlusCircle className={styles.icon} />
+                                Create Room
+                            </Link>
+                        </>
+                    ) : (
+                        ""
+                    )}
+                    {["beekeeper", "admin"].includes(authData?.user?.role) ? (
+                        <>
+                            <Link to="/services" className={styles.link}>
+                                <User className={styles.icon} />
+                                Services
+                            </Link>
+                            {authData?.user?.role == "beekeeper" ? (
+                                <Link
+                                    to="/create-service"
+                                    className={styles.link}
+                                >
+                                    <User className={styles.icon} />
+                                    Create Service
+                                </Link>
+                            ) : (
+                                ""
+                            )}
+                        </>
+                    ) : (
+                        ""
+                    )}
+
+                    {["admin"].includes(authData?.user?.role) ? (
+                        <>
+                            {" "}
+                            <Link to="/create-category" className={styles.link}>
+                                Create Category
+                            </Link>
+                        </>
+                    ) : (
+                        ""
+                    )}
                     <Link to="/profile" className={styles.link}>
                         <User className={styles.icon} />
                         Profile
                     </Link>
+
                     {!authData ? (
                         <>
                             <Link to="/login" className={styles.link}>

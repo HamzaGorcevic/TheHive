@@ -53,6 +53,7 @@ const Vote = ({
                 {
                     message_id: messageId,
                     vote_type: newVoteType,
+                    voted_user_id: authorId,
                 }
             );
 
