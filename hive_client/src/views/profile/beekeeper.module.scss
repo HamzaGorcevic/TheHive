@@ -1,61 +1,111 @@
-@import '../../assets/variables';
+@import "../../assets/variables";
 
 .beekeeperCard {
-  background-color: $cream-white;
-  border-radius: $border-radius-lg;
-  padding: $spacing-lg;
-  box-shadow: $shadow-md;
-  margin-top: $spacing-lg;
-
-  h2 {
-    color: $honey-dark;
+    background-color: white;
+    width: 1200px;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    box-shadow: $shadow-md;
     margin-bottom: $spacing-lg;
-    font-size: $font-size-xl;
-  }
 
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: $spacing-lg;
-    margin-bottom: $spacing-xl;
+    .cardHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-lg;
 
-    .statItem {
-      background-color: $honey-light;
-      padding: $spacing-md;
-      border-radius: $border-radius-md;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: $transition-base;
+        h2 {
+            font-size: $font-size-lg;
+            font-weight: bold;
+            color: $honey-dark;
+            margin: 0;
+        }
 
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: $shadow-md;
-      }
-
-      i {
-        color: $honey-dark;
-        font-size: $font-size-xl;
-        margin-bottom: $spacing-sm;
-      }
-
-      .label {
-        color: $wax-brown;
-        font-size: $font-size-sm;
-        margin-bottom: $spacing-xs;
-      }
-
-      .value {
-        color: $honey-dark;
-        font-size: $font-size-lg;
-        font-weight: bold;
-      }
+        .actions {
+            display: flex;
+            gap: $spacing-sm;
+        }
     }
-  }
 
-  .mapContainer {
-    border-radius: $border-radius-md;
-    overflow: hidden;
-    box-shadow: $shadow-sm;
-  }
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: $spacing-md;
+        margin-bottom: $spacing-lg;
+
+        .statItem {
+            display: flex;
+            flex-direction: column;
+            padding: $spacing-md;
+            background-color: $honey-light;
+            border-radius: $border-radius-md;
+
+            .label {
+                font-size: $font-size-sm;
+                color: $wax-brown;
+                margin-bottom: $spacing-sm;
+            }
+
+            .value {
+                font-size: $font-size-base;
+                font-weight: 600;
+                color: $forest-green;
+            }
+        }
+    }
+
+    .mapContainer {
+        border-radius: $border-radius-md;
+        overflow: hidden;
+        margin-top: $spacing-lg;
+    }
+}
+
+.editInput {
+    padding: $spacing-sm;
+    border: 1px solid lighten($wax-brown, 20%);
+    border-radius: $border-radius-sm;
+    font-size: $font-size-base;
+    width: 100%;
+
+    &:focus {
+        outline: none;
+        border-color: $honey-gold;
+        box-shadow: 0 0 0 2px rgba(255, 167, 38, 0.2);
+    }
+}
+
+.locationInputs {
+    display: flex;
+    gap: $spacing-sm;
+    flex-direction: column;
+}
+
+button {
+    padding: $spacing-sm;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all $transition-fast;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.editButton {
+        color: lighten($forest-green, 10%);
+        background-color: rgba(33, 150, 243, 0.1);
+        &:hover { background-color: rgba(33, 150, 243, 0.2); }
+    }
+
+    &.saveButton {
+        color: $forest-green;
+        background-color: rgba(76, 175, 80, 0.1);
+        &:hover { background-color: rgba(76, 175, 80, 0.2); }
+    }
+
+    &.cancelButton {
+        color: $wax-brown;
+        background-color: rgba(158, 158, 158, 0.1);
+        &:hover { background-color: rgba(158, 158, 158, 0.2); }
+    }
 }

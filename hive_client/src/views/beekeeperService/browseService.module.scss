@@ -1,0 +1,187 @@
+@import "../../assets/variables";
+
+.browseServices {
+  padding: 1.5rem;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: $cream-white;
+  min-height: 100vh;
+}
+
+.filtersContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  background-color: $cream-white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  border: 2px solid $honey-light;
+}
+
+.searchBar input {
+  flex: 1;
+  border: none;
+  padding: $spacing-sm;
+  font-size: $font-size-base;
+  color: $wax-brown;
+  background: none;
+}
+
+.searchBar input:focus {
+  outline: none;
+}
+
+.filters {
+  padding: $spacing-md;
+  background-color: $cream-white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+}
+
+.filters h3 {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  color: $honey-dark;
+  margin-bottom: $spacing-md;
+  font-size: $font-size-lg;
+}
+
+.filters select {
+  width: 100%;
+  padding: $spacing-sm;
+  border: 2px solid $honey-light;
+  border-radius: $border-radius-md;
+  background-color: $cream-white;
+  color: $wax-brown;
+  font-size: $font-size-base;
+  transition: $transition-base;
+}
+
+.filters select:focus {
+  outline: none;
+  border-color: $honey-dark;
+}
+
+.errorMessage {
+  text-align: center;
+  color: $error-red;
+  padding: $spacing-md;
+  background-color: rgba($error-red, 0.1);
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-lg;
+}
+
+.servicesGrid {
+  display: grid;
+  gap: $spacing-xl;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.serviceCard {
+  background-color: $cream-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-md;
+  transition: $transition-base;
+}
+
+.serviceCard:hover {
+  transform: translateY(-2px);
+  box-shadow: $shadow-lg;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+}
+
+.cardHeader h2 {
+  color: $honey-dark;
+  font-size: $font-size-xl;
+  margin: 0;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: $wax-brown;
+  cursor: pointer;
+  padding: $spacing-sm;
+  border-radius: $border-radius-sm;
+  transition: $transition-base;
+}
+
+.deleteButton:hover {
+  color: $error-red;
+  background-color: rgba($error-red, 0.1);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  color: $wax-brown;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-sm;
+  border-bottom: 1px solid $honey-light;
+}
+
+.userInfo span {
+  font-size: $font-size-sm;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm;
+  background-color: $honey-light;
+  border-radius: $border-radius-md;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-sm;
+  background-color: $honey-light;
+  border-radius: $border-radius-md;
+}
+
+.label {
+  color: $wax-brown;
+  font-size: $font-size-sm;
+  font-weight: bold;
+}
+
+.value {
+  color: $honey-dark;
+  font-size: $font-size-base;
+}
+
+@media (max-width: 768px) {
+  .browseServices {
+    padding: $spacing-md;
+  }
+
+  .servicesGrid {
+    grid-template-columns: 1fr;
+  }
+}

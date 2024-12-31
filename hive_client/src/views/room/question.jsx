@@ -1,6 +1,6 @@
 import React from "react";
 import { User, Clock } from "lucide-react";
-import styles from "./rooms.module.scss";
+import styles from "./roomMessages.module.scss";
 
 const Question = ({ room }) => {
     return (

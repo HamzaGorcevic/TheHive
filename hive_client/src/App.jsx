@@ -17,6 +17,7 @@ import BeekeeperService from "./views/beekeeperService/browseBeekeeperServices";
 import BrowseServices from "./views/beekeeperService/browseBeekeeperServices";
 import CreateService from "./views/beekeeperService/createBeekeeperService";
 import CreateCategory from "./views/admin/createCategory";
+import Landing from "./views/landing";
 function App() {
     return (
         <Router>
@@ -36,6 +37,20 @@ function App() {
             <ContextProvider>
                 <Navbar />
                 <Routes>
+                    {/* for all roles */}
+                    <Route
+                        element={
+                            <ProtectedRoute
+                                allowedRoles={["user", "beekeeper", "admin"]}
+                            />
+                        }
+                    >
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/rooms" element={<Rooms />} />
+                        <Route path="/rooms/:id" element={<Room />} />
+                    </Route>
+
+                    {/* User and beekeepr only */}
                     <Route
                         element={
                             <ProtectedRoute
@@ -69,11 +84,10 @@ function App() {
                         />
                     </Route>
                     {/* availble for everyone */}
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/rooms" element={<Rooms />} />
-                    <Route path="/rooms/:id" element={<Room />} />
+
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/" element={<Landing />} />
                     <Route
                         path="/register-beekeeper"
                         element={<RegisterBeekeeper />}

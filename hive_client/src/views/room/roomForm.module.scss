@@ -1,0 +1,94 @@
+@import "../../assets/variables";
+.container {
+    min-height: 100vh;
+    background-color: $cream-white;
+    padding: $spacing-xl;
+  }
+.form {
+    @extend .card;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+
+    h2 {
+      color: $honey-dark;
+      font-size: $font-size-xl;
+      font-weight: bold;
+    }}
+  .formGroup {
+    margin-bottom: $spacing-lg;
+
+    label {
+      display: block;
+      color: $honey-dark;
+      margin-bottom: $spacing-sm;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: $spacing-md;
+      border: 2px solid $honey-light;
+      border-radius: $border-radius-md;
+      transition: $transition-fast;
+
+      &:focus {
+        outline: none;
+        border-color: $honey-gold;
+      }
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+  }
+
+  .button {
+    width: 100%;
+    padding: $spacing-md;
+    background: $honey-gold;
+    color: white;
+    border: none;
+    border-radius: $border-radius-md;
+    font-weight: bold;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+      background: $honey-dark;
+    }
+  }
+
+  .error {
+    background: rgba($error-red, 0.1);
+    color: $error-red;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  .success {
+    background: rgba($forest-green, 0.1);
+    color: $forest-green;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  .loading {
+    text-align: center;
+    color: $honey-dark;
+    padding: $spacing-xl;
+  }
+  .roomContainer {
+    @extend .container;
+    max-width: 1200px;
+    margin: 0 auto;
+  }

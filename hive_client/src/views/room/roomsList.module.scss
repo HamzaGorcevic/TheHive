@@ -1,0 +1,104 @@
+@import '../../assets/variables';
+
+.container {
+  min-height: 100vh;
+  background-color: $cream-white;
+  padding: $spacing-xl;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+
+  h2 {
+    color: $honey-dark;
+    font-size: $font-size-xl;
+    font-weight: bold;
+  }
+}
+
+.roomGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-lg;
+}
+
+.roomCard {
+  background: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  padding: $spacing-lg;
+  border: 2px solid $honey-light;
+  transition: $transition-base;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+}
+
+.roomTitle {
+  color: $honey-dark;
+  font-size: $font-size-lg;
+  font-weight: bold;
+}
+
+.roomDescription {
+  color: $wax-brown;
+  font-size: $font-size-base;
+}
+
+.roomMeta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  color: $honey-gold;
+  font-size: $font-size-sm;
+}
+
+.deleteBtn {
+  margin-top: auto;
+  padding: $spacing-sm $spacing-md;
+  background-color: rgba($error-red, 0.1);
+  color: $error-red;
+  border: 1px solid rgba($error-red, 0.3);
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    background-color: rgba($error-red, 0.2);
+  }
+}
+
+.solvedStatus {
+  position: absolute;
+  top: $spacing-sm;
+  right: $spacing-sm;
+  background-color: $forest-green;
+  color: white;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-sm;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: $spacing-md;
+  }
+
+  .roomGrid {
+    grid-template-columns: 1fr;
+  }
+}

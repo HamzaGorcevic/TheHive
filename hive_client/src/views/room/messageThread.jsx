@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { CheckCircle2 } from "lucide-react";
-import styles from "./rooms.module.scss";
+import styles from "./roomMessages.module.scss";
 import StateContext from "../../contexts/authcontext";
 import axiosClient from "../../axios";
 import Message from "./message";
@@ -9,13 +9,11 @@ const MessageThread = ({
     message,
     onReply,
     onDelete,
-    setIsReply,
     room,
     fetchRoomData,
     level = 0,
 }) => {
     const { authData } = useContext(StateContext);
-
     const handleMarkAsSolved = async () => {
         try {
             const response = await axiosClient.post("/messages/solved", {
@@ -40,7 +38,6 @@ const MessageThread = ({
                 message={message}
                 onReply={onReply}
                 onDelete={onDelete}
-                setIsReply={setIsReply}
                 isReply={level > 0}
                 room={room}
             />
@@ -50,7 +47,6 @@ const MessageThread = ({
                     message={reply}
                     onReply={onReply}
                     onDelete={onDelete}
-                    setIsReply={setIsReply}
                     level={level + 1}
                 />
             ))}

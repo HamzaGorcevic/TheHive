@@ -125,7 +125,7 @@ const CreateCategory = () => {
                                             onClick={() =>
                                                 handleDelete(category.id)
                                             }
-                                            className={styles.deleteButton}
+                                            className={styles.deleteBtn}
                                             disabled={
                                                 isDeletingId === category.id
                                             }

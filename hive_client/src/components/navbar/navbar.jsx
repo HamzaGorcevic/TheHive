@@ -1,22 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Home, LogOut, PlusCircle, User } from "lucide-react";
+import { Home, LogOut, PlusCircle, User, Settings } from "lucide-react";
 import styles from "./navbar.module.scss";
 import StateContext from "../../contexts/authcontext";
 
 const Navbar = () => {
     const { authData, logoutUser } = useContext(StateContext);
     const navigate = useNavigate();
+    const [activeDropdown, setActiveDropdown] = useState(null);
 
     const handleLogout = () => {
         logoutUser();
         navigate("/login");
     };
 
+    const toggleDropdown = (dropdownName) => {
+        if (activeDropdown === dropdownName) {
+            setActiveDropdown(null);
+        } else {
+            setActiveDropdown(dropdownName);
+        }
+    };
+
     return (
         <nav className={styles.navbar}>
             <div className={styles.container}>
-                <Link to="/rooms" className={styles.logo}>
+                <Link to="/" className={styles.logo}>
                     <Home className={styles.icon} />
                     <span>BeeHive</span>
                 </Link>
@@ -26,77 +35,124 @@ const Navbar = () => {
                         Browse Rooms
                     </Link>
 
-                    {["beekeeper", "user"].includes(authData?.user?.role) ? (
-                        <>
-                            <Link to="/user-rooms" className={styles.link}>
+                    {["beekeeper", "user"].includes(authData?.user?.role) && (
+                        <div className={styles.dropdownContainer}>
+                            <button
+                                className={styles.link}
+                                onClick={() => toggleDropdown("spaces")}
+                            >
                                 <User className={styles.icon} />
-                                My Rooms
-                            </Link>
-                            <Link to="/create-room" className={styles.link}>
-                                <PlusCircle className={styles.icon} />
-                                Create Room
-                            </Link>
-                        </>
-                    ) : (
-                        ""
-                    )}
-                    {["beekeeper", "admin"].includes(authData?.user?.role) ? (
-                        <>
-                            <Link to="/services" className={styles.link}>
-                                <User className={styles.icon} />
-                                Services
-                            </Link>
-                            {authData?.user?.role == "beekeeper" ? (
-                                <Link
-                                    to="/create-service"
-                                    className={styles.link}
-                                >
-                                    <User className={styles.icon} />
-                                    Create Service
-                                </Link>
-                            ) : (
-                                ""
+                                My Spaces
+                            </button>
+                            {activeDropdown === "spaces" && (
+                                <div className={styles.dropdownMenu}>
+                                    <Link
+                                        to="/user-rooms"
+                                        className={styles.link}
+                                    >
+                                        <User className={styles.icon} />
+                                        My Rooms
+                                    </Link>
+                                    <Link
+                                        to="/create-room"
+                                        className={styles.link}
+                                    >
+                                        <PlusCircle className={styles.icon} />
+                                        Create Room
+                                    </Link>
+                                </div>
                             )}
-                        </>
-                    ) : (
-                        ""
+                        </div>
                     )}
 
-                    {["admin"].includes(authData?.user?.role) ? (
-                        <>
-                            {" "}
-                            <Link to="/create-category" className={styles.link}>
-                                Create Category
-                            </Link>
-                        </>
-                    ) : (
-                        ""
+                    {["beekeeper", "admin"].includes(authData?.user?.role) && (
+                        <div className={styles.dropdownContainer}>
+                            <button
+                                className={styles.link}
+                                onClick={() => toggleDropdown("management")}
+                            >
+                                <Settings className={styles.icon} />
+                                Management
+                            </button>
+                            {activeDropdown === "management" && (
+                                <div className={styles.dropdownMenu}>
+                                    <Link
+                                        to="/services"
+                                        className={styles.link}
+                                    >
+                                        <User className={styles.icon} />
+                                        Services
+                                    </Link>
+                                    {authData?.user?.role === "beekeeper" && (
+                                        <Link
+                                            to="/create-service"
+                                            className={styles.link}
+                                        >
+                                            <PlusCircle
+                                                className={styles.icon}
+                                            />
+                                            Create Service
+                                        </Link>
+                                    )}
+                                    {authData?.user?.role === "admin" && (
+                                        <Link
+                                            to="/create-category"
+                                            className={styles.link}
+                                        >
+                                            <PlusCircle
+                                                className={styles.icon}
+                                            />
+                                            Create Category
+                                        </Link>
+                                    )}
+                                </div>
+                            )}
+                        </div>
                     )}
-                    <Link to="/profile" className={styles.link}>
-                        <User className={styles.icon} />
-                        Profile
-                    </Link>
 
-                    {!authData ? (
-                        <>
-                            <Link to="/login" className={styles.link}>
-                                <User className={styles.icon} />
-                                Login
-                            </Link>
-                            <Link to="/register" className={styles.link}>
-                                <User className={styles.icon} />
-                                Register
-                            </Link>
-                        </>
-                    ) : (
+                    <div className={styles.dropdownContainer}>
                         <button
-                            onClick={handleLogout}
-                            className={styles.logoutButton}
+                            className={styles.link}
+                            onClick={() => toggleDropdown("account")}
                         >
-                            <LogOut className={styles.icon} />
-                            Logout
+                            <User className={styles.icon} />
+                            Account
                         </button>
-                    )}
+                        {activeDropdown === "account" && (
+                            <div className={styles.dropdownMenu}>
+                                <Link to="/profile" className={styles.link}>
+                                    <User className={styles.icon} />
+                                    Profile
+                                </Link>
+                                {!authData ? (
+                                    <>
+                                        <Link
+                                            to="/login"
+                                            className={styles.link}
+                                        >
+                                            <User className={styles.icon} />
+                                            Login
+                                        </Link>
+                                        <Link
+                                            to="/register"
+                                            className={styles.link}
+                                        >
+                                            <User className={styles.icon} />
+                                            Register
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <button
+                                        onClick={handleLogout}
+                                        className={styles.logoutButton}
+                                    >
+                                        <LogOut className={styles.icon} />
+                                        Logout
+                                    </button>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </nav>

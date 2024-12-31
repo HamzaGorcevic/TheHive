@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('messages/{message_id}', [MessageController::class, 'remove_message']);
 
     // Reply to a message
+    Route::get('/messages/{messageId}/replies', [MessageController::class, 'get_replies']);
 
     //Vote
     Route::get('votes', [MessageController::class, 'get_user_points']);
@@ -49,9 +50,15 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/services', [BeekeeperServiceController::class, 'get_availble_services']);
     Route::get('/categories', [BeekeeperServiceController::class, 'get_categories']);
+    Route::get("/services/user", [BeekeeperServiceController::class, 'get_user_services']);
     Route::post('/categories', [BeekeeperServiceController::class, 'create_category']);
     Route::post('/services', [BeekeeperServiceController::class, 'beekeeper_make_availble']);
     Route::get('/services/category', [BeekeeperServiceController::class, 'category_services']);
     Route::delete("/services/{service_id}", [BeekeeperServiceController::class, 'delete_service']);
     Route::delete("/categories/{category_id}", [BeekeeperServiceController::class, 'delete_category']);
+});
+Route::middleware('auth:sanctum')->group(function () {
+    Route::delete('/user/{id?}', [AuthController::class, 'delete_user']);
+    Route::put('/user/profile', [AuthController::class, 'update_profile']);
+    Route::get('/user/profile', [AuthController::class, 'get_profile']);
 });

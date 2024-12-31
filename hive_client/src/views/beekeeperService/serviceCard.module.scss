@@ -1,0 +1,64 @@
+@import '../../assets/variables';
+
+.serviceCard {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-md;
+  transition: $transition-base;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+
+    h2 {
+      color: $honey-dark;
+      font-size: $font-size-xl;
+      margin: 0;
+    }
+
+
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm;
+    background-color: $honey-light;
+    border-radius: $border-radius-md;
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    padding: $spacing-sm;
+    background-color: $honey-light;
+    border-radius: $border-radius-md;
+  }
+
+  .label {
+    color: $wax-brown;
+    font-size: $font-size-sm;
+    font-weight: bold;
+  }
+
+  .value {
+    color: $honey-dark;
+    font-size: $font-size-base;
+  }
+}

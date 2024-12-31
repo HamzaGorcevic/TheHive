@@ -1,43 +1,146 @@
-@import '../../assets/variables';
+@import "../../assets/variables";
 
 .profileCard {
-  background-color: $cream-white;
-  border-radius: $border-radius-lg;
-  padding: $spacing-lg;
-  box-shadow: $shadow-md;
-  margin-bottom: $spacing-lg;
-
-  .header {
-    border-bottom: 2px solid $honey-gold;
-    padding-bottom: $spacing-md;
+    background-color: white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    box-shadow: $shadow-md;
     margin-bottom: $spacing-lg;
+    width: 1200px;
 
-    h1 {
-      color: $wax-brown;
-      font-size: $font-size-xxl;
-      margin: 0;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-lg;
+
+        .headerContent {
+            h1 {
+                font-size: $font-size-xl;
+                font-weight: bold;
+                color: $wax-brown;
+                margin-bottom: 5px;
+            }
+
+            .role {
+                background-color: $honey-gold;
+                font-size: $font-size-sm;
+                color: $cream-white;
+                padding: 4px;
+                border-radius: $border-radius-md;
+            }
+        }
+
+        .actions {
+            display: flex;
+            gap: $spacing-sm;
+        }
     }
 
-    .role {
-      display: inline-block;
-      background-color: $honey-gold;
-      color: white;
-      padding: $spacing-xs $spacing-sm;
-      border-radius: $border-radius-sm;
-      font-size: $font-size-sm;
-      margin-top: $spacing-sm;
-    }
-  }
+    .info {
+        .infoItem {
+            display: flex;
+            margin-bottom: $spacing-md;
+            align-items: center;
 
-  .info {
-    .infoItem {
-      margin-bottom: $spacing-md;
-
-      .label {
-        color: $honey-dark;
-        font-weight: bold;
-        margin-right: $spacing-sm;
-      }
+            .label {
+                font-weight: 600;
+                min-width: 120px;
+                color: $wax-brown;
+            }
+        }
     }
-  }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: $spacing-md;
+        margin-bottom: $spacing-lg;
+
+        .statItem {
+            display: flex;
+            flex-direction: column;
+            padding: $spacing-md;
+            background-color: $honey-light;
+            border-radius: $border-radius-md;
+
+            .label {
+                font-size: $font-size-sm;
+                color: $wax-brown;
+                margin-bottom: $spacing-sm;
+            }
+
+            .value {
+                font-size: $font-size-lg;
+                font-weight: 600;
+                color: $honey-dark;
+            }
+        }
+    }
+
+    .mapContainer {
+        border-radius: $border-radius-md;
+        overflow: hidden;
+        margin-top: $spacing-lg;
+        height: 300px;
+        border: 2px solid $honey-light;
+    }
+}
+
+.editInput {
+    padding: $spacing-sm;
+    border: 1px solid $honey-light;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-base;
+    width: 100%;
+    max-width: 300px;
+    transition: $transition-fast;
+
+    &:focus {
+        outline: none;
+        border-color: $honey-gold;
+        box-shadow: 0 0 0 2px rgba($honey-gold, 0.2);
+    }
+}
+
+.locationInputs {
+    display: flex;
+    gap: $spacing-sm;
+    flex-direction: column;
+    margin-top: $spacing-md;
+}
+
+button {
+    padding: $spacing-sm;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: $transition-fast;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.editButton {
+        color: $forest-green;
+        background-color: rgba($forest-green, 0.1);
+        &:hover { background-color: rgba($forest-green, 0.2); }
+    }
+
+    &.deleteButton {
+        color: $error-red;
+        background-color: rgba($error-red, 0.1);
+        &:hover { background-color: rgba($error-red, 0.2); }
+    }
+
+    &.saveButton {
+        color: $forest-green;
+        background-color: rgba($forest-green, 0.1);
+        &:hover { background-color: rgba($forest-green, 0.2); }
+    }
+
+    &.cancelButton {
+        color: $wax-brown;
+        background-color: rgba($wax-brown, 0.1);
+        &:hover { background-color: rgba($wax-brown, 0.2); }
+    }
 }

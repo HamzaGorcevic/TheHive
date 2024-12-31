@@ -8,6 +8,8 @@ use App\Models\Beekeeper;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -86,5 +88,104 @@ class AuthController extends Controller
 
         $user->currentAccessToken()->delete();
         return response("", 204);
+    }
+
+
+    public function delete_user(Request $request, $id = null)
+    {
+        if ($id) {
+            // Check if user is admin
+            if (!$request->user()->hasRole('admin')) {
+                return response()->json([
+                    'message' => 'Unauthorized to delete other users'
+                ], 403);
+            }
+
+            $user = User::findOrFail($id);
+        } else {
+            $user = $request->user();
+        }
+
+        // Delete associated beekeeper data if exists
+        if ($user->beekeeper) {
+            $user->beekeeper->delete();
+        }
+
+        // Delete user
+        $user->delete();
+
+        return response()->json([
+            'message' => 'User deleted successfully'
+        ]);
+    }
+
+    public function update_profile(Request $request)
+    {
+        $user = $request->user();
+
+        $rules = [
+            'name' => 'sometimes|string|max:255',
+            'email' => [
+                'sometimes',
+                'email',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'password' => 'sometimes|string|min:8',
+            // Beekeeper fields
+            'beekeeper_data' => 'sometimes|array',
+            'beekeeper_data.number_of_hives' => 'required_with:beekeeper_data|integer',
+            'beekeeper_data.years_of_experience' => 'required_with:beekeeper_data|integer',
+            'beekeeper_data.location' => 'required_with:beekeeper_data|string',
+            'beekeeper_data.city' => 'required_with:beekeeper_data|string',
+            'beekeeper_data.latitude' => 'required_with:beekeeper_data|numeric',
+            'beekeeper_data.longitude' => 'required_with:beekeeper_data|numeric',
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        // Update user data
+        if (isset($validatedData['name'])) {
+            $user->name = $validatedData['name'];
+        }
+        if (isset($validatedData['email'])) {
+            $user->email = $validatedData['email'];
+        }
+        if (isset($validatedData['password'])) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+
+        $user->save();
+
+        // Handle beekeeper data
+        if (isset($validatedData['beekeeper_data'])) {
+            if ($user->beekeeper) {
+                // Update existing beekeeper data
+                $user->beekeeper->update($validatedData['beekeeper_data']);
+            } else {
+                // Create new beekeeper data and assign role
+                $user->beekeeper()->create($validatedData['beekeeper_data']);
+                $user->assignRole('beekeeper');
+            }
+        }
+        $token = $user->createToken("main")->plainTextToken;
+
+        // Refresh user data with relationships
+        $user->load(['beekeeper', 'roles']);
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'user' => $user,
+            'token' => $token
+        ]);
+    }
+
+    public function get_profile(Request $request)
+    {
+        $user = $request->user();
+        $user->load(['beekeeper', 'roles']);
+
+        return response()->json([
+            'user' => $user
+        ]);
     }
 }

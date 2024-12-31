@@ -3,6 +3,7 @@ import styles from "./Profile.module.scss";
 import StateContext from "../../contexts/authcontext";
 import BeekeeperCard from "./beekeeper";
 import UserCard from "./user";
+import UserServicesList from "./userServices";
 
 const Profile = () => {
     const { authData } = useContext(StateContext);
@@ -11,7 +12,10 @@ const Profile = () => {
         <div className={styles.profileContainer}>
             <UserCard user={authData?.user} />
             {authData?.user?.beekeeper && (
-                <BeekeeperCard beekeeper={authData?.user?.beekeeper} />
+                <>
+                    <BeekeeperCard beekeeper={authData?.user?.beekeeper} />
+                    <UserServicesList />
+                </>
             )}
         </div>
     );

@@ -12,20 +12,34 @@ use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
-    //
+
     public function room_messages(Request $request)
     {
         $roomMessages = Message::where('room_id', $request->room_id)
-            ->with(['user', 'replies.user', 'replies.replies.user']) // Load nested replies
+            ->where('parent_message_id', null)
+            ->with(['user:id,name'])
             ->latest()
-            ->where('parent_message_id', null) // Only get top-level messages
-            ->get();
+            ->paginate(20);
 
         return response()->json([
             'messages' => $roomMessages
         ]);
     }
 
+    public function get_replies(Request $request, $messageId)
+    {
+        $page = $request->query('page', 1);
+        $perPage = $request->query('per_page', 10);
+
+        $replies = Message::where('parent_message_id', $messageId)
+            ->with(['user:id,name'])
+            ->latest()
+            ->paginate($perPage);
+
+        return response()->json([
+            'replies' => $replies
+        ]);
+    }
     public function add_message(MessageRequest $request)
     {
         $data = $request->validated();
@@ -38,7 +52,6 @@ class MessageController extends Controller
             'parent_message_id' => $data['parent_message_id'] ?? null,
         ]);
 
-        // Load the relationships for the response
         $message->load(['user', 'replies.user']);
 
         return response()->json([
@@ -112,6 +125,9 @@ class MessageController extends Controller
         // Prevent voting on own messages
         if ($message->user_id === $user->id) {
             return response()->json(['error' => 'Cannot vote on your own message'], 403);
+        }
+        if ($message->parent_message_id !== null) {
+            return response()->json(['error' => 'Can only vote on parent messages'], 403);
         }
 
         try {

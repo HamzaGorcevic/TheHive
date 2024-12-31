@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { User, Clock } from "lucide-react";
-import styles from "./rooms.module.scss";
+import { User, Clock, Loader, CheckCircle, Users } from "lucide-react";
+import styles from "./roomsList.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import CustomLoader from "../../components/loader/loader";
 export const UserRooms = () => {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -41,8 +41,9 @@ export const UserRooms = () => {
             toast.error(e);
         }
     };
-    if (loading)
-        return <div className={styles.loading}>Loading your rooms...</div>;
+    if (loading) {
+        return <CustomLoader />;
+    }
     if (error) return <div className={styles.error}>{error}</div>;
 
     return (
@@ -57,20 +58,26 @@ export const UserRooms = () => {
                     <div
                         key={room.id}
                         className={styles.roomCard}
-                        onClick={() => singleRoomRedirect(room.id)}
+                        onClick={() => {
+                            singleRoomRedirect(room.id);
+                        }}
                     >
                         <h3 className={styles.roomTitle}>{room.title}</h3>
                         <p className={styles.roomDescription}>
                             {room.description}
                         </p>
-                        {room.solved_message_id ? <p>SOLVED</p> : ""}
                         <button
                             className={styles.deleteBtn}
                             onClick={(e) => handleDelete(room.id, e)}
                         >
                             Delete room
                         </button>
-
+                        {room.solved_message_id && (
+                            <div className={styles.solvedStatus}>
+                                <CheckCircle size={16} />
+                                SOLVED
+                            </div>
+                        )}
                         <div className={styles.roomMeta}>
                             <Clock size={16} />
                             <span>

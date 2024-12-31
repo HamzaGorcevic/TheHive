@@ -1,0 +1,392 @@
+@import "../../assets/variables";
+.roomContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $spacing-xl;
+}
+
+.question {
+    background:  $cream-white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    margin-bottom: $spacing-xl;
+    box-shadow: $shadow-sm;
+}
+
+.questionTitle {
+    font-size: $font-size-xxl;
+    color: $wax-brown;
+    margin-bottom: $spacing-md;
+    font-weight: 600;
+}
+
+.questionMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid rgba($wax-brown, 0.1);
+}
+
+.questionContent {
+    font-size: $font-size-lg;
+    line-height: 1.6;
+    color: $wax-brown;
+}
+
+.messageList {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+}
+
+.messageThread {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    transition: $transition-base;
+}
+
+.message {
+    background: white;
+    border: 1px solid rgba($wax-brown, 0.1);
+    border-radius: $border-radius-md;
+    padding: $spacing-lg;
+    box-shadow: $shadow-sm;
+    transition: $transition-fast;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+    }
+
+    &.reply {
+        margin-left: $spacing-xl;
+        border-left: 3px solid $honey-gold;
+        background: $cream-white;
+    }
+}
+
+.messageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid rgba($wax-brown, 0.1);
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: $wax-brown;
+    font-weight: 500;
+
+    svg {
+        color: $honey-gold;
+    }
+}
+
+.userRole {
+    font-size: $font-size-sm;
+    color: darken($cream-white, 40%);
+    margin-left: $spacing-sm;
+}
+
+.messageContent {
+    color: $wax-brown;
+    line-height: 1.6;
+    margin: $spacing-md 0;
+    font-size: $font-size-lg;
+}
+
+.messageActions {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: $spacing-md;
+}
+
+.actionButton, .viewRepliesButton {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid rgba($honey-gold, 0.3);
+    border-radius: $border-radius-md;
+    color: $wax-brown;
+    background: transparent;
+    font-size: $font-size-sm;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    svg {
+        color: $honey-gold;
+    }
+
+    &:hover {
+        background: rgba($honey-gold, 0.1);
+        border-color: $honey-gold;
+    }
+}
+
+.deleteBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid rgba($error-red, 0.3);
+    border-radius: $border-radius-md;
+    color: $error-red;
+    background: transparent;
+    font-size: $font-size-sm;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+        background: rgba($error-red, 0.1);
+        border-color: $error-red;
+    }
+}
+
+.replyForm {
+    margin-top: $spacing-md;
+    padding-top: $spacing-md;
+    border-top: 1px solid rgba($wax-brown, 0.1);
+}
+
+.replyInput {
+    width: 100%;
+    min-height: 100px;
+    padding: $spacing-md;
+    border: 2px solid rgba($honey-gold, 0.3);
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-md;
+    resize: vertical;
+    font-family: inherit;
+    transition: $transition-fast;
+
+    &:focus {
+        outline: none;
+        border-color: $honey-gold;
+        box-shadow: 0 0 0 3px rgba($honey-gold, 0.1);
+    }
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-lg;
+    background: $honey-gold;
+    color: $cream-white;
+    border: none;
+    border-radius: $border-radius-md;
+    font-weight: 500;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+        background: $honey-dark;
+        transform: translateY(-1px);
+    }
+
+    &.cancelButton {
+        background: transparent;
+        border: 1px solid rgba($wax-brown, 0.1);
+        color: $wax-brown;
+
+        &:hover {
+            background: rgba($wax-brown, 0.05);
+            border-color: rgba($wax-brown, 0.2);
+        }
+    }
+}
+
+.repliesSection {
+    margin-top: $spacing-md;
+    padding-left: $spacing-md;
+    border-left: 2px solid rgba($honey-gold, 0.3);
+}
+
+.loadMoreButton {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: $spacing-md auto;
+    padding: $spacing-sm $spacing-md;
+    background: transparent;
+    color: $wax-brown;
+    border: 2px solid $honey-gold;
+    border-radius: $border-radius-md;
+    font-weight: 500;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover:not(:disabled) {
+        background: $honey-gold;
+        color: $cream-white;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        border-color: rgba($wax-brown, 0.1);
+    }
+}
+
+.solveButton {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: transparent;
+    color: $forest-green;
+    border: 2px solid $forest-green;
+    border-radius: $border-radius-md;
+    font-weight: 500;
+    cursor: pointer;
+    transition: $transition-fast;
+    margin-top: $spacing-md;
+
+    svg {
+        color: $forest-green;
+    }
+
+    &:hover:not(:disabled) {
+        background: $forest-green;
+        color: $cream-white;
+
+        svg {
+            color: $cream-white;
+        }
+    }
+
+    &.solved {
+        background: $forest-green;
+        color: $cream-white;
+        cursor: default;
+
+        svg {
+            color: $cream-white;
+        }
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+@media (max-width: 768px) {
+    .roomContainer {
+        padding: $spacing-md;
+    }
+
+    .message {
+        padding: $spacing-md;
+    }
+
+    .message.reply {
+        margin-left: $spacing-md;
+    }
+
+    .messageHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $spacing-sm;
+    }
+
+    .messageActions {
+        flex-wrap: wrap;
+    }
+
+    .actionButton, .viewRepliesButton {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+.messageForm {
+    margin-top: $spacing-xl;
+    padding: $spacing-lg;
+    background: white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-sm;
+}
+
+.formGroup {
+    margin-bottom: $spacing-md;
+}
+
+.messageInput {
+    width: 100%;
+    min-height: 120px;
+    padding: $spacing-md;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    font-family: inherit;
+    font-size: $font-size-base;
+    color: $wax-brown;
+    resize: vertical;
+    transition: $transition-fast;
+
+    &::placeholder {
+        color: rgba($wax-brown, 0.6);
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $honey-gold;
+        box-shadow: 0 0 0 3px rgba($honey-gold, 0.1);
+    }
+}
+
+.error {
+    padding: $spacing-lg;
+    margin: $spacing-lg 0;
+    background: rgba($error-red, 0.1);
+    border: 1px solid rgba($error-red, 0.3);
+    border-radius: $border-radius-md;
+    color: $error-red;
+    text-align: center;
+    font-weight: 500;
+}
+
+.loadMore {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: $spacing-lg auto;
+    padding: $spacing-sm $spacing-lg;
+    background: transparent;
+    color: $wax-brown;
+    border: 2px solid $honey-gold;
+    border-radius: $border-radius-md;
+    font-weight: 500;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover:not(:disabled) {
+        background: $honey-gold;
+        color: $cream-white;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        border-color: $cream-white;
+    }
+}
+
+@media (max-width: 768px) {
+    .messageForm {
+        padding: $spacing-md;
+    }
+
+    .button {
+        width: 100%;
+        justify-content: center;
+    }
+}

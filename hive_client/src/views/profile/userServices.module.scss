@@ -1,0 +1,45 @@
+@import '../../assets/variables';
+
+.servicesContainer {
+  padding: $spacing-lg;
+  width: 1200px;
+  margin: 0 auto;
+
+  h1 {
+    color: $honey-dark;
+    font-size: $font-size-xxl;
+    margin-bottom: $spacing-xl;
+    text-align: center;
+  }
+}
+
+.servicesList {
+  display: grid;
+  gap: $spacing-xl;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.loading {
+  text-align: center;
+  color: $wax-brown;
+  padding: $spacing-xl;
+  font-size: $font-size-lg;
+}
+
+.error {
+  text-align: center;
+  color: $error-red;
+  padding: $spacing-xl;
+  background-color: rgba($error-red, 0.1);
+  border-radius: $border-radius-md;
+  margin: $spacing-lg;
+}
+
+.noServices {
+  text-align: center;
+  color: $wax-brown;
+  padding: $spacing-xl;
+  background-color: $honey-light;
+  border-radius: $border-radius-md;
+  font-size: $font-size-lg;
+}

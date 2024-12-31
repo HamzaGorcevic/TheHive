@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Home, Users, Clock } from "lucide-react";
-import styles from "./rooms.module.scss";
+import { Home, Users, Clock, CheckCircle } from "lucide-react";
+import styles from "./roomsList.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import StateContext from "../../contexts/authcontext";
+import CustomLoader from "../../components/loader/loader";
 
 const Rooms = () => {
     const [rooms, setRooms] = useState([]);
@@ -12,6 +13,7 @@ const Rooms = () => {
     const [error, setError] = useState("");
     const { authData } = useContext(StateContext);
     const navigate = useNavigate();
+
     const fetchRooms = async () => {
         try {
             setLoading(true);
@@ -24,12 +26,15 @@ const Rooms = () => {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         fetchRooms();
     }, []);
+
     const singleRoomRedirect = (id) => {
         navigate(`/rooms/${id}`);
     };
+
     const handleDelete = async (roomId, e) => {
         e.stopPropagation();
 
@@ -43,7 +48,8 @@ const Rooms = () => {
             toast.error(e);
         }
     };
-    if (loading) return <div className={styles.loading}>Loading rooms...</div>;
+
+    if (loading) return <CustomLoader />;
     if (error) return <div className={styles.error}>{error}</div>;
 
     return (
@@ -66,17 +72,20 @@ const Rooms = () => {
                         <p className={styles.roomDescription}>
                             {room.description}
                         </p>
-                        {authData?.user?.role == "admin" ? (
+                        {authData?.user?.role == "admin" && (
                             <button
                                 className={styles.deleteBtn}
                                 onClick={(e) => handleDelete(room.id, e)}
                             >
                                 Delete room
                             </button>
-                        ) : (
-                            ""
                         )}
-                        {room.solved_message_id ? <p>SOLVED</p> : ""}
+                        {room.solved_message_id && (
+                            <div className={styles.solvedStatus}>
+                                <CheckCircle size={16} />
+                                SOLVED
+                            </div>
+                        )}
                         <div className={styles.roomMeta}>
                             <Users size={16} />
                             <span>{room.creator.name}</span>

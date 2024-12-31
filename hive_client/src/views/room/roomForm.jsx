@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
-import styles from "./rooms.module.scss";
+import styles from "./roomForm.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
 

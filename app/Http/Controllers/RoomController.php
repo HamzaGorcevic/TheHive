@@ -11,7 +11,7 @@ class RoomController extends Controller
     //
     public function all_rooms(Request $request)
     {
-        $rooms = Room::with('creator')->latest()->get();
+        $rooms = Room::with('creator:id,name')->latest()->get();
 
         return response()->json([
             'rooms' => $rooms
@@ -48,7 +48,7 @@ class RoomController extends Controller
     }
     public function get_room(Request $request)
     {
-        $room = Room::with('creator')->find($request->room_id);
+        $room = Room::with('creator:id,name')->find($request->room_id);
 
         return response()->json([
             'room' => $room

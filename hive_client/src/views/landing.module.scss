@@ -1,0 +1,169 @@
+@import '../assets/variables';
+
+.landing {
+  min-height: 100vh;
+  background-color: $cream-white;
+}
+
+.hero {
+  position: relative;
+  min-height: 80vh;
+  background: linear-gradient(135deg, $honey-gold, $honey-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://images.unsplash.com/photo-1576594496490-f2940b6b0f33?auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+  }
+}
+
+.heroContent {
+  position: relative;
+  text-align: center;
+  color: white;
+  max-width: 800px;
+    .heroIcon{
+        color: $forest-green;
+    }
+  h1 {
+    font-size: $font-size-xxl * 1.5;
+    margin-bottom: $spacing-lg;
+    text-shadow: $shadow-md;
+  }
+
+  p {
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-xl;
+    text-shadow: $shadow-sm;
+  }
+}
+
+.heroButtons {
+  display: flex;
+  gap: $spacing-md;
+  justify-content: center;
+
+  button {
+    padding: $spacing-md $spacing-xl;
+    border-radius: $border-radius-md;
+    font-size: $font-size-lg;
+    transition: $transition-base;
+
+    &.primaryButton {
+      background-color: $forest-green;
+      color: white;
+      border: none;
+
+      &:hover {
+        background-color: darken($forest-green, 10%);
+        transform: translateY(-2px);
+      }
+    }
+
+    &.secondaryButton {
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+
+      &:hover {
+        background-color: rgba(white, 0.1);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
+
+.features {
+  padding: $spacing-xxl;
+  background-color: white;
+
+  h2 {
+    text-align: center;
+    color: $wax-brown;
+    font-size: $font-size-xxl;
+    margin-bottom: $spacing-xl;
+  }
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-xl;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featureCard {
+  background-color: white;
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  text-align: center;
+  transition: $transition-base;
+  border: 1px solid $honey-light;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+
+  .featureIcon {
+    color: $honey-gold;
+    margin-bottom: $spacing-md;
+  }
+
+  h3 {
+    color: $wax-brown;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-sm;
+  }
+
+  p {
+    color: rgba($wax-brown, 0.8);
+    font-size: $font-size-base;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: $spacing-xl $spacing-lg;
+  }
+
+  .heroContent {
+    h1 {
+      font-size: $font-size-xxl;
+    }
+
+    p {
+      font-size: $font-size-lg;
+    }
+  }
+
+  .heroButtons {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .features {
+    padding: $spacing-xl $spacing-lg;
+  }
+
+  .featureGrid {
+    grid-template-columns: 1fr;
+  }
+}
