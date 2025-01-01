@@ -1,0 +1,13 @@
+@import "../../assets/variables";
+
+.viewUser {
+    padding: $spacing-lg;
+    max-width: 800px;
+    margin: 0 auto;
+
+    h1 {
+        font-size: $font-size-xxl;
+        color: $honey-dark;
+        margin-bottom: $spacing-lg;
+    }
+}

@@ -18,6 +18,8 @@ import BrowseServices from "./views/beekeeperService/browseBeekeeperServices";
 import CreateService from "./views/beekeeperService/createBeekeeperService";
 import CreateCategory from "./views/admin/createCategory";
 import Landing from "./views/landing";
+import ViewUser from "./views/users/viewUser";
+import UsersList from "./views/users/usersList";
 function App() {
     return (
         <Router>
@@ -45,6 +47,11 @@ function App() {
                             />
                         }
                     >
+                        <Route
+                            path="/user/view/:user_id/profile"
+                            element={<ViewUser />}
+                        />
+                        <Route path="/user-list" element={<UsersList />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/rooms" element={<Rooms />} />
                         <Route path="/rooms/:id" element={<Room />} />

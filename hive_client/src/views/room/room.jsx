@@ -6,6 +6,7 @@ import styles from "./roomMessages.module.scss";
 import Question from "./question";
 import MessageThread from "./messageThread";
 import CustomLoader from "../../components/loader/loader";
+import { toast } from "react-toastify";
 const Room = () => {
     const [room, setRoom] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -59,7 +60,7 @@ const Room = () => {
                 room_id: id,
             });
             setNewMessage("");
-            fetchRoomData(1); // Refresh from first page after new post
+            fetchRoomData(1);
         } catch (err) {
             setError("Failed to post message");
         }
@@ -84,9 +85,16 @@ const Room = () => {
 
     const handleDelete = async (messageId) => {
         try {
+            setMessages((preveMessage) => {
+                return preveMessage.filter(
+                    (message) => message.id != messageId
+                );
+            });
             await axiosClient.delete(`/messages/${messageId}`);
-            fetchRoomData(1); // Refresh from first page after delete
+            toast.success("Successfully deleted message");
         } catch (err) {
+            fetchRoomData(currentPage);
+            toast.error("Failed to delete message");
             setError("Failed to delete message");
         }
     };

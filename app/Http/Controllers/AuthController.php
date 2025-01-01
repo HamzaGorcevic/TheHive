@@ -188,4 +188,34 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
+    public function get_profile_to_view(Request $request)
+    {
+        $user = User::with(['beekeeper', 'roles'])->find($request->user_id);
+
+        if ($user) {
+            return response()->json(["user" => $user]);
+        }
+        return response()->json(["message" => "User not found"]);
+    }
+    public function get_users(Request $request)
+    {
+        $users = User::with(['beekeeper' => function ($query) {
+            $query->select('user_id', 'city');
+        }])
+            ->select('id', 'name', 'points')
+            ->get();
+
+        $formattedUsers = $users->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'points' => $user->points,
+                'city' => $user->beekeeper ? $user->beekeeper->city : null,
+            ];
+        });
+
+        return response()->json([
+            'users' => $formattedUsers,
+        ]);
+    }
 }

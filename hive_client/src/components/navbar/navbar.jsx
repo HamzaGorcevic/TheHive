@@ -1,6 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Home, LogOut, PlusCircle, User, Settings } from "lucide-react";
+import {
+    Home,
+    LogOut,
+    PlusCircle,
+    User,
+    Settings,
+    Menu,
+    X,
+} from "lucide-react";
 import styles from "./navbar.module.scss";
 import StateContext from "../../contexts/authcontext";
 
@@ -8,6 +16,8 @@ const Navbar = () => {
     const { authData, logoutUser } = useContext(StateContext);
     const navigate = useNavigate();
     const [activeDropdown, setActiveDropdown] = useState(null);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const mobileMenuRef = useRef(null);
 
     const handleLogout = () => {
         logoutUser();
@@ -22,6 +32,27 @@ const Navbar = () => {
         }
     };
 
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    // Close mobile menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                mobileMenuRef.current &&
+                !mobileMenuRef.current.contains(event.target)
+            ) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
         <nav className={styles.navbar}>
             <div className={styles.container}>
@@ -30,11 +61,27 @@ const Navbar = () => {
                     <span>BeeHive</span>
                 </Link>
 
-                <div className={styles.links}>
-                    <Link to="/rooms" className={styles.link}>
-                        Browse Rooms
-                    </Link>
+                {/* Hamburger Menu Icon */}
+                <button
+                    className={styles.mobileMenuButton}
+                    onClick={toggleMobileMenu}
+                >
+                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
 
+                {/* Links Section */}
+                <div
+                    ref={mobileMenuRef}
+                    className={`${styles.links} ${
+                        isMobileMenuOpen ? styles.open : ""
+                    }`}
+                >
+                    {" "}
+                    <div className={styles.dropdownContainer}>
+                        <Link to="/rooms" className={styles.link}>
+                            Browse Rooms
+                        </Link>
+                    </div>
                     {["beekeeper", "user"].includes(authData?.user?.role) && (
                         <div className={styles.dropdownContainer}>
                             <button
@@ -64,7 +111,6 @@ const Navbar = () => {
                             )}
                         </div>
                     )}
-
                     {["beekeeper", "admin"].includes(authData?.user?.role) && (
                         <div className={styles.dropdownContainer}>
                             <button
@@ -109,7 +155,6 @@ const Navbar = () => {
                             )}
                         </div>
                     )}
-
                     <div className={styles.dropdownContainer}>
                         <button
                             className={styles.link}

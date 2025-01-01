@@ -112,19 +112,17 @@
   margin: 0;
 }
 
-.deleteButton {
-  background: none;
-  border: none;
-  color: $wax-brown;
-  cursor: pointer;
-  padding: $spacing-sm;
-  border-radius: $border-radius-sm;
-  transition: $transition-base;
-}
+.imageContainer {
+  margin-bottom: $spacing-md;
+  text-align: center;
+  max-height: 400px;
+  overflow: hidden;
 
-.deleteButton:hover {
-  color: $error-red;
-  background-color: rgba($error-red, 0.1);
+  .image {
+    max-width: 100%;
+    height: auto;
+    border-radius: $border-radius-md;
+  }
 }
 
 .userInfo {

@@ -22,7 +22,7 @@ const Message = ({
     const [showReplies, setShowReplies] = useState(false);
     const [replyCount, setReplyCount] = useState(0);
     const { authData } = useContext(StateContext);
-
+    const [deleted, setDeleted] = useState(false);
     useEffect(() => {
         const fetchReplyCount = async () => {
             try {
@@ -71,7 +71,6 @@ const Message = ({
             fetchReplies(1);
         }
     };
-
     const handleReplySubmit = async (e) => {
         e.preventDefault();
         try {
@@ -89,19 +88,13 @@ const Message = ({
     const handleDelete = async (e, id) => {
         e.preventDefault();
         try {
-            const response = await axiosClient.delete(`messages/${id}`);
-            if (response.status === 200) {
-                toast.success("Message deleted successfully");
-                if (id !== initialMessage.id) {
-                    setReplyCount((prev) => prev - 1);
-                    setReplies(replies.filter((reply) => reply.id !== id));
-                }
-                onDelete && onDelete(id);
-            }
+            setDeleted(true);
+            onDelete && onDelete(id);
         } catch (error) {
             toast.error(error.message || "Failed to delete message");
         }
     };
+    if (deleted) return "";
 
     return (
         <div className={`${styles.message} ${isReply ? styles.reply : ""}`}>

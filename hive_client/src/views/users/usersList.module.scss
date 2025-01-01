@@ -1,0 +1,51 @@
+@import "../../assets/variables";
+
+.usersList {
+    padding: $spacing-lg;
+
+    h1 {
+        font-size: $font-size-xxl;
+        color: $honey-dark;
+        margin-bottom: $spacing-lg;
+    }
+
+    .usersGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: $spacing-md;
+    }
+
+    .userCard {
+        @extend .card;
+        text-align: center;
+
+        h2 {
+            font-size: $font-size-lg;
+            color: $honey-dark;
+            margin-bottom: $spacing-sm;
+        }
+
+        p {
+            font-size: $font-size-md;
+            color: $wax-brown;
+            margin: $spacing-xs 0;
+        }
+
+        .viewProfileBtn {
+            display: inline-block;
+            margin-top: $spacing-sm;
+            padding: $spacing-xs $spacing-sm;
+            background-color: $honey-gold;
+            color: $cream-white;
+            border-radius: $border-radius-md;
+            text-decoration: none;
+            transition: all $transition-base;
+
+            &:hover {
+                background-color: darken($honey-gold, 8%);
+                transform: translateY(-1px);
+                box-shadow: $shadow-md;
+            }
+        }
+    }
+}

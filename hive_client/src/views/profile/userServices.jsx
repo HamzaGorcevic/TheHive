@@ -54,13 +54,13 @@ const UserServicesList = () => {
     return (
         <div className={styles.servicesContainer}>
             <h1>My Services</h1>
-            {services.length === 0 ? (
+            {services?.length === 0 ? (
                 <p className={styles.noServices}>
                     No services found. Start by adding a new service.
                 </p>
             ) : (
                 <div className={styles.servicesList}>
-                    {services.map((service) => (
+                    {services?.map((service) => (
                         <ServiceCard
                             key={service.id}
                             service={service}

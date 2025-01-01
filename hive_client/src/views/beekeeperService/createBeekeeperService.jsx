@@ -11,9 +11,11 @@ const CreateService = () => {
         categoryservice_id: "",
         price: "",
         details: "",
+        image: null, // Add image to formData
     });
     const [error, setError] = useState("");
     const navigate = useNavigate();
+
     useEffect(() => {
         fetchCategories();
     }, []);
@@ -21,7 +23,7 @@ const CreateService = () => {
     const fetchCategories = async () => {
         try {
             const response = await axiosClient.get("/categories");
-            if (response.status == 200) {
+            if (response.status === 200) {
                 setCategories(response.data.categories);
             }
         } catch (err) {
@@ -32,17 +34,43 @@ const CreateService = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axiosClient.post("/services", formData);
+            // Create FormData object
+            const data = new FormData();
+            data.append("categoryservice_id", formData.categoryservice_id);
+            data.append("price", formData.price);
+            data.append("details", formData.details);
+            if (formData.image) {
+                data.append("image", formData.image); // Append the image file
+            }
 
-            if (response.status == 200) {
-                setFormData({ categoryservice_id: "", price: "", details: "" });
+            // Send the request with FormData
+            const response = await axiosClient.post("/services", data, {
+                headers: {
+                    "Content-Type": "multipart/form-data", // Set the content type
+                },
+            });
+
+            if (response.status === 200) {
+                setFormData({
+                    categoryservice_id: "",
+                    price: "",
+                    details: "",
+                    image: null,
+                });
                 setError("");
-                toast.success("Succesfully created service!");
-                navigate("/services");
+                toast.success("Successfully created service!");
+                // navigate("/services");
             }
         } catch (err) {
             setError("Failed to create service");
-            toast.error(err);
+            toast.error(err.message || "An error occurred");
+        }
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setFormData({ ...formData, image: file }); // Update the image in formData
         }
     };
 
@@ -51,7 +79,6 @@ const CreateService = () => {
             <div className={styles.createService}>
                 <div className={styles.header}>
                     <Plus size={24} />
-
                     <h2>Create Available Service</h2>
                 </div>
 
@@ -117,6 +144,16 @@ const CreateService = () => {
                             required
                             maxLength={800}
                             rows={4}
+                        />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label htmlFor="image">Service Image</label>
+                        <input
+                            type="file"
+                            id="image"
+                            accept="image/*"
+                            onChange={handleImageChange}
                         />
                     </div>
 

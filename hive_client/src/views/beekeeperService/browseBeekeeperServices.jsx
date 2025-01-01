@@ -6,7 +6,7 @@ import StateContext from "../../contexts/authcontext";
 import CustomLoader from "../../components/loader/loader";
 import styles from "./browseService.module.scss";
 
-function BrowseSrvices() {
+function BrowseServices() {
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
     const [services, setServices] = useState([]);
@@ -129,6 +129,17 @@ function BrowseSrvices() {
                             )}
                         </div>
 
+                        {/* Display the image if it exists */}
+                        {service.image_url && (
+                            <div className={styles.imageContainer}>
+                                <img
+                                    src={service.image_url}
+                                    alt="Service"
+                                    className={styles.image}
+                                />
+                            </div>
+                        )}
+
                         <div className={styles.userInfo}>
                             <User size={16} />
                             <span>{service.user.name}</span>
@@ -156,4 +167,4 @@ function BrowseSrvices() {
     );
 }
 
-export default BrowseSrvices;
+export default BrowseServices;

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BeekeeperService extends Model
 {
-    protected $fillable = ['user_id', 'categoryservice_id', 'details', "price"];
+    protected $fillable = ['user_id', 'categoryservice_id', 'details', 'price', 'image_url'];
 
     public function user()
     {
@@ -17,5 +17,4 @@ class BeekeeperService extends Model
     {
         return $this->belongsTo(CategoryService::class);
     }
-    //
 }

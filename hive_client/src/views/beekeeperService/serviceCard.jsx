@@ -25,6 +25,17 @@ const ServiceCard = ({ service, onDelete }) => {
                 </button>
             </div>
 
+            {/* Display the image if it exists */}
+            {service.image_url && (
+                <div className={styles.imageContainer}>
+                    <img
+                        src={service.image_url}
+                        alt="Service"
+                        className={styles.image}
+                    />
+                </div>
+            )}
+
             <div className={styles.content}>
                 <div className={styles.detail}>
                     <span className={styles.label}>Category</span>
