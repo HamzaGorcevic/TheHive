@@ -5,7 +5,7 @@ import StateContext from "../../contexts/authcontext";
 import { Pencil, Trash2, X, Check } from "lucide-react";
 import { toast } from "react-toastify";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, isViewMode }) => {
     const [points, setPoints] = useState(0);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
@@ -85,39 +85,41 @@ const UserCard = ({ user }) => {
                     )}
                     <span className={styles.role}>{user?.role}</span>
                 </div>
-                <div className={styles.actions}>
-                    {!isEditing ? (
-                        <>
-                            <button
-                                onClick={handleEdit}
-                                className={styles.editButton}
-                            >
-                                <Pencil size={20} />
-                            </button>
-                            <button
-                                onClick={handleDelete}
-                                className={styles.deleteBtn}
-                            >
-                                <Trash2 size={20} />
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <button
-                                onClick={handleSave}
-                                className={styles.saveButton}
-                            >
-                                <Check size={20} />
-                            </button>
-                            <button
-                                onClick={handleCancel}
-                                className={styles.cancelButton}
-                            >
-                                <X size={20} />
-                            </button>
-                        </>
-                    )}
-                </div>
+                {!isViewMode && (
+                    <div className={styles.actions}>
+                        {!isEditing ? (
+                            <>
+                                <button
+                                    onClick={handleEdit}
+                                    className={styles.editButton}
+                                >
+                                    <Pencil size={20} />
+                                </button>
+                                <button
+                                    onClick={handleDelete}
+                                    className={styles.deleteBtn}
+                                >
+                                    <Trash2 size={20} />
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={handleSave}
+                                    className={styles.saveButton}
+                                >
+                                    <Check size={20} />
+                                </button>
+                                <button
+                                    onClick={handleCancel}
+                                    className={styles.cancelButton}
+                                >
+                                    <X size={20} />
+                                </button>
+                            </>
+                        )}
+                    </div>
+                )}
             </div>
             <div className={styles.info}>
                 <div className={styles.infoItem}>

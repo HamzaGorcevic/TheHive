@@ -76,12 +76,12 @@ const Navbar = () => {
                         isMobileMenuOpen ? styles.open : ""
                     }`}
                 >
-                    {" "}
-                    <div className={styles.dropdownContainer}>
-                        <Link to="/rooms" className={styles.link}>
-                            Browse Rooms
-                        </Link>
-                    </div>
+                    <Link to="/rooms" className={styles.link}>
+                        Browse Rooms
+                    </Link>
+                    <Link to="/users-list" className={styles.link}>
+                        Beekeepers
+                    </Link>
                     {["beekeeper", "user"].includes(authData?.user?.role) && (
                         <div className={styles.dropdownContainer}>
                             <button

@@ -10,11 +10,14 @@ const Profile = () => {
 
     return (
         <div className={styles.profileContainer}>
-            <UserCard user={authData?.user} />
+            <UserCard user={authData?.user} isViewMode={false} />
             {authData?.user?.beekeeper && (
                 <>
-                    <BeekeeperCard beekeeper={authData?.user?.beekeeper} />
-                    <UserServicesList />
+                    <BeekeeperCard
+                        beekeeper={authData?.user?.beekeeper}
+                        isViewMode={false}
+                    />
+                    <UserServicesList isViewMode={false} />
                 </>
             )}
         </div>

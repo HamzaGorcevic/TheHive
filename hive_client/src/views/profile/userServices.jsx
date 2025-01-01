@@ -4,7 +4,7 @@ import axiosClient from "../../axios";
 import ServiceCard from "../beekeeperService/serviceCard";
 import { toast } from "react-toastify";
 
-const UserServicesList = () => {
+const UserServicesList = ({ userId = 0, isViewMode = false }) => {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ const UserServicesList = () => {
 
     const fetchServices = async () => {
         try {
-            const response = await axiosClient.get("/services/user");
+            const response = await axiosClient.get(`/services/user/${userId}`);
             if (response.status == 200) {
                 setServices(response.data.services);
             }
@@ -65,6 +65,7 @@ const UserServicesList = () => {
                             key={service.id}
                             service={service}
                             onDelete={handleDelete}
+                            isViewMode={isViewMode}
                         />
                     ))}
                 </div>

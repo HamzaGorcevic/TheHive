@@ -35,11 +35,14 @@ const ViewUser = () => {
 
     return (
         <div className={styles.viewUser}>
-            <UserCard user={user} />
+            <UserCard user={user} isViewMode={true} />
             {user.beekeeper && (
                 <>
-                    <BeekeeperCard beekeeper={user.beekeeper} />
-                    <UserServicesList />
+                    <BeekeeperCard
+                        beekeeper={user.beekeeper}
+                        isViewMode={true}
+                    />
+                    <UserServicesList userId={user_id} isViewMode={true} />
                 </>
             )}
         </div>

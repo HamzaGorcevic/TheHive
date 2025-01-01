@@ -3,7 +3,7 @@ import { Trash2 } from "lucide-react";
 import styles from "./ServiceCard.module.scss";
 import axiosClient from "../../axios";
 
-const ServiceCard = ({ service, onDelete }) => {
+const ServiceCard = ({ service, onDelete, isViewMode }) => {
     const handleDelete = async () => {
         try {
             onDelete(service.id);
@@ -16,13 +16,17 @@ const ServiceCard = ({ service, onDelete }) => {
         <div className={styles.serviceCard}>
             <div className={styles.cardHeader}>
                 <h2>Service Details</h2>
-                <button
-                    className={styles.deleteBtn}
-                    onClick={handleDelete}
-                    aria-label="Delete service"
-                >
-                    <Trash2 size={20} />
-                </button>
+                {!isViewMode ? (
+                    <button
+                        className={styles.deleteBtn}
+                        onClick={handleDelete}
+                        aria-label="Delete service"
+                    >
+                        <Trash2 size={20} />
+                    </button>
+                ) : (
+                    ""
+                )}
             </div>
 
             {/* Display the image if it exists */}

@@ -10,7 +10,7 @@ Route::post("login", [AuthController::class, "login"]);
 Route::post("register", [AuthController::class, "register"]);
 Route::post("logout", [AuthController::class, "logout"]);
 Route::post("register_beekeeper", [AuthController::class, "register_beekeeper"]);
-
+// ROOMS
 Route::middleware('auth:sanctum')->group(function () {
     // Get all rooms
     Route::get('rooms', [RoomController::class, 'all_rooms']);
@@ -47,16 +47,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('messages/solved', [MessageController::class, 'mark_as_solved']);
 });
 
+
+// SERVICES
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/services', [BeekeeperServiceController::class, 'get_availble_services']);
     Route::get('/categories', [BeekeeperServiceController::class, 'get_categories']);
-    Route::get("/services/user", [BeekeeperServiceController::class, 'get_user_services']);
+    Route::get("/services/user/{user_id}", [BeekeeperServiceController::class, 'get_user_services']);
     Route::post('/categories', [BeekeeperServiceController::class, 'create_category']);
     Route::post('/services', [BeekeeperServiceController::class, 'beekeeper_make_availble']);
     Route::get('/services/category', [BeekeeperServiceController::class, 'category_services']);
     Route::delete("/services/{service_id}", [BeekeeperServiceController::class, 'delete_service']);
     Route::delete("/categories/{category_id}", [BeekeeperServiceController::class, 'delete_category']);
 });
+
+// USER
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/user/{id?}', [AuthController::class, 'delete_user']);
     Route::put('/user/profile', [AuthController::class, 'update_profile']);

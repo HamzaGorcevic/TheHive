@@ -55,7 +55,7 @@ const LocationMarker = ({ position, setPosition, isEditing, setFormData }) => {
     ) : null;
 };
 
-const BeekeeperCard = ({ beekeeper }) => {
+const BeekeeperCard = ({ beekeeper, isViewMode }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
         number_of_hives: beekeeper?.number_of_hives || 0,
@@ -109,31 +109,33 @@ const BeekeeperCard = ({ beekeeper }) => {
         <div className={styles.beekeeperCard}>
             <div className={styles.cardHeader}>
                 <h2>Beekeeper Details</h2>
-                <div className={styles.actions}>
-                    {!isEditing ? (
-                        <button
-                            onClick={handleEdit}
-                            className={styles.editButton}
-                        >
-                            <Pencil size={20} />
-                        </button>
-                    ) : (
-                        <>
+                {!isViewMode && (
+                    <div className={styles.actions}>
+                        {!isEditing ? (
                             <button
-                                onClick={handleSave}
-                                className={styles.saveButton}
+                                onClick={handleEdit}
+                                className={styles.editButton}
                             >
-                                <Check size={20} />
+                                <Pencil size={20} />
                             </button>
-                            <button
-                                onClick={handleCancel}
-                                className={styles.cancelButton}
-                            >
-                                <X size={20} />
-                            </button>
-                        </>
-                    )}
-                </div>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={handleSave}
+                                    className={styles.saveButton}
+                                >
+                                    <Check size={20} />
+                                </button>
+                                <button
+                                    onClick={handleCancel}
+                                    className={styles.cancelButton}
+                                >
+                                    <X size={20} />
+                                </button>
+                            </>
+                        )}
+                    </div>
+                )}
             </div>
             <div className={styles.stats}>
                 <div className={styles.statItem}>

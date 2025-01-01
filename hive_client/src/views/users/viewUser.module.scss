@@ -1,13 +1,16 @@
 @import "../../assets/variables";
 
 .viewUser {
-    padding: $spacing-lg;
-    max-width: 800px;
     margin: 0 auto;
+    padding: $spacing-xxl;
+    background-color: $cream-white;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 
-    h1 {
-        font-size: $font-size-xxl;
-        color: $honey-dark;
-        margin-bottom: $spacing-lg;
+    @media (max-width: 768px) {
+      padding: $spacing-md;
     }
 }

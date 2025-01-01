@@ -51,7 +51,7 @@ function App() {
                             path="/user/view/:user_id/profile"
                             element={<ViewUser />}
                         />
-                        <Route path="/user-list" element={<UsersList />} />
+                        <Route path="/users-list" element={<UsersList />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/rooms" element={<Rooms />} />
                         <Route path="/rooms/:id" element={<Room />} />

@@ -36,10 +36,11 @@ class BeekeeperServiceController extends Controller
         }
         return response()->json(['categories' => $categories], 200);
     }
-
     public function get_user_services(Request $request)
     {
-        $services = BeekeeperService::where('user_id', $request->user()->id)->get();
+        $userId = $request->user_id != 0 ? $request->user_id : $request->user()->id;
+
+        $services = BeekeeperService::where('user_id', $userId)->get();
 
         if ($services->isEmpty()) {
             return response()->json(['message' => 'No services available'], 200);
@@ -47,7 +48,6 @@ class BeekeeperServiceController extends Controller
 
         return response()->json(['services' => $services], 200);
     }
-
     public function beekeeper_make_availble(Request $request)
     {
         $data = $request->validate([

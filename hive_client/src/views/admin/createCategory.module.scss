@@ -132,24 +132,7 @@
     }
   }
 
-  .deleteButton {
-    background: none;
-    border: none;
-    color: $error-red;
-    cursor: pointer;
-    padding: $spacing-xs;
-    border-radius: $border-radius-sm;
-    transition: all $transition-fast;
 
-    &:hover {
-      background-color: rgba($error-red, 0.1);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  }
 
   .emptyMessage {
     text-align: center;
