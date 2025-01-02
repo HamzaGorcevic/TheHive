@@ -107,6 +107,13 @@ const Navbar = () => {
                                         <PlusCircle className={styles.icon} />
                                         Create Room
                                     </Link>
+                                    <Link
+                                        to="/user-reserved"
+                                        className={styles.link}
+                                    >
+                                        <PlusCircle className={styles.icon} />
+                                        Reservations
+                                    </Link>
                                 </div>
                             )}
                         </div>

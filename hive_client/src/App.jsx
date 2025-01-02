@@ -20,6 +20,7 @@ import CreateCategory from "./views/admin/createCategory";
 import Landing from "./views/landing";
 import ViewUser from "./views/users/viewUser";
 import UsersList from "./views/users/usersList";
+import UserReserved from "./views/reservations/userReserved";
 function App() {
     return (
         <Router>
@@ -67,6 +68,10 @@ function App() {
                     >
                         <Route path="/create-room" element={<RoomForm />} />
                         <Route path="/user-rooms" element={<UserRooms />} />
+                        <Route
+                            path="/user-reserved"
+                            element={<UserReserved />}
+                        />
                     </Route>
                     <Route
                         element={

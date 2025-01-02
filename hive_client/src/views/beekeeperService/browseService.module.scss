@@ -183,3 +183,18 @@
     grid-template-columns: 1fr;
   }
 }
+.reserveBtn {
+    padding: $spacing-sm $spacing-md;
+    background-color: $honey-dark;
+    color: $cream-white;
+    border: none;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    cursor: pointer;
+    transition: $transition-base;
+    margin-top: $spacing-md;
+}
+
+.reserveBtn:hover {
+    background-color: darken($honey-dark, 10%);
+}

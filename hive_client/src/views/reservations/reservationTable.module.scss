@@ -1,0 +1,64 @@
+@import "../../assets/variables";
+.reservationTable {
+    padding: $spacing-lg;
+    background-color: $cream-white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+    max-width: 1200px;
+    overflow-x: auto;
+}
+
+.reservationTable h2 {
+    color: $honey-dark;
+    margin-bottom: $spacing-lg;
+}
+
+.reservationTable table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.reservationTable th,
+.reservationTable td {
+    padding: $spacing-sm;
+    text-align: left;
+    border-bottom: 1px solid $honey-light;
+}
+
+.reservationTable th {
+    background-color: $honey-light;
+    color: $honey-dark;
+}
+
+.reservationTable td {
+    color: $wax-brown;
+}
+
+.acceptBtn {
+    padding: $spacing-xs $spacing-sm;
+    background-color: $forest-green;
+    color: $cream-white;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    margin-right: $spacing-xs;
+    transition: $transition-base;
+}
+
+.acceptBtn:hover {
+    background-color: darken($forest-green, 10%);
+}
+
+.declineBtn {
+    padding: $spacing-xs $spacing-sm;
+    background-color: $error-red;
+    color: $cream-white;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: $transition-base;
+}
+
+.declineBtn:hover {
+    background-color: darken($error-red, 10%);
+}

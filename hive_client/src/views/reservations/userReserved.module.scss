@@ -1,0 +1,157 @@
+@import "../../assets/variables";
+
+.userReserved {
+    padding: $spacing-lg;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: $cream-white;
+    min-height: 100vh;
+}
+
+.reservationsList {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+}
+
+.reservationCard {
+    background-color: $cream-white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    box-shadow: $shadow-md;
+    border: 2px solid $honey-light;
+    transition: all $transition-base;
+
+    &:hover {
+        box-shadow: $shadow-lg;
+        transform: translateY(-2px);
+    }
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+}
+
+.actions {
+    display: flex;
+    gap: $spacing-sm;
+}
+
+.editBtn {
+    background-color: $honey-gold;
+    color: $cream-white;
+    border: none;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    &:hover {
+        background-color: darken($honey-gold, 8%);
+        transform: translateY(-1px);
+    }
+}
+
+.deleteBtn {
+    background-color: $error-red;
+    color: $cream-white;
+    border: none;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    &:hover {
+        background-color: darken($error-red, 8%);
+        transform: translateY(-1px);
+    }
+}
+
+.reservationDetails p {
+    margin: $spacing-sm 0;
+    color: $wax-brown;
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+}
+
+.editForm label {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    color: $honey-dark;
+}
+
+.editForm input,
+.editForm select {
+    padding: $spacing-sm;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    background-color: $cream-white;
+    color: $wax-brown;
+    font-size: $font-size-base;
+    transition: $transition-base;
+
+    &:focus {
+        outline: none;
+        border-color: $honey-dark;
+    }
+}
+
+.formActions {
+    display: flex;
+    gap: $spacing-sm;
+}
+
+.formActions button {
+    padding: $spacing-sm $spacing-md;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: $transition-base;
+}
+
+.formActions button[type="submit"] {
+    background-color: $honey-gold;
+    color: $cream-white;
+
+    &:hover {
+        background-color: darken($honey-gold, 8%);
+    }
+}
+
+.formActions button[type="button"] {
+    background-color: $honey-light;
+    color: $honey-dark;
+
+    &:hover {
+        background-color: darken($honey-light, 8%);
+    }
+}
+
+@media (max-width: 768px) {
+    .userReserved {
+        padding: $spacing-md;
+    }
+
+    .reservationCard {
+        padding: $spacing-md;
+    }
+
+    .cardHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $spacing-sm;
+    }
+
+    .actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

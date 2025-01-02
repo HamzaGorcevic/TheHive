@@ -5,6 +5,7 @@ import axiosClient from "../../axios";
 import StateContext from "../../contexts/authcontext";
 import CustomLoader from "../../components/loader/loader";
 import styles from "./browseService.module.scss";
+import ReservationModal from "../../components/reservationModal/reservationModal";
 
 function BrowseServices() {
     const [loading, setLoading] = useState(false);
@@ -14,6 +15,10 @@ function BrowseServices() {
     const [searchTerm, setSearchTerm] = useState("");
     const [error, setError] = useState("");
     const { authData } = useContext(StateContext);
+
+    // Reservation modal state
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedServiceId, setSelectedServiceId] = useState(null);
 
     useEffect(() => {
         fetchCategories();
@@ -69,6 +74,11 @@ function BrowseServices() {
         } catch (e) {
             toast.error(e);
         }
+    };
+
+    const handleReserveClick = (serviceId) => {
+        setSelectedServiceId(serviceId);
+        setIsModalOpen(true);
     };
 
     const filteredServices = services.filter((service) =>
@@ -159,10 +169,24 @@ function BrowseServices() {
                                     {service.details}
                                 </p>
                             </div>
+
+                            {/* Reserve Now Button */}
+                            <button
+                                className={styles.reserveBtn}
+                                onClick={() => handleReserveClick(service.id)}
+                            >
+                                Reserve Now
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
+
+            <ReservationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                serviceId={selectedServiceId}
+            />
         </div>
     );
 }

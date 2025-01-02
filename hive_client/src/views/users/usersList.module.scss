@@ -9,6 +9,28 @@
         margin-bottom: $spacing-lg;
     }
 
+    .filters {
+        display: flex;
+        gap: $spacing-md;
+        margin-bottom: $spacing-lg;
+
+        .filterInput {
+            padding: $spacing-xs $spacing-sm;
+            border: 1px solid $honey-light;
+            border-radius: $border-radius-md;
+            font-size: $font-size-md;
+            color: $wax-brown;
+            background-color: $cream-white;
+            transition: all $transition-base;
+
+            &:focus {
+                border-color: $honey-gold;
+                box-shadow: $shadow-sm;
+                outline: none;
+            }
+        }
+    }
+
     .usersGrid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeekeeperServiceController;
 use App\Http\Controllers\MessageController;
@@ -67,4 +68,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/profile', [AuthController::class, 'get_profile']);
     Route::get('/user/view/{user_id}/profile', [AuthController::class, 'get_profile_to_view']);
     Route::get('/users', [AuthController::class, 'get_users']);
+});
+
+
+
+// Reservation routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/reservations', [ReservationController::class, 'index']); // Fetch all reservations
+    Route::post('/reservations', [ReservationController::class, 'store']); // Create a new reservation
+    Route::get('/reservations/{id}', [ReservationController::class, 'show']); // Fetch a specific reservation
+    Route::put('/reservations/{id}', [ReservationController::class, 'update']); // Update a reservation
+    Route::delete('/reservations/{id}', [ReservationController::class, 'destroy']); // Delete a reservation
+    Route::get("/reservations-user", [ReservationController::class, 'get_reserved']);
+    Route::get('/reservations-beekeeper', [ReservationController::class, 'beekeeper_reservations']);
+    Route::put('/reservations/{id}/accept', [ReservationController::class, 'accept_reservation']);
+    Route::put('/reservations/{id}/decline', [ReservationController::class, 'decline_reservation']);
 });

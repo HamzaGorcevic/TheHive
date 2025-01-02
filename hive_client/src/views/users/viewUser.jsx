@@ -5,6 +5,7 @@ import styles from "./viewUser.module.scss";
 import UserCard from "../profile/user";
 import BeekeeperCard from "../profile/beekeeper";
 import UserServicesList from "../profile/userServices";
+import CustomLoader from "../../components/loader/loader";
 
 const ViewUser = () => {
     const { user_id } = useParams();
@@ -29,7 +30,7 @@ const ViewUser = () => {
         fetchUserProfile();
     }, [user_id]);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <CustomLoader />;
     if (error) return <div>Error: {error}</div>;
     if (!user) return <div>User not found</div>;
 

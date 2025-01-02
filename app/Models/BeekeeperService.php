@@ -17,4 +17,8 @@ class BeekeeperService extends Model
     {
         return $this->belongsTo(CategoryService::class);
     }
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

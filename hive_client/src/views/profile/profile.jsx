@@ -4,6 +4,7 @@ import StateContext from "../../contexts/authcontext";
 import BeekeeperCard from "./beekeeper";
 import UserCard from "./user";
 import UserServicesList from "./userServices";
+import ReservationTable from "../reservations/reservationTable";
 
 const Profile = () => {
     const { authData } = useContext(StateContext);
@@ -18,6 +19,7 @@ const Profile = () => {
                         isViewMode={false}
                     />
                     <UserServicesList isViewMode={false} />
+                    <ReservationTable />
                 </>
             )}
         </div>
