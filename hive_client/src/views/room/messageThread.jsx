@@ -50,7 +50,18 @@ const MessageThread = ({
                     level={level + 1}
                 />
             ))}
-            {isRoomOwner && !message.parent_id && (
+            {isRoomOwner && !message.parent_id && !isMessageSolved && (
+                <button
+                    className={`${styles.solveButton} ${
+                        isMessageSolved ? styles.solved : ""
+                    }`}
+                    onClick={handleMarkAsSolved}
+                >
+                    <CheckCircle2 size={16} />
+                    {"Mark as Solved"}
+                </button>
+            )}
+            {isMessageSolved && (
                 <button
                     className={`${styles.solveButton} ${
                         isMessageSolved ? styles.solved : ""
@@ -59,7 +70,7 @@ const MessageThread = ({
                     disabled={isMessageSolved}
                 >
                     <CheckCircle2 size={16} />
-                    {isMessageSolved ? "Solved" : "Mark as Solved"}
+                    {"Solved"}
                 </button>
             )}
         </div>

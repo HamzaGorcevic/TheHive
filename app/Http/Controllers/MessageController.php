@@ -64,7 +64,7 @@ class MessageController extends Controller
     {
         $message = Message::find($request->message_id);
         if ($message) {
-            if ($message->user_id !== $request->user()->id) {
+            if ($message->user_id !== $request->user()->id && $request->user()->role != 'admin') {
                 return response()->json(['error' => 'Unauthorized'], 403);
             }
 
