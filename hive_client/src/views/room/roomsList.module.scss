@@ -1,104 +1,225 @@
-@import '../../assets/variables';
-
-.container {
-  min-height: 100vh;
-  background-color: $cream-white;
-  padding: $spacing-xl;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  margin-bottom: $spacing-xl;
-
-  h2 {
-    color: $honey-dark;
-    font-size: $font-size-xl;
-    font-weight: bold;
+@import "../../assets/variables";
+@mixin glass-effect {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
-}
 
-.roomGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: $spacing-lg;
-}
-
-.roomCard {
-  background: white;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-md;
-  padding: $spacing-lg;
-  border: 2px solid $honey-light;
-  transition: $transition-base;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-  position: relative;
-  overflow: hidden;
-
-  &:hover {
-    box-shadow: $shadow-lg;
-    transform: translateY(-2px);
+  @mixin honey-gradient {
+    background: linear-gradient(135deg, $honey-gold, $honey-dark);
   }
-}
 
-.roomTitle {
-  color: $honey-dark;
-  font-size: $font-size-lg;
-  font-weight: bold;
-}
-
-.roomDescription {
-  color: $wax-brown;
-  font-size: $font-size-base;
-}
-
-.roomMeta {
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-  color: $honey-gold;
-  font-size: $font-size-sm;
-}
-
-.deleteBtn {
-  margin-top: auto;
-  padding: $spacing-sm $spacing-md;
-  background-color: rgba($error-red, 0.1);
-  color: $error-red;
-  border: 1px solid rgba($error-red, 0.3);
-  border-radius: $border-radius-sm;
-  cursor: pointer;
-  transition: $transition-fast;
-
-  &:hover {
-    background-color: rgba($error-red, 0.2);
-  }
-}
-
-.solvedStatus {
-  position: absolute;
-  top: $spacing-sm;
-  right: $spacing-sm;
-  background-color: $forest-green;
-  color: white;
-  padding: $spacing-xs $spacing-sm;
-  border-radius: $border-radius-sm;
-  font-size: $font-size-sm;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: $spacing-xs;
-}
-
-@media (max-width: 768px) {
   .container {
-    padding: $spacing-md;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 20% 20%, rgba($honey-gold, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba($honey-dark, 0.05) 0%, transparent 40%),
+      $cream-white;
+    padding: 2.5rem;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba($honey-gold, 0.2);
+
+    svg {
+      color: $honey-gold;
+    }
+
+    h2 {
+      color: $honey-dark;
+      font-size: 1.875rem;
+      font-weight: 700;
+    }
   }
 
   .roomGrid {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
   }
-}
+
+  .roomCard {
+    @include glass-effect;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba($honey-gold, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow:
+      0 4px 6px -1px rgba($wax-brown, 0.05),
+      0 2px 4px -1px rgba($wax-brown, 0.03);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 10px 15px -3px rgba($wax-brown, 0.08),
+        0 4px 6px -2px rgba($wax-brown, 0.05);
+    }
+  }
+
+  .roomTitle {
+    color: $honey-dark;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-right: 4rem; // Space for status badge
+  }
+
+  .roomDescription {
+    color: $wax-brown;
+    font-size: 0.975rem;
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+
+  .roomMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba($wax-brown, 0.7);
+    font-size: 0.875rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba($honey-gold, 0.1);
+
+    svg {
+      color: $honey-gold;
+    }
+  }
+
+  .statusWrapper {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .solvedStatus {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    background-color: rgba($forest-green, 0.1);
+    color: $forest-green;
+    padding: 0.375rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba($forest-green, 0.2);
+
+    svg {
+      color: $forest-green;
+    }
+  }
+
+  .deleteBtn {
+    background: none;
+    border: none;
+    padding: 0.375rem;
+    color: $error-red;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: rgba($error-red, 0.1);
+      transform: scale(1.1);
+    }
+
+    svg {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+  }
+
+  .error {
+    color: $error-red;
+    text-align: center;
+    padding: 1rem;
+    background-color: rgba($error-red, 0.1);
+    border-radius: 12px;
+    margin: 2rem auto;
+    max-width: 400px;
+    border: 1px solid rgba($error-red, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 1.5rem;
+    }
+
+    .roomGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .header {
+      margin-bottom: 2rem;
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  .statusWrapper {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .solvedStatus {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    background-color: rgba($forest-green, 0.1);
+    color: $forest-green;
+    padding: 0.375rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba($forest-green, 0.2);
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      color: $forest-green;
+    }
+  }
+
+  .deleteBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($error-red, 0.1);
+    color: $error-red;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba($error-red, 0.2);
+      transform: scale(1.1);
+    }
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }

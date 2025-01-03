@@ -8,6 +8,7 @@ import {
     Settings,
     Menu,
     X,
+    BookMarked,
 } from "lucide-react";
 import styles from "./navbar.module.scss";
 import StateContext from "../../contexts/authcontext";
@@ -76,12 +77,18 @@ const Navbar = () => {
                         isMobileMenuOpen ? styles.open : ""
                     }`}
                 >
-                    <Link to="/rooms" className={styles.link}>
-                        Browse Rooms
-                    </Link>
-                    <Link to="/users-list" className={styles.link}>
-                        Beekeepers
-                    </Link>
+                    {["beekeeper", "user", "admin"].includes(
+                        authData?.user?.role
+                    ) && (
+                        <>
+                            <Link to="/rooms" className={styles.link}>
+                                Browse Rooms
+                            </Link>
+                            <Link to="/users-list" className={styles.link}>
+                                Beekeepers
+                            </Link>
+                        </>
+                    )}
                     {["beekeeper", "user"].includes(authData?.user?.role) && (
                         <div className={styles.dropdownContainer}>
                             <button
@@ -111,7 +118,7 @@ const Navbar = () => {
                                         to="/user-reserved"
                                         className={styles.link}
                                     >
-                                        <PlusCircle className={styles.icon} />
+                                        <BookMarked className={styles.icon} />
                                         Reservations
                                     </Link>
                                 </div>

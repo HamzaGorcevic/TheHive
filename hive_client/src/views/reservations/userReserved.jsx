@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import StateContext from "../../contexts/authcontext";
 import CustomLoader from "../../components/loader/loader";
 import styles from "./userReserved.module.scss";
+import ReservationCard from "./reservationCard";
+import EditReservationForm from "./editReservationForm";
 
 function UserReserved() {
     const [reservations, setReservations] = useState([]);
@@ -46,14 +48,20 @@ function UserReserved() {
     };
 
     const handleDelete = async (id) => {
-        try {
-            const response = await axiosClient.delete(`/reservations/${id}`);
-            if (response.status === 200) {
-                toast.success("Reservation deleted successfully!");
-                fetchReservations();
+        if (
+            window.confirm("Are you sure you want to cancel this reservation?")
+        ) {
+            try {
+                const response = await axiosClient.delete(
+                    `/reservations/${id}`
+                );
+                if (response.status === 200) {
+                    toast.success("Reservation cancelled successfully!");
+                    fetchReservations();
+                }
+            } catch (err) {
+                toast.error("Failed to cancel reservation.");
             }
-        } catch (err) {
-            toast.error("Failed to delete reservation.");
         }
     };
 
@@ -62,106 +70,37 @@ function UserReserved() {
     }
 
     return (
-        <div className={styles.userReserved}>
-            <h1>My Reservations</h1>
-            {reservations && reservations?.length === 0 ? (
-                <p>No reservations found.</p>
-            ) : (
-                <div className={styles.reservationsList}>
-                    {reservations?.map((reservation) => (
-                        <div
-                            key={reservation.id}
-                            className={styles.reservationCard}
-                        >
-                            <div className={styles.cardHeader}>
-                                <h2>
-                                    {
-                                        reservation.beekeeper_service
-                                            .categoryservice.name
-                                    }
-                                </h2>
-                                <div className={styles.actions}>
-                                    <button
-                                        className={styles.editBtn}
-                                        onClick={() =>
-                                            setEditingReservation(
-                                                reservation.id
-                                            )
-                                        }
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        className={styles.deleteBtn}
-                                        onClick={() =>
-                                            handleDelete(reservation.id)
-                                        }
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1>My Reservations</h1>
+                <p>Manage your upcoming appointments and services</p>
+            </div>
 
-                            {editingReservation === reservation.id ? (
-                                <EditReservationForm
-                                    reservation={reservation}
-                                    onUpdate={handleUpdate}
-                                    onCancel={() => setEditingReservation(null)}
-                                />
-                            ) : (
-                                <div className={styles.reservationDetails}>
-                                    <p>
-                                        <strong>Beekeeper:</strong>{" "}
-                                        {reservation.user.name}
-                                    </p>
-                                    <p>
-                                        <strong>Date & Time:</strong>{" "}
-                                        {new Date(
-                                            reservation.reservation_date
-                                        ).toLocaleString()}
-                                    </p>
-                                    <p>
-                                        <strong>Status:</strong>{" "}
-                                        {reservation.status}
-                                    </p>
-                                </div>
-                            )}
-                        </div>
+            {reservations?.length === 0 ? (
+                <div className={styles.emptyState}>
+                    <p>No reservations found. Book a service to get started!</p>
+                </div>
+            ) : (
+                <div className={styles.grid}>
+                    {reservations?.map((reservation) => (
+                        <ReservationCard
+                            key={reservation.id}
+                            reservation={reservation}
+                            onEdit={setEditingReservation}
+                            onDelete={handleDelete}
+                        />
                     ))}
                 </div>
             )}
-        </div>
-    );
-}
 
-function EditReservationForm({ reservation, onUpdate, onCancel }) {
-    const [reservationDate, setReservationDate] = useState(
-        reservation.reservation_date
-    );
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onUpdate(reservation.id, { reservation_date: reservationDate });
-    };
-
-    return (
-        <form onSubmit={handleSubmit} className={styles.editForm}>
-            <label>
-                Date & Time:
-                <input
-                    type="datetime-local"
-                    value={reservationDate}
-                    onChange={(e) => setReservationDate(e.target.value)}
+            {editingReservation && (
+                <EditReservationForm
+                    reservation={editingReservation}
+                    onUpdate={handleUpdate}
+                    onCancel={() => setEditingReservation(null)}
                 />
-            </label>
-
-            <div className={styles.formActions}>
-                <button type="submit">Save</button>
-                <button type="button" onClick={onCancel}>
-                    Cancel
-                </button>
-            </div>
-        </form>
+            )}
+        </div>
     );
 }
 

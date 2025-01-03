@@ -66,6 +66,7 @@ const Login = () => {
                     <button className={styles.submitButton} type="submit">
                         Login
                     </button>
+                    <a href="/register">If you dont have account register !</a>
                 </form>
             </div>
         </div>

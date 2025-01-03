@@ -6,10 +6,6 @@
     padding: $spacing-xxl;
     background-color: $cream-white;
     width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
 
     @media (max-width: 768px) {
       padding: $spacing-md;

@@ -211,6 +211,7 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'points' => $user->points,
                 'city' => $user->beekeeper ? $user->beekeeper->city : null,
+                'role' => $user->role,
             ];
         });
 

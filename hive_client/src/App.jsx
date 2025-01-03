@@ -21,6 +21,7 @@ import Landing from "./views/landing";
 import ViewUser from "./views/users/viewUser";
 import UsersList from "./views/users/usersList";
 import UserReserved from "./views/reservations/userReserved";
+import Footer from "./views/footer/footer";
 function App() {
     return (
         <Router>
@@ -105,6 +106,7 @@ function App() {
                         element={<RegisterBeekeeper />}
                     />
                 </Routes>
+                <Footer />
             </ContextProvider>
         </Router>
     );

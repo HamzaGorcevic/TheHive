@@ -3,3 +3,13 @@
     margin: 0;
     font-family: "Roboto", serif;
 }
+
+.leaflet-control-zoom-in{
+    display: none;
+}
+.leaflet-left{
+    display: none;
+}
+.leaflet-bottom{
+    display: none;
+}

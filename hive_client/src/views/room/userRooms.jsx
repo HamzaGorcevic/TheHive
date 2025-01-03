@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { User, Clock, Loader, CheckCircle, Users } from "lucide-react";
+import { User, Clock, CheckCircle, Trash2 } from "lucide-react";
 import styles from "./roomsList.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CustomLoader from "../../components/loader/loader";
+
 export const UserRooms = () => {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,6 +15,7 @@ export const UserRooms = () => {
     const singleRoomRedirect = (id) => {
         navigate(`/rooms/${id}`);
     };
+
     const fetchUserRooms = async () => {
         try {
             const response = await axiosClient.get("/user/rooms");
@@ -25,25 +27,25 @@ export const UserRooms = () => {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         fetchUserRooms();
     }, []);
+
     const handleDelete = async (roomId, e) => {
         e.stopPropagation();
-
         try {
             const response = await axiosClient.delete(`rooms/${roomId}`);
-            if (response.status == 200) {
-                toast.success("Room deleted succesfully!");
+            if (response.status === 200) {
+                toast.success("Room deleted successfully!");
                 fetchUserRooms();
             }
         } catch (e) {
             toast.error(e);
         }
     };
-    if (loading) {
-        return <CustomLoader />;
-    }
+
+    if (loading) return <CustomLoader />;
     if (error) return <div className={styles.error}>{error}</div>;
 
     return (
@@ -58,26 +60,32 @@ export const UserRooms = () => {
                     <div
                         key={room.id}
                         className={styles.roomCard}
-                        onClick={() => {
-                            singleRoomRedirect(room.id);
-                        }}
+                        onClick={() => singleRoomRedirect(room.id)}
                     >
+                        <div className={styles.statusWrapper}>
+                            {room.solved_message_id && (
+                                <>
+                                    <div className={styles.solvedStatus}>
+                                        <CheckCircle size={16} />
+                                        SOLVED
+                                    </div>
+                                    <button
+                                        className={styles.deleteBtn}
+                                        onClick={(e) =>
+                                            handleDelete(room.id, e)
+                                        }
+                                        title="Delete room"
+                                    >
+                                        <Trash2 />
+                                    </button>
+                                </>
+                            )}
+                        </div>
+
                         <h3 className={styles.roomTitle}>{room.title}</h3>
                         <p className={styles.roomDescription}>
                             {room.description}
                         </p>
-                        <button
-                            className={styles.deleteBtn}
-                            onClick={(e) => handleDelete(room.id, e)}
-                        >
-                            Delete room
-                        </button>
-                        {room.solved_message_id && (
-                            <div className={styles.solvedStatus}>
-                                <CheckCircle size={16} />
-                                SOLVED
-                            </div>
-                        )}
                         <div className={styles.roomMeta}>
                             <Clock size={16} />
                             <span>

@@ -1,30 +1,46 @@
 @import "../../assets/variables";
 
-.userReserved {
-    padding: $spacing-lg;
-    max-width: 1200px;
+.container {
+    max-width: 1400px;
     margin: 0 auto;
-    background-color: $cream-white;
-    min-height: 100vh;
+    padding: $spacing-xl $spacing-lg;
 }
 
-.reservationsList {
-    display: flex;
-    flex-direction: column;
+.header {
+    margin-bottom: $spacing-xl;
+    text-align: center;
+
+    h1 {
+        font-size: $font-size-xxl;
+        color: $honey-dark;
+        margin-bottom: $spacing-sm;
+    }
+
+    p {
+        color: $wax-brown;
+        font-size: $font-size-lg;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: $spacing-lg;
+    padding: $spacing-md;
 }
 
-.reservationCard {
-    background-color: $cream-white;
+// Card Styles
+.card {
+    background: $cream-white;
     border-radius: $border-radius-lg;
-    padding: $spacing-lg;
     box-shadow: $shadow-md;
+    padding: $spacing-lg;
     border: 2px solid $honey-light;
     transition: all $transition-base;
 
     &:hover {
+        transform: translateY(-4px);
         box-shadow: $shadow-lg;
-        transform: translateY(-2px);
     }
 }
 
@@ -33,125 +49,209 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 2px solid $honey-light;
+
+    h3 {
+        color: $honey-dark;
+        font-size: $font-size-lg;
+        font-weight: bold;
+    }
 }
 
-.actions {
+.status {
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-md;
+    font-size: $font-size-sm;
+    font-weight: 500;
+
+    &.pending {
+        background: rgba($pollen-yellow, 0.2);
+        color: darken($pollen-yellow, 30%);
+    }
+
+    &.confirmed {
+        background: rgba($forest-green, 0.2);
+        color: darken($forest-green, 10%);
+    }
+
+    &.cancelled {
+        background: rgba($error-red, 0.2);
+        color: darken($error-red, 10%);
+    }
+}
+
+.cardContent {
     display: flex;
+    flex-direction: column;
     gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
 }
 
-.editBtn {
-    background-color: $honey-gold;
-    color: $cream-white;
-    border: none;
-    padding: $spacing-sm $spacing-md;
-    border-radius: $border-radius-md;
-    cursor: pointer;
-    transition: all $transition-base;
-
-    &:hover {
-        background-color: darken($honey-gold, 8%);
-        transform: translateY(-1px);
-    }
-}
-
-.deleteBtn {
-    background-color: $error-red;
-    color: $cream-white;
-    border: none;
-    padding: $spacing-sm $spacing-md;
-    border-radius: $border-radius-md;
-    cursor: pointer;
-    transition: all $transition-base;
-
-    &:hover {
-        background-color: darken($error-red, 8%);
-        transform: translateY(-1px);
-    }
-}
-
-.reservationDetails p {
-    margin: $spacing-sm 0;
+.infoRow {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
     color: $wax-brown;
+
+    .icon {
+        color: $honey-gold;
+    }
 }
 
-.editForm {
+.cardActions {
+    display: flex;
+    gap: $spacing-sm;
+    margin-top: auto;
+}
+
+.editButton, .deleteButton, .saveButton, .cancelButton {
+    flex: 1;
+    padding: $spacing-sm;
+    border: none;
+    border-radius: $border-radius-md;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.editButton {
+    background: $honey-gold;
+    color: $cream-white;
+
+    &:hover {
+        background: darken($honey-gold, 8%);
+    }
+}
+
+.deleteButton {
+    background: rgba($error-red, 0.1);
+    color: $error-red;
+
+    &:hover {
+        background: rgba($error-red, 0.2);
+    }
+}
+
+// Modal Styles
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($wax-brown, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: $cream-white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: $shadow-lg;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+
+    h3 {
+        color: $honey-dark;
+        font-size: $font-size-xl;
+    }
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: $wax-brown;
+    cursor: pointer;
+    padding: $spacing-xs;
+    border-radius: 50%;
+    transition: all $transition-base;
+
+    &:hover {
+        background: rgba($wax-brown, 0.1);
+    }
+}
+
+.form {
     display: flex;
     flex-direction: column;
-    gap: $spacing-md;
+    gap: $spacing-lg;
 }
 
-.editForm label {
+.formGroup {
     display: flex;
     flex-direction: column;
     gap: $spacing-sm;
-    color: $honey-dark;
+
+    label {
+        color: $wax-brown;
+        font-weight: 500;
+    }
 }
 
-.editForm input,
-.editForm select {
+.input {
     padding: $spacing-sm;
     border: 2px solid $honey-light;
     border-radius: $border-radius-md;
-    background-color: $cream-white;
-    color: $wax-brown;
     font-size: $font-size-base;
-    transition: $transition-base;
+    color: $wax-brown;
+    transition: all $transition-base;
 
     &:focus {
         outline: none;
-        border-color: $honey-dark;
+        border-color: $honey-gold;
     }
 }
 
-.formActions {
+.modalActions {
     display: flex;
     gap: $spacing-sm;
+    margin-top: $spacing-md;
 }
 
-.formActions button {
-    padding: $spacing-sm $spacing-md;
-    border: none;
-    border-radius: $border-radius-md;
-    cursor: pointer;
-    transition: $transition-base;
-}
-
-.formActions button[type="submit"] {
-    background-color: $honey-gold;
+.saveButton {
+    background: $honey-gold;
     color: $cream-white;
 
     &:hover {
-        background-color: darken($honey-gold, 8%);
+        background: darken($honey-gold, 8%);
     }
 }
 
-.formActions button[type="button"] {
-    background-color: $honey-light;
+.cancelButton {
+    background: $honey-light;
     color: $honey-dark;
 
     &:hover {
-        background-color: darken($honey-light, 8%);
+        background: darken($honey-light, 8%);
     }
 }
 
 @media (max-width: 768px) {
-    .userReserved {
-        padding: $spacing-md;
+    .container {
+        padding: $spacing-lg $spacing-md;
     }
 
-    .reservationCard {
-        padding: $spacing-md;
+    .grid {
+        grid-template-columns: 1fr;
     }
 
-    .cardHeader {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: $spacing-sm;
-    }
-
-    .actions {
-        width: 100%;
-        justify-content: space-between;
+    .modal {
+        width: 95%;
+        margin: $spacing-md;
     }
 }

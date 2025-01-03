@@ -1,62 +1,75 @@
 import React, { useContext, useEffect, useState } from "react";
-import axiosClient from "../../axios";
-import styles from "./usersList.module.scss";
 import { Link } from "react-router-dom";
-import CustomLoader from "../../components/loader/loader";
+import { Search, MapPin, Award, User } from "lucide-react";
+import axiosClient from "../../axios";
 import { toast } from "react-toastify";
 import StateContext from "../../contexts/authcontext";
+import CustomLoader from "../../components/loader/loader";
+import styles from "./usersList.module.scss";
 
 const UsersList = () => {
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const { authData } = useContext(StateContext);
 
-    // Filter states
-    const [cityFilter, setCityFilter] = useState("");
-    const [pointsFilter, setPointsFilter] = useState("");
-    const [nameFilter, setNameFilter] = useState("");
+    const [filters, setFilters] = useState({
+        nameFilter: "",
+        cityFilter: "",
+        pointsFilter: "",
+    });
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await axiosClient.get("/users");
-                setUsers(response.data.users);
-                setFilteredUsers(response.data.users); // Initialize filtered users
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchUsers();
     }, []);
 
-    // Apply filters whenever cityFilter or pointsFilter changes
+    const fetchUsers = async () => {
+        try {
+            const response = await axiosClient.get("/users");
+            setUsers(response.data.users);
+            setFilteredUsers(response.data.users);
+            console.log(response.data.users);
+        } catch (err) {
+            toast.error("Failed to fetch users");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleFilterChange = (filterName, value) => {
+        setFilters((prev) => ({
+            ...prev,
+            [filterName]: value,
+        }));
+    };
+
     useEffect(() => {
         let filtered = users;
 
-        if (cityFilter) {
+        if (filters.nameFilter) {
             filtered = filtered.filter((user) =>
-                user.city?.toLowerCase().includes(cityFilter.toLowerCase())
+                user.name
+                    ?.toLowerCase()
+                    .includes(filters.nameFilter.toLowerCase())
             );
         }
 
-        if (pointsFilter) {
-            filtered = filtered.filter(
-                (user) => user.points >= parseInt(pointsFilter)
+        if (filters.cityFilter) {
+            filtered = filtered.filter((user) =>
+                user.city
+                    ?.toLowerCase()
+                    .includes(filters.cityFilter.toLowerCase())
             );
         }
-        if (nameFilter) {
-            filtered = filtered.filter((user) =>
-                user.name?.toLowerCase().includes(nameFilter)
+
+        if (filters.pointsFilter) {
+            filtered = filtered.filter(
+                (user) => user.points >= parseInt(filters.pointsFilter)
             );
         }
 
         setFilteredUsers(filtered);
-    }, [cityFilter, pointsFilter, users, nameFilter]);
+    }, [filters, users]);
 
     const handleDeleteUser = async (userId) => {
         if (window.confirm("Are you sure you want to delete this user?")) {
@@ -65,66 +78,108 @@ const UsersList = () => {
                 setUsers(users.filter((user) => user.id !== userId));
                 toast.success("User deleted successfully");
             } catch (err) {
-                toast.error("Failed to delete user: " + err.message);
+                toast.error("Failed to delete user");
             }
         }
     };
 
     if (loading) return <CustomLoader />;
-    if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className={styles.usersList}>
-            <h1>Users List</h1>
-
-            {/* Filters */}
-            <div className={styles.filters}>
-                <input
-                    type="text"
-                    placeholder="Filter by city"
-                    value={cityFilter}
-                    onChange={(e) => setCityFilter(e.target.value)}
-                    className={styles.filterInput}
-                />
-                <input
-                    type="number"
-                    placeholder="Filter by points (min)"
-                    value={pointsFilter}
-                    onChange={(e) => setPointsFilter(e.target.value)}
-                    className={styles.filterInput}
-                />
-                <input
-                    type="text"
-                    placeholder="Filter by name"
-                    value={nameFilter}
-                    onChange={(e) => setNameFilter(e.target.value)}
-                    className={styles.filterInput}
-                />
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1>Beekeepers Directory</h1>
+                <p>Connect with our community of experienced beekeepers</p>
             </div>
 
-            {/* Users Grid */}
-            <div className={styles.usersGrid}>
-                {filteredUsers.map((user) => (
-                    <div key={user.id} className={styles.userCard}>
-                        <h2>{user.name}</h2>
-                        <p>Points: {user.points}</p>
-                        {user.city && <p>City: {user.city}</p>}
-                        <Link
-                            to={`/user/view/${user.id}/profile`}
-                            className={styles.viewProfileBtn}
-                        >
-                            View Profile
-                        </Link>
-                        {authData?.user?.role === "admin" && (
-                            <button
-                                onClick={() => handleDeleteUser(user.id)}
-                                className={styles.deleteBtn}
-                            >
-                                Delete User
-                            </button>
-                        )}
-                    </div>
-                ))}
+            <div className={styles.filters}>
+                <div className={styles.filterGroup}>
+                    <Search className={styles.filterIcon} />
+                    <input
+                        type="text"
+                        placeholder="Search by name"
+                        value={filters.nameFilter}
+                        onChange={(e) =>
+                            handleFilterChange("nameFilter", e.target.value)
+                        }
+                        className={styles.filterInput}
+                    />
+                </div>
+
+                <div className={styles.filterGroup}>
+                    <MapPin className={styles.filterIcon} />
+                    <input
+                        type="text"
+                        placeholder="Filter by city"
+                        value={filters.cityFilter}
+                        onChange={(e) =>
+                            handleFilterChange("cityFilter", e.target.value)
+                        }
+                        className={styles.filterInput}
+                    />
+                </div>
+
+                <div className={styles.filterGroup}>
+                    <Award className={styles.filterIcon} />
+                    <input
+                        type="number"
+                        placeholder="Min points"
+                        value={filters.pointsFilter}
+                        onChange={(e) =>
+                            handleFilterChange("pointsFilter", e.target.value)
+                        }
+                        className={styles.filterInput}
+                    />
+                </div>
+            </div>
+
+            <div className={styles.grid}>
+                {filteredUsers.map((user) =>
+                    authData?.user.id != user.id && user.role != "admin" ? (
+                        <div key={user.id} className={styles.card}>
+                            <div className={styles.cardHeader}>
+                                <div className={styles.avatar}>
+                                    <User size={32} />
+                                </div>
+                                <h2>{user.name}</h2>
+                            </div>
+
+                            <div className={styles.cardContent}>
+                                <div className={styles.infoRow}>
+                                    <Award className={styles.icon} />
+                                    <span>{user.points} Points</span>
+                                </div>
+                                {user.city && (
+                                    <div className={styles.infoRow}>
+                                        <MapPin className={styles.icon} />
+                                        <span>{user.city}</span>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className={styles.cardActions}>
+                                <Link
+                                    to={`/user/view/${user.id}/profile`}
+                                    className={styles.viewButton}
+                                >
+                                    View Profile
+                                </Link>
+                                {authData?.user?.role === "admin" && (
+                                    <button
+                                        onClick={() =>
+                                            handleDeleteUser(user.id)
+                                        }
+                                        className={styles.deleteButton}
+                                    >
+                                        Delete User
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    ) : (
+                        ""
+                    )
+                )}
             </div>
         </div>
     );

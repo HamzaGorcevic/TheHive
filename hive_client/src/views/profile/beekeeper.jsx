@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styles from "./beekeeper.module.scss";
 import {
     MapContainer,
@@ -6,12 +6,15 @@ import {
     Marker,
     Popup,
     useMapEvents,
+    useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Pencil, Trash2, X, Check } from "lucide-react";
 import axiosClient from "../../axios";
 import { toast } from "react-toastify";
 import StateContext from "../../contexts/authcontext";
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import "leaflet-geosearch/dist/geosearch.css";
 
 // New component to handle map interactions
 const LocationMarker = ({ position, setPosition, isEditing, setFormData }) => {
@@ -55,6 +58,34 @@ const LocationMarker = ({ position, setPosition, isEditing, setFormData }) => {
     ) : null;
 };
 
+// Component to add the GeoSearch control to the map
+const LeafletGeoSearch = () => {
+    const map = useMap();
+
+    useEffect(() => {
+        const provider = new OpenStreetMapProvider();
+
+        const searchControl = new GeoSearchControl({
+            provider,
+            style: "bar", // Search bar style
+            showMarker: true, // Show marker for the searched location
+            retainZoomLevel: false, // Retain zoom level after search
+            animateZoom: true, // Animate zoom to the searched location
+            autoComplete: true, // Enable autocomplete
+            autoCompleteDelay: 250, // Autocomplete delay
+        });
+
+        map.addControl(searchControl);
+
+        // Cleanup on unmount
+        return () => {
+            map.removeControl(searchControl);
+        };
+    }, [map]);
+
+    return null;
+};
+
 const BeekeeperCard = ({ beekeeper, isViewMode }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
@@ -83,7 +114,7 @@ const BeekeeperCard = ({ beekeeper, isViewMode }) => {
             });
             updateUser(response.data.token, response.data.user);
             setIsEditing(false);
-            toast.success("Profile updated succesfully");
+            toast.success("Profile updated successfully");
         } catch (error) {
             toast.error("Failed to update beekeeper profile:" + error);
         }
@@ -203,7 +234,7 @@ const BeekeeperCard = ({ beekeeper, isViewMode }) => {
                 <MapContainer
                     center={[position.latitude, position.longitude]}
                     zoom={13}
-                    style={{ height: "300px", width: "100%" }}
+                    style={{ height: "400px", width: "100%" }}
                 >
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -215,6 +246,7 @@ const BeekeeperCard = ({ beekeeper, isViewMode }) => {
                         isEditing={isEditing}
                         setFormData={setFormData}
                     />
+                    {isEditing && <LeafletGeoSearch />}
                 </MapContainer>
             </div>
         </div>
