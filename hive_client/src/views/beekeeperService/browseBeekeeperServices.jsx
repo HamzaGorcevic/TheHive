@@ -6,6 +6,7 @@ import StateContext from "../../contexts/authcontext";
 import CustomLoader from "../../components/loader/loader";
 import styles from "./browseService.module.scss";
 import ReservationModal from "../../components/reservationModal/reservationModal";
+import { useNavigate } from "react-router-dom";
 
 function BrowseServices() {
     const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ function BrowseServices() {
     // Reservation modal state
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedServiceId, setSelectedServiceId] = useState(null);
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetchCategories();
         fetchServices();
@@ -84,6 +85,9 @@ function BrowseServices() {
     const filteredServices = services.filter((service) =>
         service.user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    const navigateToDetails = (id) => {
+        navigate(`/services/${id}`);
+    };
 
     if (loading) {
         return <CustomLoader />;
@@ -176,6 +180,12 @@ function BrowseServices() {
                                 onClick={() => handleReserveClick(service.id)}
                             >
                                 Reserve Now
+                            </button>
+                            <button
+                                className={styles.detailsBtn}
+                                onClick={() => navigateToDetails(service.id)}
+                            >
+                                Details
                             </button>
                         </div>
                     </div>

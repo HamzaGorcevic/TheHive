@@ -1,0 +1,269 @@
+@import "../../../assets/variables";
+
+.serviceDetails {
+  padding: $spacing-lg;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    padding: $spacing-md;
+  }
+}
+
+.card {
+  background: $cream-white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  padding: $spacing-lg;
+  border: 2px solid $honey-light;
+  transition: all $transition-base;
+  margin-bottom: $spacing-lg;
+
+  @media (max-width: 768px) {
+    padding: $spacing-md;
+  }
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+}
+
+.serviceImage {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-md;
+
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+
+  @media (max-width: 480px) {
+    height: 200px;
+  }
+}
+
+.serviceInfo {
+  h1 {
+    color: $honey-dark;
+    font-size: $font-size-xxl;
+    margin-bottom: $spacing-md;
+
+    @media (max-width: 768px) {
+      font-size: $font-size-xl;
+    }
+  }
+
+  .price {
+    font-size: $font-size-xl;
+    color: $wax-brown;
+    margin-bottom: $spacing-md;
+
+    @media (max-width: 768px) {
+      font-size: $font-size-lg;
+    }
+  }
+
+  .details {
+    font-size: $font-size-base;
+    line-height: 1.6;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.reserveButton {
+  background-color: $forest-green;
+  color: $cream-white;
+  border: none;
+  border-radius: $border-radius-md;
+  padding: $spacing-sm $spacing-xl;
+  font-size: $font-size-lg;
+  cursor: pointer;
+  transition: all $transition-base;
+  width: 100%;
+  margin-top: $spacing-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+
+  @media (max-width: 768px) {
+    font-size: $font-size-base;
+    padding: $spacing-sm $spacing-lg;
+  }
+
+  &:hover {
+    background-color: darken($forest-green, 8%);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    background-color: desaturate($forest-green, 30%);
+    cursor: not-allowed;
+  }
+}
+
+.recensionsSection {
+  margin-top: $spacing-xl;
+  background: $cream-white;
+  padding: $spacing-lg;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+
+  h2 {
+    color: $honey-dark;
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.recensionsList {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+.recension {
+  padding: $spacing-md;
+  border: 1px solid $honey-light;
+  border-radius: $border-radius-md;
+  background: lighten($cream-white, 2%);
+
+  .recensionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-md;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+  }
+
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .userIcon {
+      color: $wax-brown;
+    }
+
+    .userName {
+      font-weight: bold;
+      color: $honey-dark;
+    }
+  }
+
+  .beekeeperInfo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $wax-brown;
+    font-size: $font-size-sm;
+    margin-left: $spacing-sm;
+  }
+
+  .recensionMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $spacing-xs;
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    color: $pollen-yellow;
+  }
+
+  .date {
+    font-size: $font-size-sm;
+    color: $wax-brown;
+  }
+
+  .recensionMessage {
+    color: $wax-brown;
+    line-height: 1.6;
+    font-size: $font-size-base;
+  }
+}
+
+.addRecension {
+  margin-top: $spacing-xl;
+  padding-top: $spacing-lg;
+  border-top: 2px solid $honey-light;
+
+  h3 {
+    color: $honey-dark;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.recensionForm {
+  background: lighten($cream-white, 2%);
+  padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  border: 1px solid $honey-light;
+
+  .starRating {
+    display: flex;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-md;
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: $honey-light;
+      transition: color $transition-fast;
+      padding: $spacing-xs;
+
+      &.active {
+        color: $pollen-yellow;
+      }
+
+      &:hover {
+        color: $honey-gold;
+      }
+    }
+  }
+
+  textarea {
+    width: 100%;
+    padding: $spacing-md;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-md;
+    min-height: 120px;
+    resize: vertical;
+    font-size: $font-size-base;
+    background: $cream-white;
+
+    &:focus {
+      outline: none;
+      border-color: $honey-gold;
+    }
+  }
+
+  .submitButton {
+    background-color: $honey-gold;
+    color: $cream-white;
+    border: none;
+    border-radius: $border-radius-md;
+    padding: $spacing-sm $spacing-xl;
+    font-size: $font-size-base;
+    cursor: pointer;
+    transition: all $transition-base;
+    width: 100%;
+
+    &:hover:not(:disabled) {
+      background-color: darken($honey-gold, 8%);
+    }
+
+    &:disabled {
+      background-color: desaturate($honey-gold, 30%);
+      cursor: not-allowed;
+    }
+  }
+}

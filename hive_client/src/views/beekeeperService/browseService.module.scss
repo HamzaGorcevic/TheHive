@@ -183,7 +183,7 @@
     grid-template-columns: 1fr;
   }
 }
-.reserveBtn {
+.reserveBtn,.detailsBtn {
     padding: $spacing-sm $spacing-md;
     background-color: $honey-dark;
     color: $cream-white;
@@ -197,4 +197,7 @@
 
 .reserveBtn:hover {
     background-color: darken($honey-dark, 10%);
+}
+.detailsBtn{
+    background-color: $forest-green;
 }

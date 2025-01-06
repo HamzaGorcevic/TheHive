@@ -19,6 +19,21 @@ class BeekeeperServiceController extends Controller
         $this->blobClient = BlobRestProxy::createBlobService($connectionString);
     }
 
+    public function get_service(Request $request, $id)
+    {
+        $service = BeekeeperService::with([
+            'user',
+            'categoryservice',
+            'reservations.user',
+            'recensions.user'
+        ])->find($id);
+
+        if (!$service) {
+            return response()->json(['message' => 'Service not found'], 404);
+        }
+
+        return response()->json(['service' => $service], 200);
+    }
     public function get_availble_services(Request $request)
     {
         $beekeeper_services = BeekeeperService::with(['user', 'categoryservice'])->get();
@@ -36,6 +51,7 @@ class BeekeeperServiceController extends Controller
         }
         return response()->json(['categories' => $categories], 200);
     }
+
     public function get_user_services(Request $request)
     {
         $userId = $request->user_id != 0 ? $request->user_id : $request->user()->id;
@@ -48,6 +64,7 @@ class BeekeeperServiceController extends Controller
 
         return response()->json(['services' => $services], 200);
     }
+
     public function beekeeper_make_availble(Request $request)
     {
         $data = $request->validate([
@@ -127,8 +144,6 @@ class BeekeeperServiceController extends Controller
     private function uploadImageToAzure($file, $containerName)
     {
         try {
-
-
             $blobName = uniqid() . '.' . $file->getClientOriginalExtension();
 
             $content = fopen($file->getRealPath(), "r");
@@ -144,7 +159,6 @@ class BeekeeperServiceController extends Controller
         } catch (ServiceException $e) {
             return "Azure Blob Storage Error: " . $e->getMessage();
         } catch (\Exception $e) {
-            // Log any other exceptions
             return "Unexpected Error: " . $e->getMessage();
         }
     }

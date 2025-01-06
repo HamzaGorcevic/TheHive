@@ -29,6 +29,10 @@
     background-color: $honey-light;
     color: $honey-dark;
 }
+.actions{
+    display: flex;
+    gap: 20px;
+}
 
 .reservationTable td {
     color: $wax-brown;

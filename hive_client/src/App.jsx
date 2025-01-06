@@ -22,6 +22,7 @@ import ViewUser from "./views/users/viewUser";
 import UsersList from "./views/users/usersList";
 import UserReserved from "./views/reservations/userReserved";
 import Footer from "./views/footer/footer";
+import DetailsService from "./views/beekeeperService/detailsService/detailsService";
 function App() {
     return (
         <Router>
@@ -57,6 +58,10 @@ function App() {
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/rooms" element={<Rooms />} />
                         <Route path="/rooms/:id" element={<Room />} />
+                        <Route
+                            path="/services/:id"
+                            element={<DetailsService />}
+                        />
                     </Route>
 
                     {/* User and beekeepr only */}

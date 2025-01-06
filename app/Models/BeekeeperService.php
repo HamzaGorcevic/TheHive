@@ -21,4 +21,8 @@ class BeekeeperService extends Model
     {
         return $this->hasMany(Reservation::class);
     }
+    public function recensions()
+    {
+        return $this->hasMany(Recension::class, 'service_id');
+    }
 }

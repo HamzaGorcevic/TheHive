@@ -89,7 +89,7 @@ function ReservationTable() {
                                 ).toLocaleString()}
                             </td>
                             <td>{reservation.status}</td>
-                            <td>
+                            <td className={styles.actions}>
                                 {reservation.status === "pending" && (
                                     <>
                                         <button

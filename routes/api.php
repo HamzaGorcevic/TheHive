@@ -4,6 +4,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeekeeperServiceController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\RecensionController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route; // Correct import for Route
 
@@ -52,6 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
 // SERVICES
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/services', [BeekeeperServiceController::class, 'get_availble_services']);
+    Route::get('/services/{id}', [BeekeeperServiceController::class, 'get_service']);
     Route::get('/categories', [BeekeeperServiceController::class, 'get_categories']);
     Route::get("/services/user/{user_id}", [BeekeeperServiceController::class, 'get_user_services']);
     Route::post('/categories', [BeekeeperServiceController::class, 'create_category']);
@@ -83,4 +85,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reservations-beekeeper', [ReservationController::class, 'beekeeper_reservations']);
     Route::put('/reservations/{id}/accept', [ReservationController::class, 'accept_reservation']);
     Route::put('/reservations/{id}/decline', [ReservationController::class, 'decline_reservation']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/services/{serviceId}/recensions', [RecensionController::class, 'get_service_recensions']);
+    Route::post('/recensions', [RecensionController::class, 'create_recension']);
+    Route::delete('/recensions/{recensionId}', [RecensionController::class, 'delete_recension']);
 });

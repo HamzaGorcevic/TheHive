@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\BeekeeperService;
 use App\Models\Reservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use function PHPUnit\Framework\isEmpty;
 
 class ReservationController extends Controller
 {
@@ -18,13 +18,18 @@ class ReservationController extends Controller
             'beekeeper_service_id' => 'required|exists:beekeeper_services,id',
             'reservation_date' => 'required|date',
         ]);
+
+        $reservationDate = Carbon::parse($data['reservation_date']);
+
         $existingReservation = Reservation::where('beekeeper_service_id', $data['beekeeper_service_id'])
-            ->where('reservation_date', $data['reservation_date'])
+            ->whereYear('reservation_date', $reservationDate->year)
+            ->whereMonth('reservation_date', $reservationDate->month)
+            ->whereDay('reservation_date', $reservationDate->day)
             ->exists();
 
         if ($existingReservation) {
             return response()->json([
-                'message' => 'This service is already reserved for the selected date and time.',
+                'message' => 'This service is already reserved for the selected date.',
             ], 409);
         }
 
