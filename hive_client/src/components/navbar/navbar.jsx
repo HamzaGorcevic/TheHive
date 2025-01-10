@@ -179,10 +179,12 @@ const Navbar = () => {
                         </button>
                         {activeDropdown === "account" && (
                             <div className={styles.dropdownMenu}>
-                                <Link to="/profile" className={styles.link}>
-                                    <User className={styles.icon} />
-                                    Profile
-                                </Link>
+                                {authData && (
+                                    <Link to="/profile" className={styles.link}>
+                                        <User className={styles.icon} />
+                                        Profile
+                                    </Link>
+                                )}
                                 {!authData ? (
                                     <>
                                         <Link

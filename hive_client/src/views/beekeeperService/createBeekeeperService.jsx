@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreateService = () => {
     const [categories, setCategories] = useState([]);
+    const [imagePreview, setImagePreview] = useState(null);
     const [formData, setFormData] = useState({
         categoryservice_id: "",
         price: "",
@@ -71,6 +72,12 @@ const CreateService = () => {
         const file = e.target.files[0];
         if (file) {
             setFormData({ ...formData, image: file }); // Update the image in formData
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -156,7 +163,14 @@ const CreateService = () => {
                             onChange={handleImageChange}
                         />
                     </div>
-
+                    {imagePreview && formData.image ? (
+                        <img
+                            className={styles.imageContainer}
+                            src={imagePreview}
+                        />
+                    ) : (
+                        ""
+                    )}
                     <button type="submit" className={styles.submitButton}>
                         Create Service
                     </button>
