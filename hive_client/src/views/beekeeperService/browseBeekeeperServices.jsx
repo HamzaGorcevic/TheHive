@@ -16,7 +16,6 @@ function BrowseServices() {
     const [searchTerm, setSearchTerm] = useState("");
     const [error, setError] = useState("");
     const { authData } = useContext(StateContext);
-
     // Reservation modal state
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedServiceId, setSelectedServiceId] = useState(null);
@@ -40,9 +39,7 @@ function BrowseServices() {
     const fetchServices = async (categoryId) => {
         try {
             setLoading(true);
-            const url = categoryId
-                ? `/services/category?categoryservice_id=${categoryId}`
-                : "/services";
+            const url = "/services";
 
             const response = await axiosClient.get(url);
             if (response.status === 200) {
@@ -58,9 +55,19 @@ function BrowseServices() {
         }
     };
 
+    const filteredServices = services.filter((service) => {
+        const matchesCategory =
+            !selectedCategory || service.categoryservice_id == selectedCategory;
+        console.log(service.categoryservice_id, selectedCategory);
+        const matchesSearchTerm = service.user.name
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+
+        return matchesCategory && matchesSearchTerm;
+    });
+
     const handleCategoryChange = (categoryId) => {
         setSelectedCategory(categoryId);
-        fetchServices(categoryId);
     };
 
     const handleDelete = async (serviceId) => {
@@ -82,9 +89,6 @@ function BrowseServices() {
         setIsModalOpen(true);
     };
 
-    const filteredServices = services.filter((service) =>
-        service.user.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
     const navigateToDetails = (id) => {
         navigate(`/services/${id}`);
     };

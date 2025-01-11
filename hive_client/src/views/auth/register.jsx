@@ -10,10 +10,12 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const response = await axiosClient.post("/register", {
                 name,
@@ -21,9 +23,11 @@ const Register = () => {
                 password,
             });
             registerUser(response.data);
+            setLoading(false);
             toast.success("Successfully registered");
             navigate("/rooms");
         } catch (err) {
+            setLoading(false);
             // Check for a response from the server
             console.log(err.response.data.message);
             if (err.response && err.response.data && err.response.data.errors) {
@@ -70,9 +74,16 @@ const Register = () => {
                         />
                     </div>
                     {error && <p className={styles.error}>{error}</p>}
-                    <button className={styles.submitButton} type="submit">
-                        Register
-                    </button>
+                    {!loading ? (
+                        <button className={styles.submitButton} type="submit">
+                            Register
+                        </button>
+                    ) : (
+                        <button
+                            className={`${styles.submitButton} ${styles.loading}`}
+                            disabled
+                        ></button>
+                    )}
                 </form>
                 <a href="/login">Sign in if you alreayd have an account</a>
                 <a href="/register-beekeeper">Register as beekeeper</a>

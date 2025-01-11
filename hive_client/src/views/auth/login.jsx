@@ -10,8 +10,10 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         try {
             const response = await axiosClient.post("/login", {
@@ -19,10 +21,11 @@ const Login = () => {
                 password,
             });
             loginUser(response.data);
+            setLoading(false);
             toast.success("Successfully logged in");
             navigate("/rooms");
         } catch (err) {
-            // Check for a response from the server
+            setLoading(false);
             if (
                 err.response &&
                 err.response.data &&
@@ -63,9 +66,16 @@ const Login = () => {
                         />
                     </div>
                     {error && <p className={styles.error}>{error}</p>}
-                    <button className={styles.submitButton} type="submit">
-                        Login
-                    </button>
+                    {!loading ? (
+                        <button className={styles.submitButton} type="submit">
+                            Login
+                        </button>
+                    ) : (
+                        <button
+                            className={`${styles.submitButton} ${styles.loading}`}
+                            disabled
+                        ></button>
+                    )}
                     <a href="/register">If you dont have account register !</a>
                 </form>
             </div>

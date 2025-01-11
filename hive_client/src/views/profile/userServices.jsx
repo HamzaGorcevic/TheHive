@@ -3,6 +3,7 @@ import styles from "./UserServices.module.scss";
 import axiosClient from "../../axios";
 import ServiceCard from "../beekeeperService/serviceCard";
 import { toast } from "react-toastify";
+import CustomLoader from "../../components/loader/loader";
 
 const UserServicesList = ({ userId = 0, isViewMode = false }) => {
     const [services, setServices] = useState([]);
@@ -44,7 +45,7 @@ const UserServicesList = ({ userId = 0, isViewMode = false }) => {
     };
 
     if (loading) {
-        return <div className={styles.loading}>Loading services...</div>;
+        return <CustomLoader />;
     }
 
     if (error) {
