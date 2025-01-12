@@ -22,11 +22,20 @@ class BeekeeperServiceController extends Controller
     public function get_service(Request $request, $id)
     {
         $service = BeekeeperService::with([
-            'user',
-            'categoryservice',
-            'reservations.user',
-            'recensions.user'
-        ])->find($id);
+            'user' => function ($query) {
+                $query->select('id', 'name', 'email');
+            },
+            'categoryservice' => function ($query) {
+                $query->select('id', 'name');
+            },
+            'reservations.user' => function ($query) {
+                $query->select('id', 'name');
+            },
+            'recensions.user' => function ($query) {
+                $query->select('id', 'name');
+            }
+        ])->select('id', 'user_id', 'categoryservice_id', 'details', 'price', 'image_url', 'created_at')
+            ->find($id);
 
         if (!$service) {
             return response()->json(['message' => 'Service not found'], 404);
@@ -36,10 +45,20 @@ class BeekeeperServiceController extends Controller
     }
     public function get_availble_services(Request $request)
     {
-        $beekeeper_services = BeekeeperService::with(['user', 'categoryservice'])->get();
+        $beekeeper_services = BeekeeperService::with([
+            'user' => function ($query) {
+                $query->select('id', 'name', 'email');
+            },
+            'categoryservice' => function ($query) {
+                $query->select('id', 'name');
+            }
+        ])->select('id', 'user_id', 'categoryservice_id', 'details', 'price', 'image_url', 'created_at')
+            ->get();
+
         if ($beekeeper_services->isEmpty()) {
             return response()->json(['message' => 'No services available'], 204);
         }
+
         return response()->json(["services" => $beekeeper_services], 200);
     }
 

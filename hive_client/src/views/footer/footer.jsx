@@ -10,7 +10,7 @@ const Footer = () => {
         <footer className={styles.footer}>
             <div className={styles.container}>
                 <div className={styles.section}>
-                    <h3>About BeeHive</h3>
+                    <h3>About TheHive</h3>
                     <p>
                         Your trusted platform for connecting beekeepers and
                         enthusiasts. Building a sweeter world, one hive at a
@@ -42,11 +42,11 @@ const Footer = () => {
                             (123) 456-7890
                         </a>
                         <a
-                            href="mailto:contact@beehive.com"
+                            href="mailto:contact@TheHive.com"
                             className={styles.link}
                         >
                             <Mail className={styles.icon} />
-                            contact@beehive.com
+                            contact@TheHive.com
                         </a>
                     </div>
                 </div>
@@ -78,7 +78,7 @@ const Footer = () => {
             </div>
 
             <div className={styles.bottom}>
-                <p>&copy; {currentYear} BeeHive. All rights reserved.</p>
+                <p>&copy; {currentYear} TheHive. All rights reserved.</p>
             </div>
         </footer>
     );

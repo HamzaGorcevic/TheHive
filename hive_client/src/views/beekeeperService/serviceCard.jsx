@@ -2,6 +2,7 @@ import React from "react";
 import { Trash2 } from "lucide-react";
 import styles from "./ServiceCard.module.scss";
 import axiosClient from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 const ServiceCard = ({ service, onDelete, isViewMode }) => {
     const handleDelete = async () => {
@@ -11,9 +12,18 @@ const ServiceCard = ({ service, onDelete, isViewMode }) => {
             console.error("Error deleting service:", error);
         }
     };
+    const navigate = useNavigate();
+    const navigateToDetails = (id) => {
+        navigate(`/services/${id}`);
+    };
 
     return (
-        <div className={styles.serviceCard}>
+        <div
+            className={styles.serviceCard}
+            onClick={() => {
+                navigateToDetails(service.id);
+            }}
+        >
             <div className={styles.cardHeader}>
                 <h2>Service Details</h2>
                 {!isViewMode ? (

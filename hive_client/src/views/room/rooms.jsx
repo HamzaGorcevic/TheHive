@@ -70,16 +70,18 @@ const Rooms = () => {
                     >
                         <h3 className={styles.roomTitle}>{room.title}</h3>
                         <p className={styles.roomDescription}>
-                            {room.description}
+                            {room.description && room.description.slice(0, 80)}{" "}
+                            ...
                         </p>
-                        {authData?.user?.role == "admin" && (
-                            <button
-                                className={styles.deleteBtn}
-                                onClick={(e) => handleDelete(room.id, e)}
-                            >
-                                Delete room
-                            </button>
-                        )}
+                        {authData?.user?.role == "admin" ||
+                            (authData?.user?.id == room.user_id && (
+                                <button
+                                    className={styles.deleteBtn}
+                                    onClick={(e) => handleDelete(room.id, e)}
+                                >
+                                    Delete room
+                                </button>
+                            ))}
                         {room.solved_message_id && (
                             <div className={styles.solvedStatus}>
                                 <CheckCircle size={16} />

@@ -27,7 +27,12 @@ const Vote = ({
                 `/messages/${messageId}/vote`
             );
             setPoints(response.data.count);
-            setUserVote(response.data.user_vote || 0);
+
+            // Get user's previous vote for this message
+            const userVoteResponse = await axiosClient.get(
+                `/messages/${messageId}/user-vote`
+            );
+            setUserVote(userVoteResponse.data.vote_type || 0);
         } catch (err) {
             console.error("Failed to fetch votes:", err);
             setError("Failed to load votes");

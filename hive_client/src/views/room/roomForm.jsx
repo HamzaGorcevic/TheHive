@@ -9,7 +9,7 @@ const RoomForm = () => {
         title: "",
         description: "",
     });
-
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const navigate = useNavigate();
@@ -65,9 +65,17 @@ const RoomForm = () => {
                     />
                 </div>
 
-                <button type="submit" className={styles.button}>
-                    Create Room
-                </button>
+                {!loading ? (
+                    <button type="submit" className={styles.button}>
+                        Create Room
+                    </button>
+                ) : (
+                    <button
+                        type="submit"
+                        className={`${styles.button} ${styles.loading}`}
+                        disabled
+                    ></button>
+                )}
             </form>
         </div>
     );

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Star, Calendar, MapPin, User } from "lucide-react";
 import styles from "./detailsService.module.scss";
 import axiosClient from "../../../axios";
 import ReservationModal from "../../../components/reservationModal/reservationModal";
 import CustomLoader from "../../../components/loader/loader";
+import StateContext from "../../../contexts/authcontext";
 
 const DetailsService = () => {
     const { id } = useParams();
@@ -15,6 +16,7 @@ const DetailsService = () => {
     const [rating, setRating] = useState(0);
     const [submitting, setSubmitting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { authData } = useContext(StateContext);
 
     useEffect(() => {
         const fetchService = async () => {
@@ -85,13 +87,17 @@ const DetailsService = () => {
                     <p className={styles.details}>{service.details}</p>
                     <p>Provided by: {service.user.name}</p>
 
-                    <button
-                        className={styles.reserveButton}
-                        onClick={() => setIsModalOpen(true)}
-                    >
-                        <Calendar className="inline-block mr-2" size={20} />
-                        Reserve Now
-                    </button>
+                    {authData.user.id != service.user_id ? (
+                        <button
+                            className={styles.reserveButton}
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            <Calendar className="inline-block mr-2" size={20} />
+                            Reserve Now
+                        </button>
+                    ) : (
+                        ""
+                    )}
                 </div>
             </div>
 
@@ -147,50 +153,56 @@ const DetailsService = () => {
                     ))}
                 </div>
 
-                <div className={styles.addRecension}>
-                    <h3>Add Your Review</h3>
-                    <form
-                        className={styles.recensionForm}
-                        onSubmit={handleSubmitComment}
-                    >
-                        <div className={styles.starRating}>
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <button
-                                    key={star}
-                                    type="button"
-                                    className={
-                                        star <= rating ? styles.active : ""
-                                    }
-                                    onClick={() => setRating(star)}
-                                >
-                                    <Star
-                                        fill={
-                                            star <= rating
-                                                ? "currentColor"
-                                                : "none"
-                                        }
-                                        size={24}
-                                    />
-                                </button>
-                            ))}
-                        </div>
-
-                        <textarea
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            placeholder="Share your experience with this service..."
-                            required
-                        />
-
-                        <button
-                            type="submit"
-                            className={styles.submitButton}
-                            disabled={submitting || !rating || !comment.trim()}
+                {authData.user.id != service.user_id ? (
+                    <div className={styles.addRecension}>
+                        <h3>Add Your Review</h3>
+                        <form
+                            className={styles.recensionForm}
+                            onSubmit={handleSubmitComment}
                         >
-                            {submitting ? "Submitting..." : "Submit Review"}
-                        </button>
-                    </form>
-                </div>
+                            <div className={styles.starRating}>
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <button
+                                        key={star}
+                                        type="button"
+                                        className={
+                                            star <= rating ? styles.active : ""
+                                        }
+                                        onClick={() => setRating(star)}
+                                    >
+                                        <Star
+                                            fill={
+                                                star <= rating
+                                                    ? "currentColor"
+                                                    : "none"
+                                            }
+                                            size={24}
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+
+                            <textarea
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                placeholder="Share your experience with this service..."
+                                required
+                            />
+
+                            <button
+                                type="submit"
+                                className={styles.submitButton}
+                                disabled={
+                                    submitting || !rating || !comment.trim()
+                                }
+                            >
+                                {submitting ? "Submitting..." : "Submit Review"}
+                            </button>
+                        </form>
+                    </div>
+                ) : (
+                    "   "
+                )}
             </div>
 
             <ReservationModal

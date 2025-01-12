@@ -1,27 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./user.module.scss";
 import axiosClient from "../../axios";
-import StateContext from "../../contexts/authcontext";
+import StateContext, { ContextProvider } from "../../contexts/authcontext";
 import { Pencil, Trash2, X, Check } from "lucide-react";
 import { toast } from "react-toastify";
 
 const UserCard = ({ user, isViewMode }) => {
-    const [points, setPoints] = useState(0);
     const [isEditing, setIsEditing] = useState(false);
+    const { logoutUser } = useContext(StateContext);
     const [formData, setFormData] = useState({
         name: user?.name || "",
         email: user?.email || "",
     });
     const { authData, updateUser } = useContext(StateContext);
 
-    useEffect(() => {
-        const getUserPoints = async () => {
-            const response = await axiosClient.get("/votes");
-            setPoints(response.data.votes);
-        };
-        getUserPoints();
-    });
-
+    const points = isViewMode
+        ? user.points
+            ? user.points
+            : 0
+        : authData.user.points
+        ? authData.user.points
+        : 0;
     const handleEdit = () => {
         setIsEditing(true);
         setFormData({
@@ -58,6 +57,7 @@ const UserCard = ({ user, isViewMode }) => {
         ) {
             try {
                 await axiosClient.delete("/user");
+                logoutUser();
             } catch (error) {
                 console.error("Failed to delete profile:", error);
             }

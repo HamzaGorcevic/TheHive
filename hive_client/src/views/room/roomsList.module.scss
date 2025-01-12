@@ -121,28 +121,7 @@
     }
   }
 
-  .deleteBtn {
-    background: none;
-    border: none;
-    padding: 0.375rem;
-    color: $error-red;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    &:hover {
-      background-color: rgba($error-red, 0.1);
-      transform: scale(1.1);
-    }
-
-    svg {
-      width: 1.125rem;
-      height: 1.125rem;
-    }
-  }
 
   .error {
     color: $error-red;
@@ -200,26 +179,3 @@
     }
   }
 
-  .deleteBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba($error-red, 0.1);
-    color: $error-red;
-    border: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: rgba($error-red, 0.2);
-      transform: scale(1.1);
-    }
-
-    svg {
-      width: 1rem;
-      height: 1rem;
-    }
-  }

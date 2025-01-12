@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MessageRequest;
 use App\Models\Message;
 use App\Models\Room;
+use App\Models\User;
 use App\Models\Vote;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,6 +24,22 @@ class MessageController extends Controller
 
         return response()->json([
             'messages' => $roomMessages
+        ]);
+    }
+    public function get_message_votes(Request $request)
+    {
+        $voteCount = Vote::where('message_id', $request->message_id)->sum('vote_type');
+        return response()->json(['count' => $voteCount]);
+    }
+
+    public function get_user_message_vote(Request $request, $messageId)
+    {
+        $vote = Vote::where('message_id', $messageId)
+            ->where('user_id', $request->user()->id)
+            ->first();
+
+        return response()->json([
+            'vote_type' => $vote ? $vote->vote_type : 0
         ]);
     }
 
@@ -126,6 +143,8 @@ class MessageController extends Controller
         if ($message->user_id === $user->id) {
             return response()->json(['error' => 'Cannot vote on your own message'], 403);
         }
+
+        // Only allow voting on parent messages
         if ($message->parent_message_id !== null) {
             return response()->json(['error' => 'Can only vote on parent messages'], 403);
         }
@@ -133,31 +152,35 @@ class MessageController extends Controller
         try {
             DB::beginTransaction();
 
+            // Get current vote if exists
             $currentVote = Vote::where('user_id', $user->id)
                 ->where('message_id', $message->id)
                 ->first();
 
-            $previousVoteType = $currentVote ? $currentVote->vote_type : 0;
-
+            // Handle vote removal
             if ($request->vote_type === 0) {
                 if ($currentVote) {
                     $currentVote->delete();
                 }
             } else {
+                // Update or create vote
                 Vote::updateOrCreate(
-                    ['user_id' => $user->id, 'message_id' => $message->id, 'voted_user_id' => $request->voted_user_id],
+                    [
+                        'user_id' => $user->id,
+                        'message_id' => $message->id,
+                        'voted_user_id' => $message->user_id // Use message author's ID
+                    ],
                     ['vote_type' => $request->vote_type]
                 );
             }
 
+            // Update message points
             $totalPoints = $message->votes()->sum('vote_type');
             $message->update(['points' => $totalPoints]);
 
-            $pointDiff = $request->vote_type - $previousVoteType;
-            if ($pointDiff !== 0) {
-                $messageAuthor = $message->user;
-                $messageAuthor->increment('points', $pointDiff);
-            }
+            // Update user points (calculated from all their received votes)
+            $userTotalPoints = Vote::where('voted_user_id', $message->user_id)->sum('vote_type');
+            User::where('id', $message->user_id)->update(['points' => $userTotalPoints]);
 
             DB::commit();
 
@@ -207,11 +230,7 @@ class MessageController extends Controller
         ]);
     }
 
-    public function get_message_votes(Request $request)
-    {
-        $voteCount = Vote::where('message_id', $request->message_id)->count();
-        return response()->json(['count' => $voteCount]);
-    }
+
 
     private function deleteNestedReplies($message)
     {

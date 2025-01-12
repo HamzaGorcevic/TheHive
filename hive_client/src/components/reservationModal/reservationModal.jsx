@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { X } from "lucide-react";
 import axiosClient from "../../axios";
 import { toast } from "react-toastify";
 import styles from "./reservationModal.module.scss";
@@ -7,7 +8,9 @@ function ReservationModal({ isOpen, onClose, serviceId }) {
     const [reservationDate, setReservationDate] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleReservation = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
         if (!reservationDate) {
             toast.error("Please select a date and time.");
             return;
@@ -35,19 +38,43 @@ function ReservationModal({ isOpen, onClose, serviceId }) {
 
     return (
         <div className={styles.modalOverlay}>
-            <div className={styles.modalContent}>
-                <h2>Reserve Service</h2>
-                <input
-                    type="datetime-local"
-                    value={reservationDate}
-                    onChange={(e) => setReservationDate(e.target.value)}
-                />
-                <div className={styles.modalActions}>
-                    <button onClick={onClose}>Cancel</button>
-                    <button onClick={handleReservation} disabled={loading}>
-                        {loading ? "Reserving..." : "Reserve Now"}
+            <div className={styles.modal}>
+                <div className={styles.modalHeader}>
+                    <h3>Reserve Service</h3>
+                    <button onClick={onClose} className={styles.closeButton}>
+                        <X size={20} />
                     </button>
                 </div>
+
+                <form onSubmit={handleSubmit} className={styles.form}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="datetime">Select Date & Time</label>
+                        <input
+                            id="datetime"
+                            type="datetime-local"
+                            value={reservationDate}
+                            onChange={(e) => setReservationDate(e.target.value)}
+                            className={styles.input}
+                        />
+                    </div>
+
+                    <div className={styles.modalActions}>
+                        <button
+                            type="submit"
+                            className={styles.saveButton}
+                            disabled={loading}
+                        >
+                            {loading ? "Reserving..." : "Reserve Now"}
+                        </button>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className={styles.cancelButton}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

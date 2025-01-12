@@ -59,7 +59,7 @@ const Navbar = () => {
             <div className={styles.container}>
                 <Link to="/" className={styles.logo}>
                     <Home className={styles.icon} />
-                    <span>BeeHive</span>
+                    <span>TheHive</span>
                 </Link>
 
                 {/* Hamburger Menu Icon */}

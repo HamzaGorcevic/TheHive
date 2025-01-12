@@ -174,7 +174,9 @@ function BrowseServices() {
                             <div className={styles.description}>
                                 <span className={styles.label}>Details:</span>
                                 <p className={styles.value}>
-                                    {service.details}
+                                    {service.details &&
+                                        service.details.slice(0, 50)}
+                                    ...
                                 </p>
                             </div>
 

@@ -15,6 +15,7 @@ const CreateService = () => {
         image: null, // Add image to formData
     });
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,12 +29,14 @@ const CreateService = () => {
                 setCategories(response.data.categories);
             }
         } catch (err) {
+            toast.error("Failed to create service");
             setError("Failed to load categories");
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             // Create FormData object
             const data = new FormData();
@@ -58,11 +61,14 @@ const CreateService = () => {
                     details: "",
                     image: null,
                 });
+                setLoading(false);
                 setError("");
                 toast.success("Successfully created service!");
-                // navigate("/services");
+                navigate("/services");
             }
         } catch (err) {
+            setLoading(false);
+
             setError("Failed to create service");
             toast.error(err.message || "An error occurred");
         }
@@ -171,9 +177,17 @@ const CreateService = () => {
                     ) : (
                         ""
                     )}
-                    <button type="submit" className={styles.submitButton}>
-                        Create Service
-                    </button>
+                    {!loading ? (
+                        <button type="submit" className={styles.submitButton}>
+                            Create Service
+                        </button>
+                    ) : (
+                        <button
+                            type="submit"
+                            disabled
+                            className={`${styles.submitButton} ${styles.loading}`}
+                        ></button>
+                    )}
                 </form>
             </div>
         </div>

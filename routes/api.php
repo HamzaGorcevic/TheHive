@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('messages/{message_id}/vote', [MessageController::class, 'vote_message']);
     Route::get('messages/{message_id}/vote', [MessageController::class, 'get_message_votes']);
     Route::post('messages/solved', [MessageController::class, 'mark_as_solved']);
+    Route::get('messages/{message_id}/user-vote', [MessageController::class, 'get_user_message_vote']);
 });
 
 
