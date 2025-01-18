@@ -1,0 +1,122 @@
+@import "../../assets/variables";
+
+.contactContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-lg;
+    background: linear-gradient(135deg, $honey-light 0%, $cream-white 100%);
+}
+
+.contactCard {
+    @extend .card;
+    width: 100%;
+    max-width: 500px;
+    background: $cream-white;
+}
+
+.title {
+    color: $honey-dark;
+    font-size: $font-size-xxl;
+    margin-bottom: $spacing-sm;
+    text-align: center;
+    font-weight: bold;
+}
+
+.subtitle {
+    color: $wax-brown;
+    font-size: $font-size-md;
+    text-align: center;
+    margin-bottom: $spacing-lg;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+}
+
+.label {
+    color: $wax-brown;
+    font-size: $font-size-sm;
+    font-weight: 600;
+}
+
+.input {
+    padding: $spacing-sm;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    font-size: $font-size-md;
+    background-color: white;
+    transition: all $transition-base;
+
+    &:focus {
+        outline: none;
+        border-color: $honey-gold;
+        box-shadow: $shadow-sm;
+    }
+
+    &::placeholder {
+        color: lighten($wax-brown, 30%);
+    }
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.error {
+    color: $error-red;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    background-color: rgba($error-red, 0.1);
+    border-radius: $border-radius-sm;
+}
+
+.submitButton {
+    background-color: $honey-gold;
+    color: $cream-white;
+    padding: $spacing-sm $spacing-lg;
+    border: none;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-base;
+    position: relative;
+    margin-top: $spacing-sm;
+
+    &:hover:not(:disabled) {
+        background-color: darken($honey-gold, 8%);
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(1px);
+    }
+
+    &:disabled {
+        background-color: lighten($honey-gold, 15%);
+        cursor: not-allowed;
+    }
+}
+
+.loading {
+    @extend .loading;
+    background-color: $honey-gold;
+
+    &::after {
+        border: 3px solid rgba($cream-white, 0.3);
+        border-top-color: $cream-white;
+    }
+}

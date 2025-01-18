@@ -23,6 +23,7 @@ import UsersList from "./views/users/usersList";
 import UserReserved from "./views/reservations/userReserved";
 import Footer from "./views/footer/footer";
 import DetailsService from "./views/beekeeperService/detailsService/detailsService";
+import ContactMe from "./views/contact/contactme";
 function App() {
     return (
         <Router>
@@ -72,6 +73,7 @@ function App() {
                             />
                         }
                     >
+                        <Route path="/contact" element={<ContactMe />} />
                         <Route path="/create-room" element={<RoomForm />} />
                         <Route path="/user-rooms" element={<UserRooms />} />
                         <Route

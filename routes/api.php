@@ -3,9 +3,11 @@
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeekeeperServiceController;
+use App\Http\Controllers\ContactMeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RecensionController;
 use App\Http\Controllers\RoomController;
+use App\Http\Requests\ContactMeRequest;
 use Illuminate\Support\Facades\Route; // Correct import for Route
 
 Route::post("login", [AuthController::class, "login"]);
@@ -92,4 +94,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/services/{serviceId}/recensions', [RecensionController::class, 'get_service_recensions']);
     Route::post('/recensions', [RecensionController::class, 'create_recension']);
     Route::delete('/recensions/{recensionId}', [RecensionController::class, 'delete_recension']);
+});
+
+// Contact me
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/contact-me', [ContactMeController::class, 'contact_me']);
 });
