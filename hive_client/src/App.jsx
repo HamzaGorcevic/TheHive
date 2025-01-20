@@ -24,6 +24,7 @@ import UserReserved from "./views/reservations/userReserved";
 import Footer from "./views/footer/footer";
 import DetailsService from "./views/beekeeperService/detailsService/detailsService";
 import ContactMe from "./views/contact/contactme";
+import AccessDenied from "./views/errorViews/accessDenied";
 function App() {
     return (
         <Router>
@@ -113,6 +114,7 @@ function App() {
                         path="/register-beekeeper"
                         element={<RegisterBeekeeper />}
                     />
+                    <Route path="/access-denied" element={<AccessDenied />} />
                 </Routes>
                 <Footer />
             </ContextProvider>

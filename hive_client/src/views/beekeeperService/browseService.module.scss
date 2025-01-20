@@ -120,7 +120,7 @@
 
   .image {
     max-width: 100%;
-    height: auto;
+    max-height: 350px;
     border-radius: $border-radius-md;
   }
 }

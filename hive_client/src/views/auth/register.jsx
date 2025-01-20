@@ -85,8 +85,10 @@ const Register = () => {
                         ></button>
                     )}
                 </form>
-                <a href="/login">Sign in if you alreayd have an account</a>
-                <a href="/register-beekeeper">Register as beekeeper</a>
+                <div className={styles.secondaryActions}>
+                    <a href="/login">Already have an account? Sign in</a>
+                    <a href="/register-beekeeper">Register as a beekeeper</a>
+                </div>
             </div>
         </div>
     );

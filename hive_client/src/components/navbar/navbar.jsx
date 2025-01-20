@@ -97,10 +97,12 @@ const Navbar = () => {
                                 <Users className={styles.icon} />
                                 Beekeepers
                             </Link>
-                            <Link to="/services" className={styles.link}>
-                                <Wrench className={styles.icon} />
-                                Services
-                            </Link>
+                            {authData?.user?.role != "user" && (
+                                <Link to="/services" className={styles.link}>
+                                    <Wrench className={styles.icon} />
+                                    Services
+                                </Link>
+                            )}
                         </>
                     )}
                     {["beekeeper", "user"].includes(authData?.user?.role) && (
@@ -139,10 +141,15 @@ const Navbar = () => {
                                         />
                                         Reservations
                                     </Link>
-                                    <Link to="/profile" className={styles.link}>
-                                        <Wrench className={styles.icon} />
-                                        My Services
-                                    </Link>
+                                    {authData?.user?.role == "beekeeper" && (
+                                        <Link
+                                            to="/profile"
+                                            className={styles.link}
+                                        >
+                                            <Wrench className={styles.icon} />
+                                            My Services
+                                        </Link>
+                                    )}
                                 </div>
                             )}
                         </div>

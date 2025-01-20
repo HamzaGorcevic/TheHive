@@ -76,8 +76,10 @@ const Login = () => {
                             disabled
                         ></button>
                     )}
-                    <a href="/register">If you dont have account register !</a>
                 </form>
+                <div className={styles.secondaryActions}>
+                    <a href="/register">If you dont have account register !</a>
+                </div>
             </div>
         </div>
     );

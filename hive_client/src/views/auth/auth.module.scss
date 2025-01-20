@@ -223,3 +223,20 @@ a{
       cursor: not-allowed;
     }
   }
+
+  .secondaryActions {
+    margin-top: $spacing-lg;
+    text-align: center;
+
+    a {
+        display: block;
+        color: $honey-dark;
+        text-decoration: none;
+        margin-bottom: $spacing-sm;
+        transition: color $transition-base;
+
+        &:hover {
+            color: $honey-gold;
+        }
+    }
+}
