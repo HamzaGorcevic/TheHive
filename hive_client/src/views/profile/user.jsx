@@ -34,10 +34,16 @@ const UserCard = ({ user, isViewMode }) => {
             const response = await axiosClient.put("/user/profile", formData);
             setIsEditing(false);
             updateUser(response.data.token, response.data.user);
-            console.log(response);
-            toast.success("Profile updated succesfully");
+            if (response.status == 200) {
+                toast.success("Profile updated succesfully");
+            } else {
+                toast.error(response?.message);
+            }
         } catch (error) {
-            toast.error("Failed to update profile:" + error);
+            console.log(error);
+            toast.error(
+                "Failed to update profile:" + error?.response?.data?.message
+            );
         }
     };
 

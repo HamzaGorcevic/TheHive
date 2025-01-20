@@ -189,12 +189,16 @@ function BrowseServices() {
                             </div>
 
                             {/* Reserve Now Button */}
-                            <button
-                                className={styles.reserveBtn}
-                                onClick={() => handleReserveClick(service.id)}
-                            >
-                                Reserve Now
-                            </button>
+                            {authData?.user?.id != service.user_id && (
+                                <button
+                                    className={styles.reserveBtn}
+                                    onClick={() =>
+                                        handleReserveClick(service.id)
+                                    }
+                                >
+                                    Reserve Now
+                                </button>
+                            )}
                             <button
                                 className={styles.detailsBtn}
                                 onClick={() => navigateToDetails(service.id)}

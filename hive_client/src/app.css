@@ -13,3 +13,8 @@
 .leaflet-bottom{
     display: none;
 }
+
+.custom-toast-container{
+    z-index: 99999;
+}
+

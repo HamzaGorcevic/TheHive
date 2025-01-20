@@ -32,7 +32,27 @@ const DetailsService = () => {
 
         fetchService();
     }, [id]);
+    const handleDelete = async (serviceId) => {
+        const isConfirmed = window.confirm(
+            "Are you sure you want to delete this service?"
+        );
 
+        if (!isConfirmed) {
+            return; // Stop the function if the user cancels the deletion
+        }
+
+        try {
+            const response = await axiosClient.delete(`/services/${serviceId}`);
+            if (response.status === 200) {
+                toast.success(response.data.message);
+                fetchServices();
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (e) {
+            toast.error("An error occurred while deleting the service.");
+        }
+    };
     const handleSubmitComment = async (e) => {
         e.preventDefault();
         if (!rating || !comment.trim()) return;
@@ -100,7 +120,17 @@ const DetailsService = () => {
                     )}
                 </div>
             </div>
-
+            {authData?.user?.id == service.user_id ||
+            authData?.user?.role == "admin" ? (
+                <button
+                    onClick={(e) => handleDelete(e, service.id)}
+                    className={styles.deleteBtn}
+                >
+                    Delete service
+                </button>
+            ) : (
+                ""
+            )}
             <div className={styles.recensionsSection}>
                 <h2>Reviews</h2>
                 <div className={styles.recensionsList}>

@@ -8,11 +8,31 @@ function ReservationModal({ isOpen, onClose, serviceId }) {
     const [reservationDate, setReservationDate] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const handleDateChange = (e) => {
+        const selectedDate = new Date(e.target.value);
+        const now = new Date();
+
+        if (selectedDate < now) {
+            toast.error("Cannot select a past date and time");
+            return;
+        }
+
+        setReservationDate(e.target.value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!reservationDate) {
             toast.error("Please select a date and time.");
+            return;
+        }
+
+        const selectedDate = new Date(reservationDate);
+        const now = new Date();
+
+        if (selectedDate < now) {
+            toast.error("Cannot make a reservation for a past date and time");
             return;
         }
 
@@ -36,6 +56,10 @@ function ReservationModal({ isOpen, onClose, serviceId }) {
 
     if (!isOpen) return null;
 
+    // Get current date and time in ISO format for min attribute
+    const now = new Date();
+    const minDateTime = now.toISOString().slice(0, 16); // Format: YYYY-MM-DDThh:mm
+
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modal}>
@@ -53,7 +77,8 @@ function ReservationModal({ isOpen, onClose, serviceId }) {
                             id="datetime"
                             type="datetime-local"
                             value={reservationDate}
-                            onChange={(e) => setReservationDate(e.target.value)}
+                            onChange={handleDateChange}
+                            min={minDateTime}
                             className={styles.input}
                         />
                     </div>

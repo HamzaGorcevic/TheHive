@@ -148,16 +148,18 @@ const Message = ({
                         View Replies ({replyCount})
                     </button>
                 )}
-                {authData?.user?.id === initialMessage?.user_id ||
-                    (authData?.user.role == "admin" && (
-                        <button
-                            className={styles.deleteBtn}
-                            onClick={(e) => handleDelete(e, initialMessage.id)}
-                        >
-                            <Trash2 size={16} />
-                            Delete
-                        </button>
-                    ))}
+                {authData?.user?.id == initialMessage?.user_id ||
+                authData?.user.role == "admin" ? (
+                    <button
+                        className={styles.deleteBtn}
+                        onClick={(e) => handleDelete(e, initialMessage.id)}
+                    >
+                        <Trash2 size={16} />
+                        Delete
+                    </button>
+                ) : (
+                    ""
+                )}
             </div>
 
             {showReplyForm && (

@@ -69,17 +69,15 @@ export const UserRooms = () => {
                                         <CheckCircle size={16} />
                                         SOLVED
                                     </div>
-                                    <button
-                                        className={styles.deleteBtn}
-                                        onClick={(e) =>
-                                            handleDelete(room.id, e)
-                                        }
-                                        title="Delete room"
-                                    >
-                                        <Trash2 />
-                                    </button>
                                 </>
                             )}
+                            <button
+                                className={styles.deleteBtn}
+                                onClick={(e) => handleDelete(room.id, e)}
+                                title="Delete room"
+                            >
+                                Delete room
+                            </button>
                         </div>
 
                         <h3 className={styles.roomTitle}>{room.title}</h3>

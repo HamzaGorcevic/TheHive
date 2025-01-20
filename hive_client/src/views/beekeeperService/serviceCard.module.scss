@@ -1,6 +1,7 @@
 @import "../../assets/variables";
 
 .serviceCard {
+    cursor: pointer;
     background-color: $cream-white;
     border-radius: $border-radius-lg;
     box-shadow: $shadow-md;

@@ -39,6 +39,7 @@ function App() {
                 pauseOnHover
                 theme="light"
                 transition={Slide}
+                className="custom-toast-container"
             />
             <ContextProvider>
                 <Navbar />

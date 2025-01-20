@@ -113,6 +113,17 @@
         height: 20px;
         color: $cream-white;
     }
+
+    .dropdownIcon {
+        width: 16px;
+        height: 16px;
+        margin-left: $spacing-xs;
+        transition: transform 0.2s ease;
+
+        &.rotate {
+            transform: rotate(180deg);
+        }
+    }
 }
 
 .logoutButton {
@@ -128,6 +139,8 @@
     font-size: $font-size-base;
     font-weight: 500;
     transition: all $transition-base;
+    width: 100%;
+    justify-content: flex-start;
 
     &:hover {
         background: $error-red;
@@ -147,9 +160,19 @@
         color: $cream-white;
         background: transparent;
         border: none;
+        display: flex;
+        align-items: center;
 
         &:hover {
             background: rgba($cream-white, 0.1);
+        }
+
+        .dropdownIcon {
+            transition: transform 0.2s ease;
+
+            &.rotate {
+                transform: rotate(180deg);
+            }
         }
     }
 

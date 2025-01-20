@@ -5,9 +5,9 @@ import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
 
 const ServiceCard = ({ service, onDelete, isViewMode }) => {
-    const handleDelete = async () => {
+    const handleDelete = async (e) => {
         try {
-            onDelete(service.id);
+            onDelete(e, service.id);
         } catch (error) {
             console.error("Error deleting service:", error);
         }

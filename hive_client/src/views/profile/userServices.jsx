@@ -28,13 +28,24 @@ const UserServicesList = ({ userId = 0, isViewMode = false }) => {
         }
     };
 
-    const handleDelete = async (deletedId) => {
+    const handleDelete = async (e, deletedId) => {
+        console.log();
+        e.stopPropagation();
+        console.log("clicked");
+
+        const isConfirmed = window.confirm(
+            "Are you sure you want to delete this service?"
+        );
+        if (!isConfirmed) {
+            return;
+        }
+
         try {
             const response = await axiosClient.delete(`/services/${deletedId}`);
             setServices((prevServices) =>
                 prevServices.filter((service) => service.id !== deletedId)
             );
-            if (response.status == 200) {
+            if (response.status === 200) {
                 toast.success(response.data.message);
             } else {
                 toast.error(response.data.message);

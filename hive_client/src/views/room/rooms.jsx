@@ -51,7 +51,13 @@ const Rooms = () => {
 
     const handleDelete = async (roomId, e) => {
         e.stopPropagation();
+        const isConfirmed = window.confirm(
+            "Are you sure you want to delete this room ?"
+        );
 
+        if (!isConfirmed) {
+            return;
+        }
         try {
             const response = await axiosClient.delete(`rooms/${roomId}`);
             if (response.status == 200) {

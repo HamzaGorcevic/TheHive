@@ -9,6 +9,17 @@ import {
     Menu,
     X,
     BookMarked,
+    Building2,
+    Users,
+    Wrench,
+    ChevronDown,
+    UserCircle,
+    Key,
+    UserPlus,
+    Bookmark,
+    BedDouble,
+    CalendarCheck,
+    MessageCircleIcon,
 } from "lucide-react";
 import styles from "./navbar.module.scss";
 import StateContext from "../../contexts/authcontext";
@@ -37,7 +48,6 @@ const Navbar = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    // Close mobile menu when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -62,7 +72,6 @@ const Navbar = () => {
                     <span>TheHive</span>
                 </Link>
 
-                {/* Hamburger Menu Icon */}
                 <button
                     className={styles.mobileMenuButton}
                     onClick={toggleMobileMenu}
@@ -70,7 +79,6 @@ const Navbar = () => {
                     {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
 
-                {/* Links Section */}
                 <div
                     ref={mobileMenuRef}
                     className={`${styles.links} ${
@@ -82,10 +90,16 @@ const Navbar = () => {
                     ) && (
                         <>
                             <Link to="/rooms" className={styles.link}>
+                                <MessageCircleIcon className={styles.icon} />
                                 Browse Rooms
                             </Link>
                             <Link to="/users-list" className={styles.link}>
+                                <Users className={styles.icon} />
                                 Beekeepers
+                            </Link>
+                            <Link to="/services" className={styles.link}>
+                                <Wrench className={styles.icon} />
+                                Services
                             </Link>
                         </>
                     )}
@@ -95,8 +109,15 @@ const Navbar = () => {
                                 className={styles.link}
                                 onClick={() => toggleDropdown("spaces")}
                             >
-                                <User className={styles.icon} />
+                                <Building2 className={styles.icon} />
                                 My Spaces
+                                <ChevronDown
+                                    className={`${styles.dropdownIcon} ${
+                                        activeDropdown === "spaces"
+                                            ? styles.rotate
+                                            : ""
+                                    }`}
+                                />
                             </button>
                             {activeDropdown === "spaces" && (
                                 <div className={styles.dropdownMenu}>
@@ -104,22 +125,23 @@ const Navbar = () => {
                                         to="/user-rooms"
                                         className={styles.link}
                                     >
-                                        <User className={styles.icon} />
+                                        <MessageCircleIcon
+                                            className={styles.icon}
+                                        />
                                         My Rooms
-                                    </Link>
-                                    <Link
-                                        to="/create-room"
-                                        className={styles.link}
-                                    >
-                                        <PlusCircle className={styles.icon} />
-                                        Create Room
                                     </Link>
                                     <Link
                                         to="/user-reserved"
                                         className={styles.link}
                                     >
-                                        <BookMarked className={styles.icon} />
+                                        <CalendarCheck
+                                            className={styles.icon}
+                                        />
                                         Reservations
+                                    </Link>
+                                    <Link to="/profile" className={styles.link}>
+                                        <Wrench className={styles.icon} />
+                                        My Services
                                     </Link>
                                 </div>
                             )}
@@ -133,26 +155,37 @@ const Navbar = () => {
                             >
                                 <Settings className={styles.icon} />
                                 Management
+                                <ChevronDown
+                                    className={`${styles.dropdownIcon} ${
+                                        activeDropdown === "management"
+                                            ? styles.rotate
+                                            : ""
+                                    }`}
+                                />
                             </button>
                             {activeDropdown === "management" && (
                                 <div className={styles.dropdownMenu}>
-                                    <Link
-                                        to="/services"
-                                        className={styles.link}
-                                    >
-                                        <User className={styles.icon} />
-                                        Services
-                                    </Link>
                                     {authData?.user?.role === "beekeeper" && (
-                                        <Link
-                                            to="/create-service"
-                                            className={styles.link}
-                                        >
-                                            <PlusCircle
-                                                className={styles.icon}
-                                            />
-                                            Create Service
-                                        </Link>
+                                        <>
+                                            <Link
+                                                to="/create-service"
+                                                className={styles.link}
+                                            >
+                                                <Wrench
+                                                    className={styles.icon}
+                                                />
+                                                Create Service
+                                            </Link>
+                                            <Link
+                                                to="/create-room"
+                                                className={styles.link}
+                                            >
+                                                <PlusCircle
+                                                    className={styles.icon}
+                                                />
+                                                Create Room
+                                            </Link>
+                                        </>
                                     )}
                                     {authData?.user?.role === "admin" && (
                                         <Link
@@ -174,8 +207,15 @@ const Navbar = () => {
                             className={styles.link}
                             onClick={() => toggleDropdown("account")}
                         >
-                            <User className={styles.icon} />
+                            <UserCircle className={styles.icon} />
                             Account
+                            <ChevronDown
+                                className={`${styles.dropdownIcon} ${
+                                    activeDropdown === "account"
+                                        ? styles.rotate
+                                        : ""
+                                }`}
+                            />
                         </button>
                         {activeDropdown === "account" && (
                             <div className={styles.dropdownMenu}>
@@ -191,14 +231,14 @@ const Navbar = () => {
                                             to="/login"
                                             className={styles.link}
                                         >
-                                            <User className={styles.icon} />
+                                            <Key className={styles.icon} />
                                             Login
                                         </Link>
                                         <Link
                                             to="/register"
                                             className={styles.link}
                                         >
-                                            <User className={styles.icon} />
+                                            <UserPlus className={styles.icon} />
                                             Register
                                         </Link>
                                     </>

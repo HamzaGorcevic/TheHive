@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Loader, MessageSquare } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../axios";
 import styles from "./roomMessages.module.scss";
 import Question from "./question";
@@ -19,7 +19,7 @@ const Room = () => {
     const [hasMore, setHasMore] = useState(true);
     const { id } = useParams();
     const { authData } = useContext(StateContext);
-
+    const navigate = useNavigate();
     const handleDeleteRoom = async (e) => {
         e.stopPropagation();
 
@@ -35,8 +35,8 @@ const Room = () => {
         try {
             const response = await axiosClient.delete(`rooms/${id}`);
             if (response.status === 200) {
+                navigate("/rooms");
                 toast.success("Room deleted successfully!");
-                fetchUserRooms();
             }
         } catch (e) {
             toast.error("An error occurred while deleting the room.");
@@ -112,6 +112,13 @@ const Room = () => {
     };
 
     const handleDelete = async (messageId) => {
+        const isConfirmed = window.confirm(
+            "Are you sure you want to delete this room?"
+        );
+
+        if (!isConfirmed) {
+            return; // Stop the function if the user cancels the deletion
+        }
         try {
             setMessages((preveMessage) => {
                 return preveMessage.filter(
