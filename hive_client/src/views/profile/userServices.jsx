@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./UserServices.module.scss";
+import styles from "./userServices.module.scss";
 import axiosClient from "../../axios";
 import ServiceCard from "../beekeeperService/serviceCard";
 import { toast } from "react-toastify";
