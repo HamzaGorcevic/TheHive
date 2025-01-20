@@ -8,9 +8,18 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
+import L from "leaflet"; // Import Leaflet for custom icon configuration
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
-import "leaflet/dist/leaflet.css";
 import "leaflet-geosearch/dist/geosearch.css";
+import MarkerPng from "../assets/images/beemarker.png"; // Ensure the path to marker.png is correct
+
+// Custom Marker Icon
+const customMarkerIcon = L.icon({
+    iconUrl: MarkerPng, // Path to your custom marker image
+    iconSize: [100, 103], // Size of the icon [width, height]
+    iconAnchor: [52, 103], // Anchor point of the icon [x, y]
+    popupAnchor: [0, -41], // Position of the popup relative to the icon [x, y]
+});
 
 const LocationMarker = ({ onLocationSelect }) => {
     const [position, setPosition] = useState(null);
@@ -38,8 +47,11 @@ const LocationMarker = ({ onLocationSelect }) => {
         },
     });
 
-    return position ? <Marker position={position} /> : null;
+    return position ? (
+        <Marker position={position} icon={customMarkerIcon} />
+    ) : null;
 };
+
 function LeafletgeoSearch() {
     const map = useMap();
     useEffect(() => {
