@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import StateContext from "../../contexts/authcontext";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 import "leaflet-geosearch/dist/geosearch.css";
+import { customMarkerIcon } from "../../assets/customMarkers";
 
 // New component to handle map interactions
 const LocationMarker = ({ position, setPosition, isEditing, setFormData }) => {
@@ -52,7 +53,10 @@ const LocationMarker = ({ position, setPosition, isEditing, setFormData }) => {
     });
 
     return position ? (
-        <Marker position={[position.latitude, position.longitude]}>
+        <Marker
+            position={[position.latitude, position.longitude]}
+            icon={customMarkerIcon}
+        >
             <Popup>Selected location</Popup>
         </Marker>
     ) : null;
