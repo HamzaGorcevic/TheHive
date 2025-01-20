@@ -82,6 +82,7 @@
 
 // Card
 .card {
+    cursor: pointer;
     background: $cream-white;
     border-radius: $border-radius-lg;
     padding: $spacing-lg;
@@ -149,7 +150,7 @@
     margin-top: auto;
 }
 
-.viewButton, .deleteButton {
+.viewButton {
     flex: 1;
     padding: $spacing-sm;
     border: none;

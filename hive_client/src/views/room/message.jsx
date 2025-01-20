@@ -23,6 +23,7 @@ const Message = ({
     const [replyCount, setReplyCount] = useState(0);
     const { authData } = useContext(StateContext);
     const [deleted, setDeleted] = useState(false);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const fetchReplyCount = async () => {
             try {
@@ -73,9 +74,11 @@ const Message = ({
     };
     const handleReplySubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await onReply(initialMessage.id, replyContent, true);
             setReplyContent("");
+            setLoading(false);
             setShowReplyForm(false);
             setReplyCount((prev) => prev + 1);
             setCurrentPage(1);
@@ -167,9 +170,16 @@ const Message = ({
                         required
                     />
                     <div className={styles.replyFormActions}>
-                        <button type="submit" className={styles.button}>
-                            Post Reply
-                        </button>
+                        {loading ? (
+                            <button
+                                disabled
+                                className={`${styles.button} ${styles.loading} `}
+                            ></button>
+                        ) : (
+                            <button type="submit" className={styles.button}>
+                                Post Reply
+                            </button>
+                        )}
                         <button
                             type="button"
                             onClick={() => setShowReplyForm(false)}

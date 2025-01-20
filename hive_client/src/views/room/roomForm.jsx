@@ -14,10 +14,13 @@ const RoomForm = () => {
     const [success, setSuccess] = useState("");
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         try {
             await axiosClient.post("/rooms", formData);
             setSuccess("Room created successfully!");
+            setLoading(false);
+
             setFormData({ title: "", description: "" });
             navigate("/user-rooms");
             setError("");

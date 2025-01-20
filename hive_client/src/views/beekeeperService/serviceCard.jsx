@@ -1,6 +1,6 @@
 import React from "react";
 import { Trash2 } from "lucide-react";
-import styles from "./serviceCard.module.scss";
+import styles from "./ServiceCard.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
 

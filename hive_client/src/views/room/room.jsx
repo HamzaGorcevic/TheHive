@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Loader, MessageSquare } from "lucide-react";
 import { useParams } from "react-router-dom";
 import axiosClient from "../../axios";
@@ -7,6 +7,7 @@ import Question from "./question";
 import MessageThread from "./messageThread";
 import CustomLoader from "../../components/loader/loader";
 import { toast } from "react-toastify";
+import StateContext from "../../contexts/authcontext";
 const Room = () => {
     const [room, setRoom] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -14,8 +15,33 @@ const Room = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [replyLoading, setReplyLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const { id } = useParams();
+    const { authData } = useContext(StateContext);
+
+    const handleDeleteRoom = async (e) => {
+        e.stopPropagation();
+
+        // Ask for user confirmation
+        const isConfirmed = window.confirm(
+            "Are you sure you want to delete this room?"
+        );
+
+        if (!isConfirmed) {
+            return; // Stop the function if the user cancels the deletion
+        }
+
+        try {
+            const response = await axiosClient.delete(`rooms/${id}`);
+            if (response.status === 200) {
+                toast.success("Room deleted successfully!");
+                fetchUserRooms();
+            }
+        } catch (e) {
+            toast.error("An error occurred while deleting the room.");
+        }
+    };
 
     const fetchRoomData = async (page = 1) => {
         try {
@@ -54,11 +80,13 @@ const Room = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setReplyLoading(true);
         try {
             await axiosClient.post(`/rooms/${id}/messages`, {
                 content: newMessage,
                 room_id: id,
             });
+            setReplyLoading(false);
             setNewMessage("");
             fetchRoomData(1);
         } catch (err) {
@@ -112,6 +140,14 @@ const Room = () => {
 
     return (
         <div className={styles.roomContainer}>
+            {authData?.user?.id == room.user_id ||
+            authData?.user?.role == "admin" ? (
+                <button onClick={handleDeleteRoom} className={styles.deleteBtn}>
+                    Delete room
+                </button>
+            ) : (
+                ""
+            )}
             <Question room={room} />
 
             <div className={styles.messageList}>
@@ -143,10 +179,17 @@ const Room = () => {
                         required
                     />
                 </div>
-                <button type="submit" className={styles.button}>
-                    <MessageSquare size={20} />
-                    Post Answer
-                </button>
+                {replyLoading ? (
+                    <button
+                        disabled
+                        className={`${styles.button} ${styles.loading}`}
+                    ></button>
+                ) : (
+                    <button type="submit" className={styles.button}>
+                        <MessageSquare size={20} />
+                        Post Answer
+                    </button>
+                )}
             </form>
         </div>
     );

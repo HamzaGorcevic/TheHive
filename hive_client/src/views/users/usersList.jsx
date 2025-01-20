@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Search, MapPin, Award, User } from "lucide-react";
 import axiosClient from "../../axios";
 import { toast } from "react-toastify";
@@ -71,7 +71,9 @@ const UsersList = () => {
         setFilteredUsers(filtered);
     }, [filters, users]);
 
-    const handleDeleteUser = async (userId) => {
+    const handleDeleteUser = async (e, userId) => {
+        e.stopPropagation();
+
         if (window.confirm("Are you sure you want to delete this user?")) {
             try {
                 await axiosClient.delete(`/user/${userId}`);
@@ -82,7 +84,7 @@ const UsersList = () => {
             }
         }
     };
-
+    const navigate = useNavigate();
     if (loading) return <CustomLoader />;
 
     return (
@@ -135,8 +137,15 @@ const UsersList = () => {
 
             <div className={styles.grid}>
                 {filteredUsers.map((user) =>
-                    authData?.user.id != user.id && user.role != "admin" ? (
-                        <div key={user.id} className={styles.card}>
+                    authData?.user.id != user.id && user.role == "beekeeper" ? (
+                        <div
+                            key={user.id}
+                            className={styles.card}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/user/view/${user.id}/profile`);
+                            }}
+                        >
                             <div className={styles.cardHeader}>
                                 <div className={styles.avatar}>
                                     <User size={32} />
@@ -158,18 +167,18 @@ const UsersList = () => {
                             </div>
 
                             <div className={styles.cardActions}>
-                                <Link
+                                {/* <Link
                                     to={`/user/view/${user.id}/profile`}
                                     className={styles.viewButton}
                                 >
                                     View Profile
-                                </Link>
+                                </Link> */}
                                 {authData?.user?.role === "admin" && (
                                     <button
-                                        onClick={() =>
-                                            handleDeleteUser(user.id)
+                                        onClick={(e) =>
+                                            handleDeleteUser(e, user.id)
                                         }
-                                        className={styles.deleteButton}
+                                        className={`${styles.deleteButton} ${styles.viewButton}`}
                                     >
                                         Delete User
                                     </button>

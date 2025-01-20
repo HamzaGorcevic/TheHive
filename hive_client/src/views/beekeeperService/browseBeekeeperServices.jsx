@@ -71,6 +71,14 @@ function BrowseServices() {
     };
 
     const handleDelete = async (serviceId) => {
+        const isConfirmed = window.confirm(
+            "Are you sure you want to delete this service?"
+        );
+
+        if (!isConfirmed) {
+            return; // Stop the function if the user cancels the deletion
+        }
+
         try {
             const response = await axiosClient.delete(`/services/${serviceId}`);
             if (response.status === 200) {
@@ -80,7 +88,7 @@ function BrowseServices() {
                 toast.error(response.data.message);
             }
         } catch (e) {
-            toast.error(e);
+            toast.error("An error occurred while deleting the service.");
         }
     };
 

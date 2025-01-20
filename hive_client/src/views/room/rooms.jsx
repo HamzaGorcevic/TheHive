@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Home, Users, Clock, CheckCircle } from "lucide-react";
+import { Home, Users, Clock, CheckCircle, Search } from "lucide-react";
 import styles from "./roomsList.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,8 @@ import CustomLoader from "../../components/loader/loader";
 
 const Rooms = () => {
     const [rooms, setRooms] = useState([]);
+    const [filteredRooms, setFilteredRooms] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const { authData } = useContext(StateContext);
@@ -19,6 +21,7 @@ const Rooms = () => {
             setLoading(true);
             const response = await axiosClient.get("/rooms");
             setRooms(response.data.rooms);
+            setFilteredRooms(response.data.rooms);
             setError("");
         } catch (err) {
             setError("Failed to load rooms");
@@ -30,6 +33,17 @@ const Rooms = () => {
     useEffect(() => {
         fetchRooms();
     }, []);
+
+    useEffect(() => {
+        const filtered = rooms.filter(
+            (room) =>
+                room.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                room.description
+                    ?.toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+        );
+        setFilteredRooms(filtered);
+    }, [searchTerm, rooms]);
 
     const singleRoomRedirect = (id) => {
         navigate(`/rooms/${id}`);
@@ -59,8 +73,21 @@ const Rooms = () => {
                 <h2>All Rooms</h2>
             </div>
 
+            <div className={styles.searchContainer}>
+                <div className={styles.searchWrapper}>
+                    <Search size={20} />
+                    <input
+                        type="text"
+                        placeholder="Search rooms..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className={styles.searchInput}
+                    />
+                </div>
+            </div>
+
             <div className={styles.roomGrid}>
-                {rooms.map((room) => (
+                {filteredRooms.map((room) => (
                     <div
                         key={room.id}
                         className={styles.roomCard}
@@ -74,14 +101,16 @@ const Rooms = () => {
                             ...
                         </p>
                         {authData?.user?.role == "admin" ||
-                            (authData?.user?.id == room.user_id && (
-                                <button
-                                    className={styles.deleteBtn}
-                                    onClick={(e) => handleDelete(room.id, e)}
-                                >
-                                    Delete room
-                                </button>
-                            ))}
+                        authData?.user?.id == room.user_id ? (
+                            <button
+                                className={styles.deleteBtn}
+                                onClick={(e) => handleDelete(room.id, e)}
+                            >
+                                Delete room
+                            </button>
+                        ) : (
+                            ""
+                        )}
                         {room.solved_message_id && (
                             <div className={styles.solvedStatus}>
                                 <CheckCircle size={16} />
