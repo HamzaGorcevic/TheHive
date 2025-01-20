@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import styles from "./Profile.module.scss";
+import styles from "./profile.module.scss";
 import StateContext from "../../contexts/authcontext";
 import BeekeeperCard from "./beekeeper";
 import UserCard from "./user";
