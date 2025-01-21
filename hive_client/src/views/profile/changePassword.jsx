@@ -133,7 +133,10 @@ const ChangePassword = () => {
                     </div>
 
                     {loading ? (
-                        <button disabled className={styles.loading}></button>
+                        <button
+                            disabled
+                            className={`${styles.loading} ${styles.submitButton}`}
+                        ></button>
                     ) : (
                         <button type="submit" className={styles.submitButton}>
                             Update Password

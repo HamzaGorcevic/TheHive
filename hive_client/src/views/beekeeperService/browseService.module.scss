@@ -201,3 +201,48 @@
 .detailsBtn{
     background-color: $forest-green;
 }
+
+
+// Add these new styles to your browseService.module.scss file
+
+.createServiceBtn {
+    position: fixed;
+    bottom: $spacing-xl;
+    right: $spacing-xl;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md $spacing-lg;
+    background-color: $honey-gold;
+    color: white;
+    border: none;
+    border-radius: $border-radius-lg;
+    font-size: $font-size-base;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba($honey-dark, 0.2);
+    z-index: 100;
+
+    &:hover {
+        background-color: darken($honey-gold, 10%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba($honey-dark, 0.3);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+        bottom: $spacing-lg;
+        right: $spacing-lg;
+        padding: $spacing-sm $spacing-md;
+        font-size: $font-size-sm;
+    }
+}
+
+// Optional: Add some padding at the bottom of the services grid to prevent button overlap
+.servicesGrid {
+    padding-bottom: 80px; // Adjust based on button height
+}

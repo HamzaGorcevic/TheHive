@@ -159,7 +159,9 @@ const Navbar = () => {
                             )}
                         </div>
                     )}
-                    {["beekeeper", "admin"].includes(authData?.user?.role) && (
+                    {["beekeeper", "admin", "user"].includes(
+                        authData?.user?.role
+                    ) && (
                         <div className={styles.dropdownContainer}>
                             <button
                                 className={styles.link}
@@ -177,6 +179,19 @@ const Navbar = () => {
                             </button>
                             {activeDropdown === "management" && (
                                 <div className={styles.dropdownMenu}>
+                                    <Link
+                                        to="/create-room"
+                                        className={styles.link}
+                                    >
+                                        <PlusCircle className={styles.icon} />
+                                        Create Room
+                                    </Link>
+                                    <Link to="/contact" className={styles.link}>
+                                        <MessageCircleIcon
+                                            className={styles.icon}
+                                        />
+                                        Contact me
+                                    </Link>
                                     {authData?.user?.role === "beekeeper" && (
                                         <>
                                             <Link
@@ -187,24 +202,6 @@ const Navbar = () => {
                                                     className={styles.icon}
                                                 />
                                                 Create Service
-                                            </Link>
-                                            <Link
-                                                to="/create-room"
-                                                className={styles.link}
-                                            >
-                                                <PlusCircle
-                                                    className={styles.icon}
-                                                />
-                                                Create Room
-                                            </Link>
-                                            <Link
-                                                to="/contact"
-                                                className={styles.link}
-                                            >
-                                                <MessageCircleIcon
-                                                    className={styles.icon}
-                                                />
-                                                Contact me
                                             </Link>
                                         </>
                                     )}

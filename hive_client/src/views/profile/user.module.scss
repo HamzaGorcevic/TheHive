@@ -97,11 +97,13 @@
 
 // Password Change Styles
 .passwordSection {
+
     background-color: white;
     border-radius: $border-radius-lg;
     padding: $spacing-lg;
     box-shadow: $shadow-md;
     margin-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
 
     .sectionHeader {
         display: flex;

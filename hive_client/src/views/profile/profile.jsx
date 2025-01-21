@@ -13,6 +13,8 @@ const Profile = () => {
     return (
         <div className={styles.profileContainer}>
             <UserCard user={authData?.user} isViewMode={false} />
+            <ChangePassword />
+
             {authData?.user?.beekeeper && (
                 <>
                     <BeekeeperCard
@@ -23,7 +25,6 @@ const Profile = () => {
                     <ReservationTable />
                 </>
             )}
-            <ChangePassword />
         </div>
     );
 };

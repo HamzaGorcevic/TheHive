@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Home, Users, Clock, CheckCircle, Search } from "lucide-react";
+import { Home, Users, Clock, CheckCircle, Search, Plus } from "lucide-react";
 import styles from "./roomsList.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
@@ -74,9 +74,18 @@ const Rooms = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                <Home size={24} />
-                <h2>All Rooms</h2>
+            <div className={styles.headerContainer}>
+                <div className={styles.header}>
+                    <Home size={24} />
+                    <h2>All Rooms</h2>
+                </div>
+                <button
+                    className={styles.createRoomButton}
+                    onClick={() => navigate("/create-room")}
+                >
+                    <Plus size={20} />
+                    Create Room
+                </button>
             </div>
 
             <div className={styles.searchContainer}>

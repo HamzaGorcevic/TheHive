@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { User, Clock, CheckCircle, Trash2 } from "lucide-react";
+import {
+    User,
+    Clock,
+    CheckCircle,
+    Trash2,
+    Plus,
+    Home,
+    Trash2Icon,
+} from "lucide-react";
 import styles from "./roomsList.module.scss";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
@@ -50,11 +58,19 @@ export const UserRooms = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                <User size={24} />
-                <h2>My Rooms</h2>
+            <div className={styles.headerContainer}>
+                <div className={styles.header}>
+                    <Home size={24} />
+                    <h2>My Rooms</h2>
+                </div>
+                <button
+                    className={styles.createRoomButton}
+                    onClick={() => navigate("/create-room")}
+                >
+                    <Plus size={20} />
+                    Create Room
+                </button>
             </div>
-
             <div className={styles.roomGrid}>
                 {rooms.map((room) => (
                     <div
@@ -76,7 +92,7 @@ export const UserRooms = () => {
                                 onClick={(e) => handleDelete(room.id, e)}
                                 title="Delete room"
                             >
-                                Delete room
+                                <Trash2Icon />
                             </button>
                         </div>
 

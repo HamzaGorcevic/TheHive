@@ -1,109 +1,114 @@
-@import '../../assets/variables';
+@import "../../assets/variables";
 
 .authContainer {
-  min-height: 100vh;
-  padding: $spacing-xl;
-  background: linear-gradient(135deg, $cream-white, $honey-light);
-}
-a{
+    min-height: 100vh;
+    padding: $spacing-xl;
+    background: linear-gradient(135deg, $cream-white, $honey-light);
+  }
+
+  a {
     display: block;
     margin-top: 15px;
     color: rgb(9, 10, 124);
     text-decoration: none;
-}
-.authCard {
-  background-color: white;
-  padding: $spacing-xl;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-lg;
-  position: relative;
-  max-width: 500px;
-  margin: auto;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(to right, $honey-gold, $honey-dark);
-    border-radius: $border-radius-lg $border-radius-lg 0 0;
-  }
-}
-
-.title {
-  color: $wax-brown;
-  font-size: $font-size-xxl;
-  margin-bottom: $spacing-lg;
-  text-align: center;
-  font-weight: bold;
-}
-
-.formGroup {
-  margin-bottom: $spacing-lg;
-}
-
-.label {
-  display: block;
-  color: $wax-brown;
-  font-size: $font-size-sm;
-  margin-bottom: $spacing-xs;
-  font-weight: 500;
-}
-
-.input {
-  width: 100%;
-  padding: $spacing-md;
-  border: 2px solid $honey-light;
-  border-radius: $border-radius-md;
-  font-size: $font-size-base;
-  transition: $transition-base;
-
-  &:focus {
-    outline: none;
-    border-color: $honey-gold;
-    box-shadow: 0 0 0 3px rgba($honey-gold, 0.2);
-  }
-}
-
-.submitButton {
-  width: 100%;
-  padding: $spacing-md;
-  background-color: $honey-gold;
-  color: white;
-  border: none;
-  border-radius: $border-radius-md;
-  font-size: $font-size-base;
-  font-weight: 600;
-  cursor: pointer;
-  transition: $transition-base;
-
-  &:hover {
-    background-color: $honey-dark;
-    transform: translateY(-1px);
   }
 
-  &:active {
-    transform: translateY(0);
+  .authCard {
+    background-color: white;
+    padding: $spacing-xl;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-lg;
+    position: relative;
+    max-width: 500px;
+    margin: auto;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, $honey-gold, $honey-dark);
+      border-radius: $border-radius-lg $border-radius-lg 0 0;
+    }
   }
-}
 
-.error {
-  color: $error-red;
-  font-size: $font-size-sm;
-  margin-top: $spacing-xs;
-  text-align: center;
-}
+  .title {
+    color: $wax-brown;
+    font-size: $font-size-xxl;
+    margin-bottom: $spacing-lg;
+    text-align: center;
+    font-weight: bold;
+  }
 
+  .formGroup {
+    margin-bottom: $spacing-lg;
+  }
 
-.container {
+  .label {
+    display: block;
+    color: $wax-brown;
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-xs;
+    font-weight: 500;
+  }
+
+  .input {
+    width: 100%;
+    padding: $spacing-md;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    transition: $transition-base;
+
+    &:focus {
+      outline: none;
+      border-color: $honey-gold;
+      box-shadow: 0 0 0 3px rgba($honey-gold, 0.2);
+    }
+  }
+
+  .submitButton {
+    width: 100%;
+    padding: $spacing-md;
+    background-color: $honey-gold;
+    color: white;
+    border: none;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition-base;
+
+    &:hover {
+      background-color: $honey-dark;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .error {
+    color: $error-red;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+    text-align: center;
+  }
+
+  .container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: $spacing-xl;
+    padding: $spacing-md;
     background-color: $honey-light;
+
+    @media (max-width: 768px) {
+      padding: $spacing-sm;
+    }
   }
 
   .form {
@@ -113,6 +118,10 @@ a{
     padding: $spacing-xl;
     border-radius: $border-radius-lg;
     box-shadow: $shadow-lg;
+
+    @media (max-width: 768px) {
+      padding: $spacing-md;
+    }
   }
 
   .header {
@@ -123,6 +132,10 @@ a{
       color: $honey-dark;
       font-size: $font-size-xxl;
       margin-top: $spacing-sm;
+
+      @media (max-width: 768px) {
+        font-size: $font-size-xl;
+      }
     }
 
     .logo {
@@ -137,11 +150,13 @@ a{
 
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
+      gap: $spacing-md;
     }
   }
 
   .inputGroup {
     position: relative;
+    width: 100%;
   }
 
   .label {
@@ -155,22 +170,30 @@ a{
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
   }
 
   .icon {
     position: absolute;
     left: $spacing-sm;
     color: $honey-gold;
+    min-width: 20px;
   }
 
   .input {
     width: 100%;
-    padding: $spacing-sm $spacing-xl $spacing-sm $spacing-xxl;
+    padding: $spacing-sm $spacing-md $spacing-sm $spacing-xxl;
     border: 2px solid $honey-light;
     border-radius: $border-radius-md;
     font-size: $font-size-base;
     transition: border-color $transition-base;
     background-color: white;
+    min-height: 42px;
+
+    @media (max-width: 768px) {
+      padding: $spacing-sm $spacing-sm $spacing-sm $spacing-xl;
+      font-size: $font-size-sm;
+    }
 
     &:focus {
       outline: none;
@@ -191,6 +214,10 @@ a{
       color: $wax-brown;
       font-size: $font-size-lg;
       margin-bottom: $spacing-md;
+
+      @media (max-width: 768px) {
+        font-size: $font-size-base;
+      }
     }
   }
 
@@ -213,6 +240,12 @@ a{
     font-size: $font-size-lg;
     cursor: pointer;
     transition: background-color $transition-base;
+    min-height: 48px;
+
+    @media (max-width: 768px) {
+      font-size: $font-size-base;
+      padding: $spacing-sm;
+    }
 
     &:hover {
       background-color: darken($honey-gold, 10%);
@@ -229,41 +262,97 @@ a{
     text-align: center;
 
     a {
-        display: block;
-        color: $honey-dark;
-        text-decoration: none;
-        margin-bottom: $spacing-sm;
-        transition: color $transition-base;
+      display: block;
+      color: $honey-dark;
+      text-decoration: none;
+      margin-bottom: $spacing-sm;
+      transition: color $transition-base;
 
-        &:hover {
-            color: $honey-gold;
-        }
+      &:hover {
+        color: $honey-gold;
+      }
     }
-}
+  }
 
-// Add these new styles to your existing auth.module.scss file
-
-.fieldError {
+  .fieldError {
     margin-top: $spacing-xs;
 
     .errorText {
-        color: $error-red;
-        font-size: $font-size-sm;
-        margin: 0;
+      color: $error-red;
+      font-size: $font-size-sm;
+      margin: 0;
     }
-}
+  }
 
-.inputError {
+  .inputError {
     border-color: $error-red !important;
 
     &:focus {
-        box-shadow: 0 0 0 3px rgba($error-red, 0.2) !important;
+      box-shadow: 0 0 0 3px rgba($error-red, 0.2) !important;
     }
-}
+  }
 
-.submitButton {
+  .submitButton {
     &.loading {
-        background-color: lighten($honey-gold, 20%);
-        cursor: not-allowed;
+      background-color: lighten($honey-gold, 20%);
+      cursor: not-allowed;
     }
-}
+  }
+
+  // Add these new styles to your existing auth.module.scss file
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .icon {
+    position: absolute;
+    left: $spacing-sm;
+    color: $honey-gold;
+    min-width: 20px;
+  }
+
+  .input {
+    width: 100%;
+    padding: $spacing-sm $spacing-xl $spacing-sm $spacing-xxl;
+    border: 2px solid $honey-light;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    transition: border-color $transition-base;
+    background-color: white;
+
+    &:focus {
+      outline: none;
+      border-color: $honey-gold;
+      box-shadow: 0 0 0 3px rgba($honey-gold, 0.2);
+    }
+  }
+
+  .passwordToggle {
+    position: absolute;
+    right: $spacing-sm;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $honey-gold;
+
+    &:hover {
+      color: $honey-dark;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    .icon {
+      position: static;
+      left: auto;
+    }
+  }

@@ -197,7 +197,7 @@ const Register = () => {
                         type="submit"
                         disabled={loading}
                     >
-                        {loading ? "Registering..." : "Register"}
+                        {loading ? "  " : "Register"}
                     </button>
                 </form>
                 <div className={styles.secondaryActions}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Filter, User, Search } from "lucide-react";
+import { Filter, User, Search, Plus } from "lucide-react";
 import { toast } from "react-toastify";
 import axiosClient from "../../axios";
 import StateContext from "../../contexts/authcontext";
@@ -104,9 +104,19 @@ function BrowseServices() {
     if (loading) {
         return <CustomLoader />;
     }
+    const handleCreateService = () => {
+        navigate("/create-service");
+    };
 
     return (
         <div className={styles.browseServices}>
+            <button
+                className={styles.createServiceBtn}
+                onClick={handleCreateService}
+            >
+                <Plus size={20} />
+                Create New Service
+            </button>
             <div className={styles.filtersContainer}>
                 <div className={styles.searchBar}>
                     <Search size={20} />

@@ -258,7 +258,7 @@ const RegisterBeekeeper = () => {
                     />
 
                     <div className={styles.mapSection}>
-                        <h2>Select Your Location</h2>
+                        <h2>Where Are Your Bees ?</h2>
                         <LocationPicker
                             onLocationSelect={handleLocationSelect}
                         />

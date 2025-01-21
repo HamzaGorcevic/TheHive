@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import axiosClient from "../../axios";
 import StateContext from "../../contexts/authcontext";
 import styles from "./auth.module.scss";
@@ -11,7 +12,9 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
@@ -31,13 +34,17 @@ const Login = () => {
                 err.response.data &&
                 err.response.data.message
             ) {
-                setError(err.response.data.message); // Show the error from the backend
+                setError(err.response.data.message);
             } else {
-                setError("Login failed. Please try again."); // Fallback error
+                setError("Login failed. Please try again.");
             }
             toast.error("Failed to log in");
             console.error(err);
         }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -47,23 +54,40 @@ const Login = () => {
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <label className={styles.label}>Email:</label>
-                        <input
-                            className={styles.input}
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
+                        <div className={styles.inputWrapper}>
+                            <Mail className={styles.icon} size={16} />
+                            <input
+                                className={styles.input}
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
                     </div>
                     <div className={styles.formGroup}>
                         <label className={styles.label}>Password:</label>
-                        <input
-                            className={styles.input}
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                        <div className={styles.inputWrapper}>
+                            <Lock className={styles.icon} size={16} />
+                            <input
+                                className={styles.input}
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={togglePasswordVisibility}
+                                className={styles.passwordToggle}
+                            >
+                                {showPassword ? (
+                                    <EyeOff size={16} className={styles.icon} />
+                                ) : (
+                                    <Eye size={16} className={styles.icon} />
+                                )}
+                            </button>
+                        </div>
                     </div>
                     {error && <p className={styles.error}>{error}</p>}
                     {!loading ? (
