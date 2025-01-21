@@ -77,14 +77,6 @@
             }
         }
     }
-
-    .mapContainer {
-        border-radius: $border-radius-md;
-        overflow: hidden;
-        margin-top: $spacing-lg;
-        height: 300px;
-        border: 2px solid $honey-light;
-    }
 }
 
 .editInput {
@@ -103,11 +95,89 @@
     }
 }
 
-.locationInputs {
+// Password Change Styles
+.passwordSection {
+    background-color: white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    box-shadow: $shadow-md;
+    margin-top: $spacing-lg;
+
+    .sectionHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-lg;
+
+        .headerContent {
+            h2 {
+                font-size: $font-size-lg;
+                color: $wax-brown;
+                margin-bottom: 4px;
+            }
+
+            .subtitle {
+                color: rgba($wax-brown, 0.7);
+                font-size: $font-size-sm;
+            }
+        }
+    }
+
+    .passwordForm {
+        max-width: 400px;
+
+        .formGroup {
+            margin-bottom: $spacing-md;
+
+            label {
+                display: block;
+                margin-bottom: $spacing-sm;
+                color: $wax-brown;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+.actionButton {
     display: flex;
+    align-items: center;
     gap: $spacing-sm;
-    flex-direction: column;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    border: none;
+    cursor: pointer;
+    transition: $transition-fast;
+    font-weight: 500;
+
+    &.editButton {
+        color: $forest-green;
+        background-color: rgba($forest-green, 0.1);
+        &:hover { background-color: rgba($forest-green, 0.2); }
+    }
+
+    &.cancelButton {
+        color: $wax-brown;
+        background-color: rgba($wax-brown, 0.1);
+        &:hover { background-color: rgba($wax-brown, 0.2); }
+    }
+}
+
+.submitButton {
+    background-color: $honey-gold;
+    color: white;
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-md;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: $transition-fast;
+    width: 100%;
     margin-top: $spacing-md;
+
+    &:hover {
+        background-color: darken($honey-gold, 5%);
+    }
 }
 
 button {

@@ -7,20 +7,82 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const { registerUser } = useContext(StateContext);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        passwordConfirm: "",
+        name: "",
+    });
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+
+    const validatePassword = (password) => {
+        const errors = [];
+        if (password.length < 7) {
+            errors.push("Password must be at least 7 characters long");
+        }
+        if (!/[A-Z]/.test(password)) {
+            errors.push("Password must contain at least one uppercase letter");
+        }
+        return errors;
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+
+        // Validate password
+        const passwordErrors = validatePassword(formData.password);
+        if (passwordErrors.length > 0) {
+            newErrors.password = passwordErrors;
+        }
+
+        // Validate password confirmation
+        if (formData.password !== formData.passwordConfirm) {
+            newErrors.passwordConfirm = ["Passwords do not match"];
+        }
+
+        // Validate email
+        if (!formData.email.includes("@")) {
+            newErrors.email = ["Please enter a valid email address"];
+        }
+
+        // Validate name
+        if (formData.name.trim().length < 2) {
+            newErrors.name = ["Name must be at least 2 characters long"];
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+        // Clear error for this field when user starts typing
+        if (errors[name]) {
+            setErrors((prev) => ({
+                ...prev,
+                [name]: undefined,
+            }));
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validateForm()) {
+            return;
+        }
+
         setLoading(true);
         try {
             const response = await axiosClient.post("/register", {
-                name,
-                email,
-                password,
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
             });
             registerUser(response.data);
             setLoading(false);
@@ -28,14 +90,35 @@ const Register = () => {
             navigate("/rooms");
         } catch (err) {
             setLoading(false);
-            // Check for a response from the server
-            console.log(err.response.data.message);
-            if (err.response && err.response.data && err.response.data.errors) {
-                setError(err.response.data.message); // Show the error from the server
+            if (err.response?.data?.errors) {
+                setErrors((prev) => ({
+                    ...prev,
+                    server: err.response.data.message,
+                }));
             } else {
-                setError("Registration failed. Please try again."); // Fallback error
+                setErrors((prev) => ({
+                    ...prev,
+                    server: "Registration failed. Please try again.",
+                }));
             }
         }
+    };
+
+    const renderFieldError = (fieldErrors) => {
+        if (!fieldErrors) return null;
+        return (
+            <div className={styles.fieldError}>
+                {Array.isArray(fieldErrors) ? (
+                    fieldErrors.map((error, index) => (
+                        <p key={index} className={styles.errorText}>
+                            {error}
+                        </p>
+                    ))
+                ) : (
+                    <p className={styles.errorText}>{fieldErrors}</p>
+                )}
+            </div>
+        );
     };
 
     return (
@@ -46,44 +129,73 @@ const Register = () => {
                     <div className={styles.formGroup}>
                         <label className={styles.label}>Name:</label>
                         <input
-                            className={styles.input}
+                            className={`${styles.input} ${
+                                errors.name ? styles.inputError : ""
+                            }`}
                             type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
                             required
                         />
+                        {renderFieldError(errors.name)}
                     </div>
                     <div className={styles.formGroup}>
                         <label className={styles.label}>Email:</label>
                         <input
-                            className={styles.input}
+                            className={`${styles.input} ${
+                                errors.email ? styles.inputError : ""
+                            }`}
                             type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
                             required
                         />
+                        {renderFieldError(errors.email)}
                     </div>
                     <div className={styles.formGroup}>
                         <label className={styles.label}>Password:</label>
                         <input
-                            className={styles.input}
+                            className={`${styles.input} ${
+                                errors.password ? styles.inputError : ""
+                            }`}
                             type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
                             required
                         />
+                        {renderFieldError(errors.password)}
                     </div>
-                    {error && <p className={styles.error}>{error}</p>}
-                    {!loading ? (
-                        <button className={styles.submitButton} type="submit">
-                            Register
-                        </button>
-                    ) : (
-                        <button
-                            className={`${styles.submitButton} ${styles.loading}`}
-                            disabled
-                        ></button>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>
+                            Confirm Password:
+                        </label>
+                        <input
+                            className={`${styles.input} ${
+                                errors.passwordConfirm ? styles.inputError : ""
+                            }`}
+                            type="password"
+                            name="passwordConfirm"
+                            value={formData.passwordConfirm}
+                            onChange={handleChange}
+                            required
+                        />
+                        {renderFieldError(errors.passwordConfirm)}
+                    </div>
+                    {errors.server && (
+                        <p className={styles.error}>{errors.server}</p>
                     )}
+                    <button
+                        className={`${styles.submitButton} ${
+                            loading ? styles.loading : ""
+                        }`}
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {loading ? " " : "Register"}
+                    </button>
                 </form>
                 <div className={styles.secondaryActions}>
                     <a href="/login">Already have an account? Sign in</a>

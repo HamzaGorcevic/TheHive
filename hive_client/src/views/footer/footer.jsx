@@ -37,6 +37,9 @@ const Footer = () => {
                 <div className={styles.section}>
                     <h3>Contact</h3>
                     <div className={styles.links}>
+                        <a className={styles.link} href="/contact">
+                            Contact us
+                        </a>
                         <a href="tel:+1234567890" className={styles.link}>
                             <Phone className={styles.icon} />
                             (123) 456-7890

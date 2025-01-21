@@ -5,6 +5,7 @@ import BeekeeperCard from "./beekeeper";
 import UserCard from "./user";
 import UserServicesList from "./userServices";
 import ReservationTable from "../reservations/reservationTable";
+import ChangePassword from "./changePassword";
 
 const Profile = () => {
     const { authData } = useContext(StateContext);
@@ -22,6 +23,7 @@ const Profile = () => {
                     <ReservationTable />
                 </>
             )}
+            <ChangePassword />
         </div>
     );
 };

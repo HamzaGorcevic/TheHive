@@ -73,6 +73,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/profile', [AuthController::class, 'get_profile']);
     Route::get('/user/view/{user_id}/profile', [AuthController::class, 'get_profile_to_view']);
     Route::get('/users', [AuthController::class, 'get_users']);
+    Route::post('/user/change-password', [AuthController::class, 'change_password']);
 });
 
 

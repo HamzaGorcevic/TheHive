@@ -192,6 +192,15 @@ const Navbar = () => {
                                                 />
                                                 Create Room
                                             </Link>
+                                            <Link
+                                                to="/contact"
+                                                className={styles.link}
+                                            >
+                                                <MessageCircleIcon
+                                                    className={styles.icon}
+                                                />
+                                                Contact me
+                                            </Link>
                                         </>
                                     )}
                                     {authData?.user?.role === "admin" && (

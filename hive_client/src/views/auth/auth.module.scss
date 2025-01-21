@@ -240,3 +240,30 @@ a{
         }
     }
 }
+
+// Add these new styles to your existing auth.module.scss file
+
+.fieldError {
+    margin-top: $spacing-xs;
+
+    .errorText {
+        color: $error-red;
+        font-size: $font-size-sm;
+        margin: 0;
+    }
+}
+
+.inputError {
+    border-color: $error-red !important;
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba($error-red, 0.2) !important;
+    }
+}
+
+.submitButton {
+    &.loading {
+        background-color: lighten($honey-gold, 20%);
+        cursor: not-allowed;
+    }
+}

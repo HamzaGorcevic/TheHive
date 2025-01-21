@@ -119,6 +119,53 @@ class AuthController extends Controller
         ]);
     }
 
+    public function change_password(Request $request)
+    {
+        $user = $request->user();
+
+        // Validate request data
+        $validated = $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'different:current_password',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/',
+            ],
+        ], [
+            'new_password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, and one number',
+            'new_password.different' => 'New password must be different from your current password',
+        ]);
+
+        // Check if current password is correct
+        if (!Hash::check($validated['current_password'], $user->password)) {
+            return response()->json([
+                'message' => 'Current password is incorrect'
+            ], 400);
+        }
+
+        // Check similarity with current password (prevent simple character changes)
+        $similarityThreshold = 0.8; // 80% similarity threshold
+        $similarity = similar_text($validated['current_password'], $validated['new_password'], $percent);
+        if ($percent > $similarityThreshold * 100) {
+            return response()->json([
+                'message' => 'New password is too similar to your current password'
+            ], 400);
+        }
+
+        $user->password = Hash::make($validated['new_password']);
+        $user->save();
+
+        // $user->tokens()->delete();
+        $token = $user->createToken("main")->plainTextToken;
+
+        return response()->json([
+            'message' => 'Password changed successfully',
+            'token' => $token
+        ]);
+    }
     public function update_profile(Request $request)
     {
         $user = $request->user();
