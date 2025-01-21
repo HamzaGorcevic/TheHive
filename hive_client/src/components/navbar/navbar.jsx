@@ -132,23 +132,28 @@ const Navbar = () => {
                                         />
                                         My Rooms
                                     </Link>
-                                    <Link
-                                        to="/user-reserved"
-                                        className={styles.link}
-                                    >
-                                        <CalendarCheck
-                                            className={styles.icon}
-                                        />
-                                        Reservations
-                                    </Link>
+
                                     {authData?.user?.role == "beekeeper" && (
-                                        <Link
-                                            to="/profile"
-                                            className={styles.link}
-                                        >
-                                            <Wrench className={styles.icon} />
-                                            My Services
-                                        </Link>
+                                        <>
+                                            <Link
+                                                to="/profile"
+                                                className={styles.link}
+                                            >
+                                                <Wrench
+                                                    className={styles.icon}
+                                                />
+                                                My Services
+                                            </Link>
+                                            <Link
+                                                to="/user-reserved"
+                                                className={styles.link}
+                                            >
+                                                <CalendarCheck
+                                                    className={styles.icon}
+                                                />
+                                                Reservations
+                                            </Link>
+                                        </>
                                     )}
                                 </div>
                             )}

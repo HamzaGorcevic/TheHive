@@ -19,11 +19,14 @@ const Register = () => {
 
     const validatePassword = (password) => {
         const errors = [];
-        if (password.length < 7) {
-            errors.push("Password must be at least 7 characters long");
+        if (password.length < 8) {
+            errors.push("Password must be at least 8 characters long");
         }
         if (!/[A-Z]/.test(password)) {
             errors.push("Password must contain at least one uppercase letter");
+        }
+        if (!/\d/.test(password)) {
+            errors.push("Password must contain at least one number");
         }
         return errors;
     };
@@ -194,7 +197,7 @@ const Register = () => {
                         type="submit"
                         disabled={loading}
                     >
-                        {loading ? " " : "Register"}
+                        {loading ? "Registering..." : "Register"}
                     </button>
                 </form>
                 <div className={styles.secondaryActions}>
