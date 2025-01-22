@@ -17,6 +17,7 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
+    padding: 0 $spacing-md;
 }
 
 .logo {
@@ -30,6 +31,7 @@
     transition: all $transition-base;
     padding: $spacing-xs $spacing-sm;
     border-radius: $border-radius-md;
+    white-space: nowrap;
 
     &:hover {
         background: rgba($cream-white, 0.1);
@@ -56,7 +58,7 @@
         background: rgba($cream-white, 0.2);
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -66,9 +68,14 @@
 .links {
     display: flex;
     align-items: center;
-    gap: $spacing-lg;
+    gap: $spacing-md;
+    flex-wrap: nowrap;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1200px) {
+        gap: $spacing-sm;
+    }
+
+    @media (max-width: 1024px) {
         display: none;
         flex-direction: column;
         width: 100%;
@@ -80,6 +87,7 @@
         box-shadow: $shadow-lg;
         border-bottom-left-radius: $border-radius-lg;
         border-bottom-right-radius: $border-radius-lg;
+        gap: $spacing-sm;
 
         &.open {
             display: flex;
@@ -96,12 +104,17 @@
     font-size: $font-size-base;
     font-weight: 500;
     transition: all $transition-base;
-    padding: $spacing-sm $spacing-md;
+    padding: $spacing-xs $spacing-sm;
     border-radius: $border-radius-md;
     white-space: nowrap;
     background: transparent;
     border: none;
     cursor: pointer;
+
+    @media (max-width: 1200px) {
+        font-size: $font-size-sm;
+        padding: $spacing-xs;
+    }
 
     &:hover {
         background: rgba($cream-white, 0.1);
@@ -109,9 +122,14 @@
     }
 
     .icon {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         color: $cream-white;
+
+        @media (max-width: 1200px) {
+            width: 16px;
+            height: 16px;
+        }
     }
 
     .dropdownIcon {
@@ -119,6 +137,11 @@
         height: 16px;
         margin-left: $spacing-xs;
         transition: transform 0.2s ease;
+
+        @media (max-width: 1200px) {
+            width: 14px;
+            height: 14px;
+        }
 
         &.rotate {
             transform: rotate(180deg);
@@ -148,8 +171,8 @@
     }
 
     .icon {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -166,14 +189,6 @@
         &:hover {
             background: rgba($cream-white, 0.1);
         }
-
-        .dropdownIcon {
-            transition: transform 0.2s ease;
-
-            &.rotate {
-                transform: rotate(180deg);
-            }
-        }
     }
 
     .dropdownMenu {
@@ -181,22 +196,24 @@
         top: calc(100% + #{$spacing-xs});
         right: 0;
         background: linear-gradient(to bottom, $honey-dark, darken($honey-dark, 5%));
-        min-width: 220px;
+        min-width: 200px;
         border-radius: $border-radius-lg;
         padding: $spacing-xs;
         box-shadow: $shadow-lg;
         border: 1px solid rgba($cream-white, 0.1);
         transform-origin: top right;
         animation: dropdownFade 200ms ease-out;
+        z-index: 1000;
 
         .link, .logoutButton {
             width: 100%;
             justify-content: flex-start;
             margin: $spacing-xs 0;
+            white-space: nowrap;
         }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         width: 100%;
 
         .dropdownMenu {
@@ -204,6 +221,7 @@
             width: 100%;
             margin-top: $spacing-sm;
             animation: none;
+            min-width: unset;
         }
     }
 }

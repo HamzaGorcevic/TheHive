@@ -25,6 +25,7 @@ import Footer from "./views/footer/footer";
 import DetailsService from "./views/beekeeperService/detailsService/detailsService";
 import ContactMe from "./views/contact/contactme";
 import AccessDenied from "./views/errorViews/accessDenied";
+import ReservationSchedule from "./views/reservationSchedule/reservationSchedule";
 function App() {
     return (
         <Router>
@@ -83,6 +84,18 @@ function App() {
                             element={<UserReserved />}
                         />
                     </Route>
+                    {/* beekeeper */}
+                    <Route
+                        element={
+                            <ProtectedRoute allowedRoles={["beekeeper"]} />
+                        }
+                    >
+                        <Route
+                            path="/schedule"
+                            element={<ReservationSchedule />}
+                        />
+                    </Route>
+                    {/* beekeeper and admin */}
                     <Route
                         element={
                             <ProtectedRoute

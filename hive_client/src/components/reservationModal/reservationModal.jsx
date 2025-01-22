@@ -48,7 +48,7 @@ function ReservationModal({ isOpen, onClose, serviceId }) {
                 onClose();
             }
         } catch (err) {
-            toast.error("Failed to create reservation.");
+            toast.error(err.response.data.message);
         } finally {
             setLoading(false);
         }

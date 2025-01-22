@@ -110,13 +110,15 @@ function BrowseServices() {
 
     return (
         <div className={styles.browseServices}>
-            <button
-                className={styles.createServiceBtn}
-                onClick={handleCreateService}
-            >
-                <Plus size={20} />
-                Create New Service
-            </button>
+            {authData?.user?.role != "admin" && (
+                <button
+                    className={styles.createServiceBtn}
+                    onClick={handleCreateService}
+                >
+                    <Plus size={20} />
+                    Create New Service
+                </button>
+            )}
             <div className={styles.filtersContainer}>
                 <div className={styles.searchBar}>
                     <Search size={20} />

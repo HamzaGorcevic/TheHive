@@ -4,12 +4,13 @@ import { toast } from "react-toastify";
 import StateContext from "../../contexts/authcontext";
 import CustomLoader from "../../components/loader/loader";
 import styles from "./reservationTable.module.scss";
+import { useNavigate } from "react-router-dom";
 
 function ReservationTable() {
     const [reservations, setReservations] = useState([]);
     const [loading, setLoading] = useState(false);
     const { authData } = useContext(StateContext);
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetchReservations();
     }, []);
@@ -19,7 +20,11 @@ function ReservationTable() {
             setLoading(true);
             const response = await axiosClient.get("/reservations-beekeeper");
             if (response.status === 200) {
-                setReservations(response.data.reservations);
+                setReservations(
+                    response.data.reservations.filter(
+                        (res) => res.status == "pending"
+                    )
+                );
             }
         } catch (err) {
             toast.error("Failed to fetch reservations.");
@@ -35,7 +40,7 @@ function ReservationTable() {
             );
             if (response.status === 200) {
                 toast.success("Reservation accepted!");
-                fetchReservations();
+                navigate("/schedule");
             }
         } catch (err) {
             toast.error("Failed to accept reservation.");
@@ -49,7 +54,10 @@ function ReservationTable() {
             );
             if (response.status === 200) {
                 toast.success("Reservation declined!");
-                fetchReservations();
+                const filtered = reservations.filter(
+                    (res) => res.id != reservationId
+                );
+                setReservations(filtered);
             }
         } catch (err) {
             toast.error("Failed to decline reservation.");

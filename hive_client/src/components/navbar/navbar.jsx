@@ -20,6 +20,9 @@ import {
     BedDouble,
     CalendarCheck,
     MessageCircleIcon,
+    Calendar,
+    Calendar1,
+    CalendarClockIcon,
 } from "lucide-react";
 import styles from "./navbar.module.scss";
 import StateContext from "../../contexts/authcontext";
@@ -145,13 +148,22 @@ const Navbar = () => {
                                                 My Services
                                             </Link>
                                             <Link
+                                                to="/schedule"
+                                                className={styles.link}
+                                            >
+                                                <CalendarClockIcon
+                                                    className={styles.icon}
+                                                />
+                                                Schedule
+                                            </Link>
+                                            <Link
                                                 to="/user-reserved"
                                                 className={styles.link}
                                             >
                                                 <CalendarCheck
                                                     className={styles.icon}
                                                 />
-                                                Reservations
+                                                My Reservations
                                             </Link>
                                         </>
                                     )}

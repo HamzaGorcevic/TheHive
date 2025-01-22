@@ -79,13 +79,15 @@ const Rooms = () => {
                     <Home size={24} />
                     <h2>All Rooms</h2>
                 </div>
-                <button
-                    className={styles.createRoomButton}
-                    onClick={() => navigate("/create-room")}
-                >
-                    <Plus size={20} />
-                    Create Room
-                </button>
+                {authData?.user?.role != "admin" && (
+                    <button
+                        className={styles.createRoomButton}
+                        onClick={() => navigate("/create-room")}
+                    >
+                        <Plus size={20} />
+                        Create Room
+                    </button>
+                )}
             </div>
 
             <div className={styles.searchContainer}>

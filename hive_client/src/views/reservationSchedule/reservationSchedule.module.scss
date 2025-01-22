@@ -1,0 +1,215 @@
+@import "../../assets/variables";
+
+.calendarContainer {
+    background: $cream-white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    margin: $spacing-lg;
+    box-shadow: $shadow-md;
+    transition: $transition-base;
+
+    &:hover {
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  .calendarHeader {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+
+    h2 {
+      color: $honey-dark;
+      font-size: $font-size-xl;
+      font-weight: 600;
+    }
+
+    .calendarIcon {
+      color: $honey-gold;
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  .monthNavigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-md;
+
+    h3 {
+      color: $wax-brown;
+      font-size: $font-size-lg;
+      font-weight: 500;
+    }
+
+    .navButton {
+      background: transparent;
+      border: 1px solid $honey-light;
+      color: $honey-dark;
+      padding: $spacing-xs;
+      border-radius: $border-radius-sm;
+      cursor: pointer;
+      transition: $transition-fast;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: $honey-light;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(1px);
+      }
+    }
+  }
+
+  .calendar {
+    border: 1px solid $honey-light;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+  }
+
+  .weekDays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: $honey-light;
+    padding: $spacing-sm;
+  }
+
+  .weekDay {
+    text-align: center;
+    color: $honey-dark;
+    font-weight: 600;
+    font-size: $font-size-sm;
+  }
+
+  .calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: $honey-light;
+    padding: 1px;
+  }
+
+  .calendarDay {
+    aspect-ratio: 1;
+    background: $cream-white;
+    padding: $spacing-xs;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    position: relative;
+    transition: $transition-base;
+
+    .dayNumber {
+      font-size: $font-size-sm;
+      color: $wax-brown;
+      font-weight: 500;
+    }
+
+    &.hasReservations {
+      background: rgba($honey-light, 0.3);
+      border: 1px solid $honey-gold;
+    }
+  }
+
+  .reservation {
+    background: $honey-gold;
+    padding: $spacing-xs;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    color: $cream-white;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: $transition-base;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-sm;
+    }
+
+    .time {
+      font-weight: 600;
+    }
+
+    .client {
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+
+    .status {
+      font-size: 0.7rem;
+      text-transform: capitalize;
+      opacity: 0.8;
+    }
+  }
+
+  .loading {
+    grid-column: span 7;
+    text-align: center;
+    padding: $spacing-xl;
+    color: $honey-dark;
+    font-size: $font-size-base;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-left: $spacing-sm;
+      border: 2px solid rgba($honey-dark, 0.3);
+      border-top-color: $honey-dark;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+  }
+
+  // Responsive styles
+  @media (max-width: 768px) {
+    .calendarContainer {
+      margin: $spacing-sm;
+      padding: $spacing-sm;
+    }
+
+    .calendarDay {
+      min-height: 80px;
+      font-size: $font-size-sm;
+    }
+
+    .weekDay {
+      font-size: 0.75rem;
+    }
+
+    .reservation {
+      padding: 4px;
+
+      .time {
+        font-size: 0.7rem;
+      }
+
+      .client {
+        font-size: 0.65rem;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .calendarDay {
+      min-height: 60px;
+    }
+
+    .monthNavigation h3 {
+      font-size: $font-size-base;
+    }
+
+    .calendarHeader h2 {
+      font-size: $font-size-lg;
+    }
+  }
